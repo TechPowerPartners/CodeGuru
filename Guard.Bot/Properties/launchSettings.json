@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "Guard.Bot": {
+      "commandName": "Project"
+    },
+    "Container (Dockerfile)": {
+      "commandName": "Docker"
+    }
+  }
+}
