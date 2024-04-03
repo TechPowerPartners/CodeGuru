@@ -4,8 +4,8 @@ using Refit;
 public interface IGuardApi
 {
     [Post("/users/registration")]
-    Task RegisterAsync(RegisterDto dto);
+    Task<IApiResponse> RegisterAsync(RegisterDto dto);
 
     [Get("/posts/random")]
-    Task<string> GetRandomPostContentAsync();
+    Task<IApiResponse<string>> GetRandomPostContentAsync();
 }

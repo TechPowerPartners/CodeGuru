@@ -1,15 +1,20 @@
 version: '3.4'
+
 services:
-  botovskixapi:
-    build: 
-      context: ./botovskixAPI/
-      dockerfile: Dockerfile
-    ports:
-      - "8080:8080"
-      - "8081:8081"
-  botovskiy:
-    build: 
-      context: ./botovskiy
-      dockerfile: Dockerfile
-    volumes:
-      - ./Commands:/app/Commands
+  api:
+    container_name: api
+    image: ${DOCKER_REGISTRY-}guardapi
+    build:
+      context: .
+      dockerfile: Guard.Api/Dockerfile
+
+  bot:
+    container_name: bot
+    image: ${DOCKER_REGISTRY-}guardbot
+    build:
+      context: .
+      dockerfile: Guard.Bot/Dockerfile
+    environment:
+        - ApiUrl=http://api
+        # - BotSettings__Token=—ﬁƒ¿_“Œ ≈Õ
+

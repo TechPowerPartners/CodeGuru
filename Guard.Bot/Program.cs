@@ -1,6 +1,8 @@
 ﻿using DSharpPlus;
 using Guard.Bot.Commands;
+using Guard.Bot.Settings;
 using Guard.Bot.SubscriberModules;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Nefarius.DSharpPlus.CommandsNext.Extensions.Hosting;
@@ -8,12 +10,14 @@ using Nefarius.DSharpPlus.Extensions.Hosting;
 using Refit;
 
 var builder = Host.CreateDefaultBuilder()
-    .ConfigureServices(services =>
+    .ConfigureServices((hostContext, services) =>
     {
+        services.Configure<ResourceSettings>(hostContext.Configuration.GetSection(nameof(ResourceSettings)));
+
         services.AddDiscord(config =>
         {
             config.Intents = DiscordIntents.All;
-            config.Token = "MTIyMDc0MTk3MTA5MDQ3NzA3Ng.GKY-xL.LQaznghYe049oS8Nm_qdoXGltB2FkFv4fYKoHM";
+            config.Token = hostContext.Configuration.GetValue<string>("BotSettings:Token")!;
             config.TokenType = TokenType.Bot;
             config.AutoReconnect = true;
         });
@@ -23,7 +27,7 @@ var builder = Host.CreateDefaultBuilder()
         services.AddDiscordCommandsNext(
             options =>
             {
-                options.StringPrefixes = ["!"];
+                options.StringPrefixes = [hostContext.Configuration.GetValue<string>("BotSettings:CommandPrefix")!];
                 options.EnableDms = false;
                 options.EnableMentionPrefix = true;
             },
@@ -38,9 +42,21 @@ var builder = Host.CreateDefaultBuilder()
 
         services
             .AddRefitClient<IGuardApi>()
-            .ConfigureHttpClient(client => client.BaseAddress = new ("http://127.0.0.1:5184"));
+            .ConfigureHttpClient(client =>
+            {
+                client.BaseAddress = new(hostContext.Configuration.GetValue<string>("ApiUrl")!);
+            });
     });
+
+builder.ConfigureAppConfiguration(conf =>
+{
+    conf.AddEnvironmentVariables();
+
+    conf
+        .AddJsonFile("appsettings.json", optional: false, true)
+        .AddJsonFile("appsettings.Secrets.json", optional: true, true);
+});
 
 var app = builder.Build();
 
-await app.StartAsync();
+await app.RunAsync();

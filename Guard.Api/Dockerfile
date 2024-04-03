@@ -4,22 +4,21 @@ FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
 USER app
 WORKDIR /app
 EXPOSE 8080
-EXPOSE 8081
 
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
-COPY ["botovskixAPI/botovskixAPI.csproj", "botovskixAPI/"]
-RUN dotnet restore "./botovskixAPI/./botovskixAPI.csproj"
+COPY ["Guard.Api/Guard.Api.csproj", "Guard.Api/"]
+RUN dotnet restore "./Guard.Api/Guard.Api.csproj"
 COPY . .
-WORKDIR "/src/botovskixAPI"
-RUN dotnet build "./botovskixAPI.csproj" -c $BUILD_CONFIGURATION -o /app/build
+WORKDIR "/src/Guard.Api"
+RUN dotnet build "./Guard.Api.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
 FROM build AS publish
 ARG BUILD_CONFIGURATION=Release
-RUN dotnet publish "./botovskixAPI.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
+RUN dotnet publish "./Guard.Api.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
 
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "botovskixAPI.dll"]
+ENTRYPOINT ["dotnet", "Guard.Api.dll"]

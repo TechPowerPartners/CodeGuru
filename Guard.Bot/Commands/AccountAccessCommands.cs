@@ -7,22 +7,34 @@ namespace Guard.Bot.Commands;
 public class AccountAccessCommands(IGuardApi _guardApi) : BaseCommandModule
 {
     [Command("dayparol")]
-    public async Task SendPassword(CommandContext ctx)
+    public async Task SendPassword(CommandContext context)
     {
-        var discordDmChannel = await ctx.Member.CreateDmChannelAsync();
+        var discordDmChannel = await context.Member.CreateDmChannelAsync();
 
         var password = GeneratePassword();
 
         var dto = new RegisterDto()
         {
-            Name = ctx.Member.Username,
+            Name = context.Member.Username,
             Password = password,
             Validator = 765123
         };
 
-        await _guardApi.RegisterAsync(dto);
+        var apiResponse = await _guardApi.RegisterAsync(dto);
 
-        await discordDmChannel.SendMessageAsync($"Твой Логин: {ctx.Member.Username}\nТвой пароль: {password}");
+        if(apiResponse.StatusCode == System.Net.HttpStatusCode.Conflict)
+        {
+            await context.Channel.SendMessageAsync("Ты уже зареган, вспоминай пароль анчоус");
+            return;
+        }
+
+        if (!apiResponse.IsSuccessStatusCode)
+        {
+            await context.Channel.SendMessageAsync("Опять нихрена не работает. Тех неполадки емае");
+            return;
+        }
+
+        await discordDmChannel.SendMessageAsync($"Твой Логин: {context.Member.Username}\nТвой пароль: {password}");
     }
 
     private static string GeneratePassword()

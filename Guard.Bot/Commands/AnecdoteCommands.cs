@@ -1,15 +1,19 @@
 ﻿using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
+using Guard.Bot.Settings;
+using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 
 namespace Guard.Bot.Commands;
 
-public class AnecdoteCommands(IGuardApi _guardApi) : BaseCommandModule
+internal class AnecdoteCommands(
+    IGuardApi _guardApi,
+    IOptions<ResourceSettings> _resourceSettingsOptions) : BaseCommandModule
 {
     [Command("daygazu")]
     public async Task GenericIsma(CommandContext context)
     {
-        var json = await File.ReadAllTextAsync("isme.json");
+        var json = await File.ReadAllTextAsync(_resourceSettingsOptions.Value.IsmaJokesPath);
         var jokes = JsonConvert.DeserializeObject<List<dynamic>>(json);
 
         var random = new Random();
@@ -21,7 +25,12 @@ public class AnecdoteCommands(IGuardApi _guardApi) : BaseCommandModule
     [Command("sila")]
     public async Task GenericCitation(CommandContext context)
     {
-        var postContent = await _guardApi.GetRandomPostContentAsync();
-        await context.Channel.SendMessageAsync(postContent);
+        var apiResponse = await _guardApi.GetRandomPostContentAsync();
+
+        var message = apiResponse.IsSuccessStatusCode ? 
+            apiResponse.Content : 
+            "Опять нихрена не работает. Тех неполадки";
+
+        await context.Channel.SendMessageAsync(message);
     }
 }
