@@ -16,5 +16,5 @@ services:
       dockerfile: Guard.Bot/Dockerfile
     environment:
         - ApiUrl=http://api
-        # - BotSettings__Token=—ﬁƒ¿_“Œ ≈Õ
+        # - BotSettings__Token=TOKEN
 

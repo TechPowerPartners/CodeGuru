@@ -7,6 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Nefarius.DSharpPlus.CommandsNext.Extensions.Hosting;
 using Nefarius.DSharpPlus.Extensions.Hosting;
+using Nefarius.DSharpPlus.SlashCommands.Extensions.Hosting;
 using Refit;
 
 var builder = Host.CreateDefaultBuilder()
@@ -33,10 +34,15 @@ var builder = Host.CreateDefaultBuilder()
             },
             extension =>
             {
-                extension.RegisterCommands<CoreCommands>();
+                //extension.RegisterCommands<CoreCommands>();
                 extension.RegisterCommands<AnecdoteCommands>();
-                extension.RegisterCommands<AccountAccessCommands>();
+                
             });
+
+        services.AddDiscordSlashCommands(extension: extension =>
+        {
+            extension.RegisterCommands<SlashCommands>();
+        });
 
         services.AddDiscordHostedService();
 
@@ -50,11 +56,9 @@ var builder = Host.CreateDefaultBuilder()
 
 builder.ConfigureAppConfiguration(conf =>
 {
-    conf.AddEnvironmentVariables();
-
-    conf
-        .AddJsonFile("appsettings.json", optional: false, true)
-        .AddJsonFile("appsettings.Secrets.json", optional: true, true);
+    conf.AddJsonFile("appsettings.json", optional: false, true)
+        .AddJsonFile("appsettings.Secrets.json", optional: true, true)
+        .AddEnvironmentVariables();
 });
 
 var app = builder.Build();
