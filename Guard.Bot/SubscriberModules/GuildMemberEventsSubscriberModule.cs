@@ -12,16 +12,14 @@ public class GuildMemberEventsSubscriberModule : IDiscordGuildMemberAddedEventSu
             channel.Name == ChannelNameConsts.General &&
             channel.Type == ChannelType.Text);
 
-        if (generalChannel is null)
-        {
-            Console.WriteLine("Channel not found");
-            return;
-        }
-
         var message = $"""
-            ДарооВа @{args.Member.Mention} в наш уютный {args.Guild.Name}!
-            Ты шарпист или же геймдейвер?
-            Расскажи о себе(если не ответишь кик через 2 минуты)
+            Добро пожаловать @{args.Member.Mention} в наш уютный {args.Guild.Name}!
+            Меня зовут Исмаил и я буду твоим наставником.
+            Я буду сопровождать тебя на всем пути становления настоящим разработчиком!
+            
+            Для того чтобы со мной общаться, напиши !help
+
+            А пока что, расскажи о себе. Какой у тебя опыт? Какую сферу разработки ты выбрал?
             """;
 
         await generalChannel.SendMessageAsync(message);

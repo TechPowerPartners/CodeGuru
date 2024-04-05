@@ -24,6 +24,7 @@ var builder = Host.CreateDefaultBuilder()
         });
 
         services.AddDiscordGuildMemberAddedEventSubscriber<GuildMemberEventsSubscriberModule>();
+        services.AddDiscordComponentInteractionCreatedEventSubscriber<DiscordComponentInteractionCreatedEventSubscriber>();
 
         services.AddDiscordCommandsNext(
             options =>
@@ -31,17 +32,18 @@ var builder = Host.CreateDefaultBuilder()
                 options.StringPrefixes = [hostContext.Configuration.GetValue<string>("BotSettings:CommandPrefix")!];
                 options.EnableDms = false;
                 options.EnableMentionPrefix = true;
+                options.EnableDefaultHelp = false;
             },
             extension =>
             {
-                //extension.RegisterCommands<CoreCommands>();
-                extension.RegisterCommands<AnecdoteCommands>();
+                extension.RegisterCommands<CoreCommands>();
+                extension.RegisterCommands<JokeCommands>();
                 
             });
 
         services.AddDiscordSlashCommands(extension: extension =>
         {
-            extension.RegisterCommands<SlashCommands>();
+            
         });
 
         services.AddDiscordHostedService();
