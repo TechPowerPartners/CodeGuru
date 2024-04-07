@@ -12,6 +12,7 @@
     <PackageReference Include="DSharpPlus" Version="5.0.0-nightly-02188" />
     <PackageReference Include="DSharpPlus.CommandsNext" Version="5.0.0-nightly-02188" />
     <PackageReference Include="DSharpPlus.Interactivity" Version="5.0.0-nightly-02188" />
+    <PackageReference Include="Microsoft.CodeAnalysis.CSharp.Scripting" Version="4.9.2" />
     <PackageReference Include="Microsoft.Extensions.Configuration" Version="8.0.0" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="8.0.0" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="8.0.0" />

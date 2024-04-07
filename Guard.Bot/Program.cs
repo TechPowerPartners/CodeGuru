@@ -38,6 +38,7 @@ var builder = Host.CreateDefaultBuilder()
             {
                 extension.RegisterCommands<CoreCommands>();
                 extension.RegisterCommands<JokeCommands>();
+                extension.RegisterCommands<EvalCommands>();
                 
             });
 
