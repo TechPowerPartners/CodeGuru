@@ -1,4 +1,5 @@
-﻿using DSharpPlus;
+﻿using System.Reflection;
+using DSharpPlus;
 using Guard.Bot.Commands;
 using Guard.Bot.Settings;
 using Guard.Bot.SubscriberModules;
@@ -14,7 +15,6 @@ var builder = Host.CreateDefaultBuilder()
     .ConfigureServices((hostContext, services) =>
     {
         services.Configure<ResourceSettings>(hostContext.Configuration.GetSection(nameof(ResourceSettings)));
-
         services.AddDiscord(config =>
         {
             config.Intents = DiscordIntents.All;
@@ -38,6 +38,7 @@ var builder = Host.CreateDefaultBuilder()
             {
                 extension.RegisterCommands<CoreCommands>();
                 extension.RegisterCommands<JokeCommands>();
+                extension.RegisterCommands<EvalCommands>();
                 
             });
 
@@ -48,6 +49,11 @@ var builder = Host.CreateDefaultBuilder()
 
         services.AddDiscordHostedService();
 
+        services.AddHttpClient("eval").ConfigureHttpClient(client =>
+        {
+            client.BaseAddress = new(hostContext.Configuration.GetValue<string>("EvalUrl")!);
+        });
+        
         services
             .AddRefitClient<IGuardApi>()
             .ConfigureHttpClient(client =>
@@ -60,6 +66,7 @@ builder.ConfigureAppConfiguration(conf =>
 {
     conf.AddJsonFile("appsettings.json", optional: false, true)
         .AddJsonFile("appsettings.Secrets.json", optional: true, true)
+        .AddUserSecrets(Assembly.GetExecutingAssembly(), true)
         .AddEnvironmentVariables();
 });
 

@@ -17,4 +17,17 @@ services:
     environment:
         - ApiUrl=http://api
         # - BotSettings__Token=TOKEN
+    
+  repl:
+    image: ghcr.io/discord-csharp/csharprepl:latest
+    restart: always
+    read_only: true
+    user: www-data
+    environment:
+      - ASPNETCORE_URLS=http://+:31337
+    ports:
+      - '31337:31337'
+    tmpfs:
+      - /tmp
+      - /var
 
