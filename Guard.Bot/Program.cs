@@ -48,11 +48,6 @@ var builder = Host.CreateDefaultBuilder()
         });
 
         services.AddDiscordHostedService();
-
-        services.AddHttpClient("eval").ConfigureHttpClient(client =>
-        {
-            client.BaseAddress = new(hostContext.Configuration.GetValue<string>("EvalUrl")!);
-        });
         
         services
             .AddRefitClient<IGuardApi>()
