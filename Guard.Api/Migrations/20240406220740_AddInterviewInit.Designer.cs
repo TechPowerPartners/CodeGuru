@@ -3,6 +3,7 @@ using System;
 using Guard.Api.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace botovskixAPI.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240406220740_AddInterviewInit")]
+    partial class AddInterviewInit
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -31,27 +34,21 @@ namespace botovskixAPI.Migrations
                     b.Property<int>("FromRole")
                         .HasColumnType("integer");
 
-                    b.Property<TimeOnly>("FromTime")
-                        .HasColumnType("time without time zone");
-
                     b.Property<Guid>("IntervieweeId")
                         .HasColumnType("uuid");
 
-                    b.Property<bool?>("IsPassed")
+                    b.Property<bool>("IsPassed")
                         .HasColumnType("boolean");
 
                     b.Property<string>("Review")
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<DateOnly>("StartDate")
-                        .HasColumnType("date");
+                    b.Property<DateTime>("StartDate")
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<int>("ToRole")
                         .HasColumnType("integer");
-
-                    b.Property<TimeOnly>("ToTime")
-                        .HasColumnType("time without time zone");
 
                     b.HasKey("Id");
 
