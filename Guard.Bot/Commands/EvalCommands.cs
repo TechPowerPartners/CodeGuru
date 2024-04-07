@@ -60,28 +60,33 @@ internal class EvalCommands : BaseCommandModule
                 .WithColor(DiscordColor.Gold);
 
             if (!string.IsNullOrEmpty(result.Code))
-                builder.AddField("Код", $"```cs\n{result.Code}\n```");
+            {
+                builder.WithDescription($"Код\n```cs\n{result.Code}\n```");
+            }
 
             if (result.ReturnValue is not null)
-                builder.AddField("Результат", $"```json\n{json}\n```");
+            {
+                builder.AddField("Результат", $"```json\n{json[(json.Length > 600 ? 600 : json.Length - 1)]}\n...```");
+            }
 
             if (!string.IsNullOrEmpty(result.ConsoleOut))
-                builder.AddField("Вывод в консоль", $"```json\n{result.ConsoleOut}\n```");
+            {
+                builder.AddField("Вывод в консоль",
+                    $"```json\n{result.ConsoleOut[..(result.ConsoleOut.Length > 300 ? 300 : result.ConsoleOut.Length - 1)]}\n...```");
+            }
 
             if (!string.IsNullOrEmpty(result.Exception))
-                builder.AddField("Результат", $"```json\n{result.ExceptionType} - {result.Exception}\n```");
+                builder.AddField("Результат", $"```diff\n{result.ExceptionType} - {result.Exception}\n```");
 
             builder.WithFooter(
                 $"Время компиляции: {result.CompileTime}ms | Время работы: {result.ExecutionTime}ms");
 
-            
             await context.RespondAsync(builder.Build());
-            await context.Channel.DeleteMessageAsync(context.Message);  
+            await context.Channel.DeleteMessageAsync(context.Message);
         }
         catch (Exception)
         {
             await context.RespondAsync("Таймаут, спам или неправильный запрос");
-            throw;
         }
     }
 
