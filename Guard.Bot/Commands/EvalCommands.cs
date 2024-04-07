@@ -74,7 +74,9 @@ internal class EvalCommands : BaseCommandModule
             builder.WithFooter(
                 $"Время компиляции: {result.CompileTime}ms | Время работы: {result.ExecutionTime}ms");
 
+            
             await context.RespondAsync(builder.Build());
+            await context.Channel.DeleteMessageAsync(context.Message);  
         }
         catch (Exception)
         {
