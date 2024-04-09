@@ -1,6 +1,7 @@
 ﻿using DSharpPlus;
 using DSharpPlus.EventArgs;
-using Guard.Bot.GuardApiContracts.DTOs;
+using Guard.Bot.Integrations.GuardApi;
+using Guard.Bot.Integrations.GuardApi.DTOs;
 using Nefarius.DSharpPlus.Extensions.Hosting.Events;
 
 namespace Guard.Bot.SubscriberModules;

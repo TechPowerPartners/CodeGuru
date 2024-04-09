@@ -16,8 +16,7 @@ services:
       dockerfile: Guard.Bot/Dockerfile
     environment:
         - ApiUrl=http://api
-        #- BotSettings__Token=Token
-        - EvilApiUrl=http://eval-api
+        # - BotSettings__Token=TOKEN
 
   eval-api:
     container_name: evalapi      
@@ -26,3 +25,15 @@ services:
     build:
       context: .
       dockerfile: Guard.EvalApi/Dockerfile
+
+  rabbitmq:
+    container_name: rabbitmq
+    image: "rabbitmq:3-management"
+    hostname: "rabbitmq"
+    environment:
+      RABBITMQ_DEFAULT_USER: "rabbitmq"
+      RABBITMQ_DEFAULT_PASS: "rabbitmq"
+      RABBITMQ_DEFAULT_VHOST: "/"
+    ports:
+      - "15672:15672"
+      - "5672:5672"

@@ -1,4 +1,6 @@
-﻿namespace Guard.Api.Domain;
+﻿using Shared.Domain;
+
+namespace Guard.Api.Domain;
 
 public class Interview
 {
@@ -13,19 +15,4 @@ public class Interview
     public bool? IsPassed { get; set; } 
     public Guid IntervieweeId { get; set; }
     public User Interviewee { get; set; }
-
-}
-
-
-
-
-public enum CareerRole
-{
-    Amateur = 0,
-    AmateurPlus = 1,
-    Intern = 2,
-    InterPlus = 3,
-    Junior = 4,
-    Middle = 5,
-    Senior = 6,
 }
