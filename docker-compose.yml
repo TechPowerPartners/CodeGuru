@@ -17,6 +17,7 @@ services:
     environment:
         - ApiUrl=http://api
         # - BotSettings__Token=TOKEN
+        - EvalApiUrl=http://eval-api
 
   eval-api:
     container_name: evalapi      
