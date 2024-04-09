@@ -59,4 +59,48 @@ public static class CareerRoleExtensions
     {
         return role.AsString(EnumFormat.Description)!;
     }
+
+    /// <summary>
+    /// Получить реальное название роли.
+    /// </summary>
+    public static CareerRole GetFromRealName(string realRole)
+    {
+        foreach (var field in typeof(CareerRole).GetFields())
+        {
+            if (Attribute.GetCustomAttribute(field, typeof(DescriptionAttribute)) is DescriptionAttribute attribute)
+            {
+                if (attribute.Description == realRole)
+                    return (CareerRole)field.GetValue(null);
+            }
+            else
+            {
+                if (field.Name == realRole)
+                    return (CareerRole)field.GetValue(null);
+            }
+        }
+
+        throw new ArgumentException("Роль не найдена", nameof(realRole));
+    }
+
+    /// <summary>
+    /// Проверить валидность роли.
+    /// </summary>
+    public static bool IsRealRoleValid(string realRole)
+    {
+        foreach (var field in typeof(CareerRole).GetFields())
+        {
+            if (Attribute.GetCustomAttribute(field, typeof(DescriptionAttribute)) is DescriptionAttribute attribute)
+            {
+                if (attribute.Description == realRole)
+                    return true;
+            }
+            else
+            {
+                if (field.Name == realRole)
+                    return true;
+            }
+        }
+
+        return false;
+    }
 }
