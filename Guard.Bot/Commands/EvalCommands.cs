@@ -38,8 +38,17 @@ internal class EvalCommands(IHttpClientFactory clientFactory) : BaseCommandModul
         uri += "/eval";
 
         var client = _clientFactory.CreateClient();
-
-        var r = await client.PostAsync(uri, JsonContent.Create(new { Code = input }));
+        
+        HttpResponseMessage r;
+        try
+        {
+            r = await client.PostAsync(uri, JsonContent.Create(new { Code = input }));
+        }
+        catch (Exception)
+        {
+            await context.RespondAsync("Таймаут, ты заепал циклы запускать");
+            return;
+        }
         
         if (r.StatusCode != HttpStatusCode.BadRequest && r.StatusCode != HttpStatusCode.OK)
         {

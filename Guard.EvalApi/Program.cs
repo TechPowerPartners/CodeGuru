@@ -32,7 +32,7 @@ app.Use(async (context, next) =>
     if (app.Environment.IsProduction() && !context.Response.HasStarted && (context.Request.Path.Equals("/eval", StringComparison.OrdinalIgnoreCase)))
     {
         // terminate the process after 90 seconds whether the request is done or not (infinite loops, long sleeps, etc)
-        exitTimer.Change(TimeSpan.FromSeconds(90), Timeout.InfiniteTimeSpan);
+        exitTimer.Change(TimeSpan.FromSeconds(30), Timeout.InfiniteTimeSpan);
 
         // terminate the process when the request finishes (assume the code is malicious. 
         // Should be hosted in a container/host system that destroys/re-builds the container)
