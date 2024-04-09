@@ -1,25 +1,8 @@
-﻿using System.Collections;
-using System.Collections.Immutable;
-using System.Diagnostics;
-using System.Net;
+﻿using System.Net;
 using System.Net.Http.Json;
-using System.Reflection;
-using System.Runtime.Versioning;
-using System.Text;
-using System.Text.Json;
-using System.Text.Json.Serialization;
-using AngouriMath;
 using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Entities;
-using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.CSharp;
-using Microsoft.CodeAnalysis.CSharp.Scripting;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
-using Microsoft.CodeAnalysis.Diagnostics;
-using Microsoft.CodeAnalysis.Scripting;
-using Microsoft.Extensions.Hosting;
-using TypeInfo = System.Reflection.TypeInfo;
 
 namespace Guard.Bot.Commands;
 
@@ -31,14 +14,14 @@ internal class EvalCommands(IHttpClientFactory clientFactory) : BaseCommandModul
     public async Task ProcessEvalCommand(CommandContext context, [RemainingText] string input)
     {
         var uri = Environment.GetEnvironmentVariable("EvilApiUrl");
-        
+
         if (uri is null)
             throw new Exception("EvilApiUrl environment variable not provided");
 
         uri += "/eval";
 
         var client = _clientFactory.CreateClient();
-        
+
         HttpResponseMessage r;
         try
         {
@@ -46,10 +29,10 @@ internal class EvalCommands(IHttpClientFactory clientFactory) : BaseCommandModul
         }
         catch (Exception)
         {
-            await context.RespondAsync("Таймаут, ты заепал циклы запускать");
+            await context.RespondAsync("Таймаут, попробуй еще раз");
             return;
         }
-        
+
         if (r.StatusCode != HttpStatusCode.BadRequest && r.StatusCode != HttpStatusCode.OK)
         {
             await context.RespondAsync("Сервак сдох");
@@ -57,17 +40,19 @@ internal class EvalCommands(IHttpClientFactory clientFactory) : BaseCommandModul
         }
 
         var response = (await r.Content.ReadFromJsonAsync<Response>())!;
-        
-        if(r.StatusCode == HttpStatusCode.BadRequest)
+
+        if (r.StatusCode == HttpStatusCode.BadRequest)
         {
             await context.RespondAsync(response.Error!);
         }
-        
-        var result = response.Result;
+
+        var result = response.Result!;
 
         var builder = new DiscordEmbedBuilder()
             .WithTitle("Компилятор")
             .WithColor(DiscordColor.Gold);
+
+        int remain = 1000;
 
         if (!string.IsNullOrEmpty(result.Code))
         {
@@ -76,15 +61,21 @@ internal class EvalCommands(IHttpClientFactory clientFactory) : BaseCommandModul
 
         if (result.ReturnValue is not null)
         {
-            builder.AddField("Результат", $"```json\n{(response.SerializedReturnValue!.Length > 600
-                ? response.SerializedReturnValue[..600] + "..."
-                : response.SerializedReturnValue)}\n```");
+            var json = response.SerializedReturnValue!;
+
+            remain -= Truncate(ref json, 800);
+
+            builder.AddField("Результат", $"```json\n{json}\n```");
         }
 
         if (!string.IsNullOrEmpty(result.ConsoleOut))
         {
+            var json = result.ConsoleOut;
+
+            Truncate(ref json, remain);
+
             builder.AddField("Вывод в консоль",
-                $"```json\n{(result.ConsoleOut.Length > 600 ? result.ConsoleOut[..600] + "..." : result.ConsoleOut)}\n```");
+                $"```json\n{json}\n```");
         }
 
         if (!string.IsNullOrEmpty(result.Exception))
@@ -96,6 +87,16 @@ internal class EvalCommands(IHttpClientFactory clientFactory) : BaseCommandModul
         await context.RespondAsync(builder.Build());
         await context.Channel.DeleteMessageAsync(context.Message);
     }
+
+    private static int Truncate(ref string str, int limit)
+    {
+        var len = str.Length;
+
+        if (len <= limit) return len;
+
+        str = string.Concat(str.AsSpan(0, limit), "...");
+        return limit;
+    }
 }
 
 public class Response
@@ -103,7 +104,7 @@ public class Response
     public int Status { get; set; }
     public string? Error { get; set; }
     public string? SerializedReturnValue { get; set; }
-    public EvalResult Result { get; set; }
+    public EvalResult? Result { get; set; }
 }
 
 public class EvalResult
