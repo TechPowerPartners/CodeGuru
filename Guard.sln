@@ -9,6 +9,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Guard.Api", "Guard.Api\Guar
 EndProject
 Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{F9CD2A51-6C95-437C-A4DA-045191F6630F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Guard.EvalApi", "Guard.EvalApi\Guard.EvalApi.csproj", "{792EA2E1-980A-4279-98F5-C72DE271EA0E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{F9CD2A51-6C95-437C-A4DA-045191F6630F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F9CD2A51-6C95-437C-A4DA-045191F6630F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F9CD2A51-6C95-437C-A4DA-045191F6630F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{792EA2E1-980A-4279-98F5-C72DE271EA0E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{792EA2E1-980A-4279-98F5-C72DE271EA0E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{792EA2E1-980A-4279-98F5-C72DE271EA0E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{792EA2E1-980A-4279-98F5-C72DE271EA0E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

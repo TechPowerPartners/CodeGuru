@@ -10,6 +10,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="AngouriMath" Version="1.3.0" />
     <PackageReference Include="DSharpPlus" Version="5.0.0-nightly-02188" />
     <PackageReference Include="DSharpPlus.CommandsNext" Version="5.0.0-nightly-02188" />
     <PackageReference Include="DSharpPlus.Interactivity" Version="5.0.0-nightly-02188" />

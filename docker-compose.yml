@@ -7,7 +7,7 @@ services:
     build:
       context: .
       dockerfile: Guard.Api/Dockerfile
-
+      
   bot:
     container_name: bot
     image: ${DOCKER_REGISTRY-}guardbot
@@ -16,4 +16,13 @@ services:
       dockerfile: Guard.Bot/Dockerfile
     environment:
         - ApiUrl=http://api
-        # - BotSettings__Token=TOKEN
+        #- BotSettings__Token=Token
+        - EvilApiUrl=http://eval-api
+
+  eval-api:
+    container_name: evalapi      
+    image: ${DOCKER_REGISTRY-}guardevalapi
+    restart: always
+    build:
+      context: .
+      dockerfile: Guard.EvalApi/Dockerfile
