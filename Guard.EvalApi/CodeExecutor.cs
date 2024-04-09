@@ -22,13 +22,16 @@ public class CodeExecutor
     private static readonly ImmutableArray<DiagnosticAnalyzer> Analyzers =
         [new BlacklistedTypesAnalyzer()];
     
-    public JsonSerializerOptions CreateJsonSerializerOptions()
+    public static JsonSerializerOptions CreateJsonSerializerOptions()
     {
-        var serializerOptions = new JsonSerializerOptions();
-        serializerOptions.MaxDepth = 10240;
-        serializerOptions.IncludeFields = true;
-        serializerOptions.PropertyNameCaseInsensitive = true;
-        serializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
+        var serializerOptions = new JsonSerializerOptions
+        {
+            MaxDepth = 10240,
+            IncludeFields = true,
+            PropertyNameCaseInsensitive = true,
+            ReferenceHandler = ReferenceHandler.IgnoreCycles
+        };
+        
         serializerOptions.NumberHandling |= JsonNumberHandling.AllowNamedFloatingPointLiterals;
         serializerOptions.Converters.Add(new TypeJsonConverter());
         serializerOptions.Converters.Add(new TypeInfoJsonConverter());

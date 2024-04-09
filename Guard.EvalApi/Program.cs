@@ -22,23 +22,21 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-//app.UseHttpsRedirection();
-
 app.UseCustomExceptionHandler();
 
-var exitTimer = new Timer(s => app.Lifetime.StopApplication(), null, Timeout.Infinite, Timeout.Infinite);
+var exitTimer = new Timer(_ => app.Lifetime.StopApplication(), null, Timeout.Infinite, Timeout.Infinite);
 app.Use(async (context, next) =>
 {
     if (app.Environment.IsProduction() && !context.Response.HasStarted && (context.Request.Path.Equals("/eval", StringComparison.OrdinalIgnoreCase)))
     {
-        // terminate the process after 90 seconds whether the request is done or not (infinite loops, long sleeps, etc)
+        // terminate the process after 30 seconds whether the request is done or not (infinite loops, long sleeps, etc.)
         exitTimer.Change(TimeSpan.FromSeconds(30), Timeout.InfiniteTimeSpan);
 
         // terminate the process when the request finishes (assume the code is malicious. 
         // Should be hosted in a container/host system that destroys/re-builds the container)
-        context.Response.OnCompleted(async () =>
+        context.Response.OnCompleted(() =>
         {
-            Task.Run(async () =>
+            return Task.Run(async () =>
             {
                 await Task.Delay(10000);
                 app.Lifetime.StopApplication();
@@ -59,7 +57,7 @@ app.MapPost("/eval", async (
         try
         {
             var result = await codeExecutor.ExecuteCode(request!.Code!);
-            var options = codeExecutor.CreateJsonSerializerOptions();
+            var options = CodeExecutor.CreateJsonSerializerOptions();
 
             return Results.Json(new
             {
