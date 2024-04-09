@@ -1,7 +1,10 @@
 {
   "profiles": {
     "Guard.Bot": {
-      "commandName": "Project"
+      "commandName": "Project",
+      "environmentVariables": {
+        "EvilApiUrl": "http://localhost:8081"
+      }
     },
     "Container (Dockerfile)": {
       "commandName": "Docker"

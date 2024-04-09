@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Queue.Contracts", "Queue.Co
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shared.Domain", "Shared.Domain\Shared.Domain.csproj", "{01E3BAEE-5C67-4070-898E-3DFF254B5D4E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Guard.EvalApi", "Guard.EvalApi\Guard.EvalApi.csproj", "{792EA2E1-980A-4279-98F5-C72DE271EA0E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{01E3BAEE-5C67-4070-898E-3DFF254B5D4E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{01E3BAEE-5C67-4070-898E-3DFF254B5D4E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{01E3BAEE-5C67-4070-898E-3DFF254B5D4E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{792EA2E1-980A-4279-98F5-C72DE271EA0E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{792EA2E1-980A-4279-98F5-C72DE271EA0E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{792EA2E1-980A-4279-98F5-C72DE271EA0E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{792EA2E1-980A-4279-98F5-C72DE271EA0E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

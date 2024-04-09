@@ -364,3 +364,4 @@ FodyWeavers.xsd
 /Guard.Bot/appsettings.Secrets.json
 
 .idea/.idea.Guard/.idea/
+.idea/
