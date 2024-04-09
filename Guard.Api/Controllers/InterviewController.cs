@@ -1,24 +1,38 @@
-﻿using Guard.Api.Domain;
+﻿using EasyNetQ;
+using Guard.Api.Domain;
 using Guard.Api.DTOs.Interview;
 using Guard.Api.Persistence;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Queue.Contracts;
 
 namespace Guard.Api.Controllers;
 [Route("api/[controller]")]
 [ApiController]
-public class InterviewController(ApplicationDbContext dbContext) : ControllerBase
+public class InterviewController(ApplicationDbContext dbContext, IBus _bus) : ControllerBase
 {
+    [HttpPost("CreateTest")]
+    public async Task CreateInterviewTest(InterviewDto interviewDto)
+    {
+        await _bus.PubSub.PublishAsync(new InterviewCreatedMessage(
+            interviewDto.Name,
+            interviewDto.FromRole,
+            interviewDto.ToRole,
+            interviewDto.StartDate,
+            interviewDto.FromTime,
+            interviewDto.ToTime));
+    }
+
     [HttpPost]
     public async Task<IActionResult> CreateInterview(InterviewDto interviewDto)
     {
         var isDateFree = !await dbContext.Interviews.AnyAsync(i => i.StartDate == interviewDto.StartDate);
-        if (isDateFree == false) 
+        if (!isDateFree) 
             return BadRequest("Дата занята");
 
         var interviewee = await dbContext.Users.FirstOrDefaultAsync(u => u.Name == interviewDto.Name);
-        if (interviewee == null) 
-            return BadRequest("Пользователя нет");
+        if (interviewee is null) 
+            return BadRequest("Собеседуемый не найден");
 
         var interview = new Interview()
         {
@@ -32,8 +46,17 @@ public class InterviewController(ApplicationDbContext dbContext) : ControllerBas
             Review = string.Empty
         };
 
-        dbContext.Interviews.Add(interview);
-        dbContext.SaveChanges();
+        await dbContext.Interviews.AddAsync(interview);
+        await dbContext.SaveChangesAsync();
+
+        await _bus.PubSub.PublishAsync(new InterviewCreatedMessage(
+           interviewDto.Name,
+           interviewDto.FromRole,
+           interviewDto.ToRole,
+           interviewDto.StartDate,
+           interviewDto.FromTime,
+           interviewDto.ToTime));
+
         return Ok();
     }
 

@@ -1,4 +1,4 @@
-﻿namespace Guard.Bot.GuardApiContracts.DTOs;
+﻿namespace Guard.Bot.Integrations.GuardApi.DTOs;
 
 public class RegisterDto
 {

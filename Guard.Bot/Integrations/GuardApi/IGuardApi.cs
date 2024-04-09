@@ -1,5 +1,7 @@
-﻿using Guard.Bot.GuardApiContracts.DTOs;
+﻿using Guard.Bot.Integrations.GuardApi.DTOs;
 using Refit;
+
+namespace Guard.Bot.Integrations.GuardApi;
 
 public interface IGuardApi
 {
