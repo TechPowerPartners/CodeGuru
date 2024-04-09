@@ -1,4 +1,4 @@
-﻿using Guard.Api.Domain;
+﻿using Shared.Domain;
 
 namespace Guard.Api.DTOs.Interview;
 
@@ -10,5 +10,4 @@ public class InterviewDto
     public CareerRole FromRole { get; set; }
     public CareerRole ToRole { get; set; }
     public string Name { get; set; }
-   
 }

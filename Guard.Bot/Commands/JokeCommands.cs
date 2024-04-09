@@ -1,5 +1,6 @@
 ﻿using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
+using Guard.Bot.Integrations.GuardApi;
 using Guard.Bot.Settings;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;

@@ -1,3 +1,4 @@
+using EasyNetQ;
 using Guard.Api;
 using Guard.Api.Persistence;
 
@@ -6,10 +7,16 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<ApplicationDbContext>();
 builder.Services.AddControllers();
 
+builder.Services.AddDateOnlyTimeOnlyStringConverters();
 builder.Services.ConfigureAuthentication();
 builder.Services.ConfigureSwagger();
 
 builder.Services.AddEndpointsApiExplorer();
+
+builder.Services.RegisterEasyNetQ("host=rabbitmq;username=rabbitmq;password=rabbitmq", register =>
+{
+    register.EnableConsoleLogger();
+});
 
 var app = builder.Build();
 

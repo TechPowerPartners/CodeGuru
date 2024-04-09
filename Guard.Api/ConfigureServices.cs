@@ -41,10 +41,10 @@ public static class ConfigureServices
     /// </summary>
     public static IServiceCollection ConfigureSwagger(this IServiceCollection services)
     {
-        services.AddSwaggerGen();
-
         services.AddSwaggerGen(opt =>
         {
+            opt.UseDateOnlyTimeOnlyStringConverters();
+
             opt.SwaggerDoc("v1", new OpenApiInfo { Title = "GuardApi", Version = "v0.1" });
 
             opt.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
