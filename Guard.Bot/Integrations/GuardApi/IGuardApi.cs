@@ -1,4 +1,5 @@
-﻿using Guard.Bot.Integrations.GuardApi.DTOs;
+﻿using Guard.Api.DTOs.Interview;
+using Guard.Bot.Integrations.GuardApi.DTOs;
 using Refit;
 
 namespace Guard.Bot.Integrations.GuardApi;
@@ -10,4 +11,7 @@ public interface IGuardApi
 
     [Get("/posts/random")]
     Task<IApiResponse<string>> GetRandomPostContentAsync();
+
+    [Post("/interview")]
+    Task<IApiResponse> CreateInterviewAsync(InterviewDto dto);
 }

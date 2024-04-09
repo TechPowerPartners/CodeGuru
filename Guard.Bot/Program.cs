@@ -26,7 +26,8 @@ var builder = Host.CreateDefaultBuilder()
 
         services.AddDiscordGuildMemberAddedEventSubscriber<GuildMemberEventsSubscriberModule>();
         services.AddDiscordComponentInteractionCreatedEventSubscriber<DiscordComponentInteractionCreatedEventSubscriber>();
-
+        services.AddDiscordModalSubmittedEventSubscriber<DiscordModalSubmittedEventSubscriber>();
+        
         services.AddDiscordCommandsNext(
             options =>
             {
@@ -51,7 +52,7 @@ var builder = Host.CreateDefaultBuilder()
         services.AddDiscordHostedService();
 
         services.ConfigureIntergrations(hostContext.Configuration);
-        services.ConfigureQueue(hostContext.Configuration);
+        //services.ConfigureQueue(hostContext.Configuration);
     });
 
 builder.ConfigureAppConfiguration(conf =>

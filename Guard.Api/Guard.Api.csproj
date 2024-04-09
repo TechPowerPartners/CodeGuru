@@ -39,6 +39,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Guard.Api.Contracts\Guard.Api.Contracts.csproj" />
     <ProjectReference Include="..\Queue.Contracts\Queue.Contracts.csproj" />
     <ProjectReference Include="..\Shared.Domain\Shared.Domain.csproj" />
   </ItemGroup>
