@@ -6,7 +6,7 @@ using Guard.Bot.Integrations.GuardApi;
 using Guard.Bot.Settings;
 using Microsoft.Extensions.Options;
 using Nefarius.DSharpPlus.Extensions.Hosting.Events;
-using Shared.Domain;
+using Domain.Shared;
 
 namespace Guard.Bot.SubscriberModules;
 
