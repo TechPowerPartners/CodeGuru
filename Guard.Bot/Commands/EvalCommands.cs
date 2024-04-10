@@ -13,6 +13,8 @@ internal class EvalCommands(IHttpClientFactory clientFactory) : BaseCommandModul
     [Command("eval")]
     public async Task ProcessEvalCommand(CommandContext context, [RemainingText] string input)
     {
+        await context.TriggerTypingAsync();
+        
         var uri = Environment.GetEnvironmentVariable("EvalApiUrl");
 
         if (uri is null)
