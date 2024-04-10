@@ -8,7 +8,7 @@ public class GetInterviewsRequest
     /// <summary>
     /// Дата начала собеседования.
     /// </summary>
-    public DateOnly? StartDate { get; set; }
+    public DateTime? StartDate { get; set; }
 
     /// <summary>
     /// Имя собеседуемого.

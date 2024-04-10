@@ -20,7 +20,6 @@ public class InterviewController(ApplicationDbContext dbContext, IBus _bus) : Co
             request.IntervieweeName,
             request.FromRole,
             request.ToRole,
-            request.Date,
             request.FromTime,
             request.ToTime));
     }
@@ -28,7 +27,7 @@ public class InterviewController(ApplicationDbContext dbContext, IBus _bus) : Co
     [HttpPost]
     public async Task<IActionResult> CreateInterview(CreateInterviewRequest request)
     {
-        var isDateFree = !await dbContext.Interviews.AnyAsync(i => i.Date.Date == request.Date);
+        var isDateFree = !await dbContext.Interviews.AnyAsync(i => i.Date.FromTime == request.FromTime);
         if (!isDateFree) 
             return BadRequest("Дата занята");
 
@@ -36,7 +35,7 @@ public class InterviewController(ApplicationDbContext dbContext, IBus _bus) : Co
         if (interviewee is null) 
             return BadRequest("Собеседуемый не найден");
 
-        var interviewDate = InterviewDate.Create(request.Date, request.FromTime, request.ToTime);
+        var interviewDate = InterviewDate.Create(request.FromTime, request.ToTime);
         var roleEnhancement = RoleEnhancement.Create(request.FromRole, request.ToRole);
         var interview = new Interview(Guid.NewGuid(), interviewDate, roleEnhancement, interviewee.Id);
 
@@ -47,7 +46,6 @@ public class InterviewController(ApplicationDbContext dbContext, IBus _bus) : Co
            request.IntervieweeName,
            request.FromRole,
            request.ToRole,
-           request.Date,
            request.FromTime,
            request.ToTime));
 
@@ -60,7 +58,7 @@ public class InterviewController(ApplicationDbContext dbContext, IBus _bus) : Co
         var querry = (IQueryable<Interview>)dbContext.Interviews;
 
         if (request.StartDate != null)
-            querry = querry.Where(i => i.Date.Date == request.StartDate.Value);
+            querry = querry.Where(i => i.Date.FromTime == request.StartDate.Value);
        
         if (request.IntervieweeName != null) 
             querry = querry.Where(i => i.Interviewee.Name == request.IntervieweeName);
