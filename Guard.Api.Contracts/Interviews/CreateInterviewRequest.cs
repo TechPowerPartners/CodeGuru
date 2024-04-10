@@ -3,37 +3,32 @@ using Domain.Shared;
 namespace Guard.Api.Contracts.Interviews;
 
 /// <summary>
-/// Информация для создания собеседования.
+/// Г€Г­ГґГ®Г°Г¬Г Г¶ГЁГї Г¤Г«Гї Г±Г®Г§Г¤Г Г­ГЁГї Г±Г®ГЎГҐГ±ГҐГ¤Г®ГўГ Г­ГЁГї.
 /// </summary>
 public class CreateInterviewRequest
 {
     /// <summary>
-    /// Дата начала.
+    /// Г‚Г°ГҐГ¬Гї ГЇГ°Г®ГўГҐГ¤ГҐГ­ГЁГї - Г±.
     /// </summary>
-    public DateOnly Date { get; set; }
+    public DateTime FromTime { get; set; }
 
     /// <summary>
-    /// Время проведения - с.
+    /// Г‚Г°ГҐГ¬Гї ГЇГ°Г®ГўГҐГ¤ГҐГ­ГЁГї - ГЇГ®.
     /// </summary>
-    public TimeOnly FromTime { get; set; }
+    public DateTime ToTime { get; set; }
 
     /// <summary>
-    /// Время проведения - по.
-    /// </summary>
-    public TimeOnly ToTime { get; set; }
-
-    /// <summary>
-    /// Роль с которой будет повышение.
+    /// ГђГ®Г«Гј Г± ГЄГ®ГІГ®Г°Г®Г© ГЎГіГ¤ГҐГІ ГЇГ®ГўГ»ГёГҐГ­ГЁГҐ.
     /// </summary>
     public CareerRole FromRole { get; set; }
 
     /// <summary>
-    /// Роль на которую будет повышение.
+    /// ГђГ®Г«Гј Г­Г  ГЄГ®ГІГ®Г°ГіГѕ ГЎГіГ¤ГҐГІ ГЇГ®ГўГ»ГёГҐГ­ГЁГҐ.
     /// </summary>
     public CareerRole ToRole { get; set; }
 
     /// <summary>
-    /// Имя собеседуемого.
+    /// Г€Г¬Гї Г±Г®ГЎГҐГ±ГҐГ¤ГіГҐГ¬Г®ГЈГ®.
     /// </summary>
     public string IntervieweeName { get; set; }
 }
