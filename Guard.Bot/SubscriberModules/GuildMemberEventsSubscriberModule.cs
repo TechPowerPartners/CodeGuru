@@ -13,11 +13,11 @@ public class GuildMemberEventsSubscriberModule : IDiscordGuildMemberAddedEventSu
             channel.Type == ChannelType.Text);
 
         var message = $"""
-            Добро пожаловать @{args.Member.Mention} в наш уютный {args.Guild.Name}!
+            Добро пожаловать {args.Member.Mention} в наш уютный {args.Guild.Name}!
             Меня зовут Исмаил и я буду твоим наставником.
             Я буду сопровождать тебя на всем пути становления настоящим разработчиком!
             
-            Для того чтобы со мной общаться, напиши !help
+            Для того чтобы со мной общаться, напиши "!guard help"
 
             А пока что, расскажи о себе. Какой у тебя опыт? Какую сферу разработки ты выбрал?
             """;

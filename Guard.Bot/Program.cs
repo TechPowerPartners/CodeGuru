@@ -16,7 +16,7 @@ var builder = Host.CreateDefaultBuilder()
     .ConfigureServices((hostContext, services) =>
     {
         services.Configure<ResourceSettings>(hostContext.Configuration.GetSection(nameof(ResourceSettings)));
-        services.Configure<TPPServerSettings>(hostContext.Configuration.GetSection(nameof(TPPServerSettings)));
+        services.Configure<DiscordServerSettings>(hostContext.Configuration.GetSection(nameof(DiscordServerSettings)));
         services.AddDiscord(config =>
         {
             config.Intents = DiscordIntents.All;

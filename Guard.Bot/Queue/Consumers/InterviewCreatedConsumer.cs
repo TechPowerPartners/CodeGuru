@@ -10,11 +10,11 @@ namespace Guard.Bot.Queue.Consumers;
 
 internal class InterviewCreatedConsumer(
     IDiscordClientService _discordClientService,
-    IOptions<TPPServerSettings> _tppServerSettings) : IConsumeAsync<InterviewCreatedMessage>
+    IOptions<DiscordServerSettings> _tppServerSettings) : IConsumeAsync<InterviewCreatedMessage>
 {
     public async Task ConsumeAsync(InterviewCreatedMessage message, CancellationToken cancellationToken = default)
     {
-        var guild = _discordClientService.Client.GetGuildAsync(_tppServerSettings.Value.Id).Result;
+        var guild = await _discordClientService.Client.GetGuildAsync(_tppServerSettings.Value.Id);
 
         var interviewModerationChannel = guild.Channels.Values.FirstOrDefault(c => c.Name == ChannelNameConsts.InterviewModeration);
 

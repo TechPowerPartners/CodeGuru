@@ -1,6 +1,6 @@
-﻿namespace Guard.Api.DTOs.Users;
+﻿namespace Guard.Api.Contracts.Users;
 
-public class RegisterDto
+public class RegisterRequest
 {
     public string Name { get; set; }
     public string Password { get; set; }

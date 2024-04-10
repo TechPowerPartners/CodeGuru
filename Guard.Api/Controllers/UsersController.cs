@@ -1,6 +1,6 @@
-﻿using Guard.Api.Domain;
-using Guard.Api.DTOs.Users;
+﻿using Guard.Api.Contracts.Users;
 using Guard.Api.Persistence;
+using Guard.Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -14,9 +14,9 @@ namespace Guard.Api.Controllers;
 public class UsersController(ApplicationDbContext _context) : ControllerBase
 {
     [HttpPost("login")]
-    public IActionResult Login(LoginDto dto)
+    public IActionResult Login(LoginRequest request)
     {
-        var findUser = _context.Users.FirstOrDefault(u => u.Name == dto.Name);
+        var findUser = _context.Users.FirstOrDefault(u => u.Name == request.Name);
 
         var secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("ismailismailismailismailismailismailismail"));
         var loginCredential = new SigningCredentials(secretKey, SecurityAlgorithms.HmacSha256);
@@ -34,17 +34,17 @@ public class UsersController(ApplicationDbContext _context) : ControllerBase
     }
 
     [HttpPost("registration")]
-    public async Task<IActionResult> RegistrationAsync(RegisterDto dto)
+    public async Task<IActionResult> RegistrationAsync(RegisterRequest request)
     {
-        if (dto.Validator != 765123)
+        if (request.Validator != 765123)
             return BadRequest("низя");
 
-        var findUser = await _context.Users.FirstOrDefaultAsync(u => u.Name == dto.Name);
+        var findUser = await _context.Users.FirstOrDefaultAsync(u => u.Name == request.Name);
 
         if (findUser is not null)
         {
-            findUser.Name = dto.Name;
-            findUser.Password = dto.Password;
+            findUser.Name = request.Name;
+            findUser.Password = request.Password;
             await _context.SaveChangesAsync();
 
             return StatusCode(StatusCodes.Status409Conflict, $"User already exist");
@@ -52,8 +52,8 @@ public class UsersController(ApplicationDbContext _context) : ControllerBase
 
         _context.Users.Add(new User
         {
-            Name = dto.Name,
-            Password = dto.Password,
+            Name = request.Name,
+            Password = request.Password,
         });
 
         await _context.SaveChangesAsync();

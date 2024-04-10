@@ -1,8 +1,6 @@
-﻿using System.Text.Json.Serialization;
+﻿namespace Guard.Domain.Entities;
 
-namespace Guard.Api.Domain;
-
-public class User
+public class User : IAggregateRoot
 {
     public Guid Id { get; set; }
     public string Name { get; set; }

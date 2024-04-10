@@ -1,6 +1,6 @@
-﻿using Guard.Api.Domain;
-using Guard.Api.DTOs.Posts;
+﻿using Guard.Api.Contracts.Posts;
 using Guard.Api.Persistence;
+using Guard.Domain.Entities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -12,9 +12,9 @@ namespace Guard.Api.Controllers;
 public class PostsController(ApplicationDbContext _context) : ControllerBase
 {
     [HttpGet]
-    public Task<List<PostDto>> GetAllAsync()
+    public Task<List<GetPostResponse>> GetAllAsync()
         => _context.Posts
-            .Select(p => new PostDto()
+            .Select(p => new GetPostResponse()
             {
                 Id = p.Id,
                 PostContent = p.PostContent

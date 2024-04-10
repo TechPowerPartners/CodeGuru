@@ -1,24 +1,24 @@
 ﻿using EnumsNET;
 using System.ComponentModel;
 
-namespace Shared.Domain;
+namespace Domain.Shared;
 
 public enum CareerRole
 {
-    [Description("\ud83e\udd77 Опыт не ивестен")]
+    [Description("\ud83e\udd77 Опыт не известен")]
     Unknown = 0,
 
     [Description("\ud83e\uddd1\u200d\ud83c\udfeb Amateur")]
-    Amateur = 1,
+    Amateur = 10,
 
     [Description("\ud83e\uddd1\u200d\ud83c\udfeb Amateur +")]
     AmateurPlus = 11,
 
     [Description("\ud83e\uddd1\u200d\ud83c\udf93 Intern")]
-    Intern = 2,
+    Intern = 20,
 
     [Description("\ud83e\uddd1\u200d\ud83c\udf93 Intern +")]
-    InternPlus = 22,
+    InternPlus = 21,
 
     [Description("\ud83e\udd35 Junior")]
     Junior = 3,
@@ -40,7 +40,7 @@ public static class CareerRoleExtensions
     /// <exception cref="ArgumentException">Роль нельзя забустить.</exception>
     public static CareerRole BoostByInterview(this CareerRole role)
     {
-        if(role is CareerRole.Amateur)
+        if (role is CareerRole.Amateur)
             return CareerRole.AmateurPlus;
 
         if (role is CareerRole.AmateurPlus)
@@ -51,6 +51,14 @@ public static class CareerRoleExtensions
 
         throw new ArgumentException("Роль нельзя забустить");
     }
+
+    /// <summary>
+    /// Проверить что роль является следующей после текущей.
+    /// </summary>
+    public static bool HasNext(this CareerRole role, CareerRole nextRole) =>
+        role is CareerRole.Amateur && nextRole is CareerRole.AmateurPlus ||
+        role is CareerRole.AmateurPlus && nextRole is CareerRole.Intern ||
+        role is CareerRole.Intern && nextRole is CareerRole.InternPlus;
 
     /// <summary>
     /// Получить реальное название роли.

@@ -9,13 +9,21 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Guard.Api", "Guard.Api\Guar
 EndProject
 Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{F9CD2A51-6C95-437C-A4DA-045191F6630F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Guard.Api.Contracts", "Guard.Api.Contracts\Guard.Api.Contracts.csproj", "{B25DF6D9-858E-4590-AD16-6F96A2937E3A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Guard.Api.Contracts", "Guard.Api.Contracts\Guard.Api.Contracts.csproj", "{B25DF6D9-858E-4590-AD16-6F96A2937E3A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shared.Domain", "Shared.Domain\Shared.Domain.csproj", "{FBD6854B-7269-4281-A600-B684C8974A4F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Domain.Shared", "Shared.Domain\Domain.Shared.csproj", "{FBD6854B-7269-4281-A600-B684C8974A4F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Queue.Contracts", "Queue.Contracts\Queue.Contracts.csproj", "{468AB383-E75B-4CC5-A9A3-685BA672E58B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Queue.Contracts", "Queue.Contracts\Queue.Contracts.csproj", "{468AB383-E75B-4CC5-A9A3-685BA672E58B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Guard.EvalApi", "Guard.EvalApi\Guard.EvalApi.csproj", "{792EA2E1-980A-4279-98F5-C72DE271EA0E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Guard.EvalApi", "Guard.EvalApi\Guard.EvalApi.csproj", "{792EA2E1-980A-4279-98F5-C72DE271EA0E}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Guard.Domain", "Guard.Domain\Guard.Domain.csproj", "{08FCBC18-A252-4FA1-9FDB-C5496CA3D11D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Api", "Api", "{82486ABB-8938-42BE-9229-5A3ECA6829CA}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Eval", "Eval", "{7F5B5EDA-6EEF-41C9-90DF-405B602ED1E1}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Bot", "Bot", "{1DA5688F-35AF-400B-BBED-AA0A477CF6CD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -49,9 +57,21 @@ Global
 		{468AB383-E75B-4CC5-A9A3-685BA672E58B}.Release|Any CPU.Build.0 = Release|Any CPU
 		{792EA2E1-980A-4279-98F5-C72DE271EA0E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{792EA2E1-980A-4279-98F5-C72DE271EA0E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{792EA2E1-980A-4279-98F5-C72DE271EA0E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{792EA2E1-980A-4279-98F5-C72DE271EA0E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{08FCBC18-A252-4FA1-9FDB-C5496CA3D11D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{08FCBC18-A252-4FA1-9FDB-C5496CA3D11D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{08FCBC18-A252-4FA1-9FDB-C5496CA3D11D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{08FCBC18-A252-4FA1-9FDB-C5496CA3D11D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{67CB461F-B6F0-4D4B-BB10-B2D62C8F6818} = {1DA5688F-35AF-400B-BBED-AA0A477CF6CD}
+		{6DD689BD-6074-439E-9420-A6B74814A695} = {82486ABB-8938-42BE-9229-5A3ECA6829CA}
+		{792EA2E1-980A-4279-98F5-C72DE271EA0E} = {7F5B5EDA-6EEF-41C9-90DF-405B602ED1E1}
+		{08FCBC18-A252-4FA1-9FDB-C5496CA3D11D} = {82486ABB-8938-42BE-9229-5A3ECA6829CA}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {46DC610A-DE1B-46A3-834E-6800AF158536}

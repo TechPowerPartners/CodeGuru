@@ -1,4 +1,4 @@
-﻿using Shared.Domain;
+﻿using Domain.Shared;
 
 namespace Queue.Contracts;
 

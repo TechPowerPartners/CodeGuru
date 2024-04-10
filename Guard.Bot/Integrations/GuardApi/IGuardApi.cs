@@ -1,5 +1,5 @@
-﻿using Guard.Api.DTOs.Interview;
-using Guard.Bot.Integrations.GuardApi.DTOs;
+﻿using Guard.Api.Contracts.Interviews;
+using Guard.Api.Contracts.Users;
 using Refit;
 
 namespace Guard.Bot.Integrations.GuardApi;
@@ -7,11 +7,11 @@ namespace Guard.Bot.Integrations.GuardApi;
 public interface IGuardApi
 {
     [Post("/users/registration")]
-    Task<IApiResponse> RegisterAsync(RegisterDto dto);
+    Task<IApiResponse> RegisterAsync(RegisterRequest request);
 
     [Get("/posts/random")]
     Task<IApiResponse<string>> GetRandomPostContentAsync();
 
     [Post("/interview")]
-    Task<IApiResponse> CreateInterviewAsync(InterviewDto dto);
+    Task<IApiResponse> CreateInterviewAsync(CreateInterviewRequest request);
 }

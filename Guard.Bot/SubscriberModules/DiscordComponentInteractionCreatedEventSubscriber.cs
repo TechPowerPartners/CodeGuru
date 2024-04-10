@@ -1,8 +1,8 @@
 ﻿using DSharpPlus;
 using DSharpPlus.Entities;
 using DSharpPlus.EventArgs;
+using Guard.Api.Contracts.Users;
 using Guard.Bot.Integrations.GuardApi;
-using Guard.Bot.Integrations.GuardApi.DTOs;
 using Nefarius.DSharpPlus.Extensions.Hosting.Events;
 
 namespace Guard.Bot.SubscriberModules;
@@ -47,14 +47,14 @@ internal class DiscordComponentInteractionCreatedEventSubscriber(IGuardApi _guar
 
       var password = GeneratePassword();
 
-      var dto = new RegisterDto()
+      var request = new RegisterRequest()
       {
          Name = member.Username,
          Password = password,
          Validator = 765123
       };
 
-      var apiResponse = await _guardApi.RegisterAsync(dto);
+      var apiResponse = await _guardApi.RegisterAsync(request);
 
       if (apiResponse.StatusCode == System.Net.HttpStatusCode.Conflict)
       {

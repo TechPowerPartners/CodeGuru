@@ -1,6 +1,4 @@
-﻿using System.Text.Json.Serialization;
-
-namespace Guard.Api.Domain;
+﻿namespace Guard.Domain.Entities;
 
 public class Post
 {

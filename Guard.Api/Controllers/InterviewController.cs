@@ -1,95 +1,85 @@
 ﻿using EasyNetQ;
-using Guard.Api.Domain;
-using Guard.Api.DTOs.Interview;
+using Guard.Api.Contracts.Interviews;
 using Guard.Api.Persistence;
+using Guard.Domain.Entities;
+using Guard.Domain.ValueObjects;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Queue.Contracts;
 
 namespace Guard.Api.Controllers;
-[Route("api/[controller]")]
+
+[Route("[controller]")]
 [ApiController]
 public class InterviewController(ApplicationDbContext dbContext, IBus _bus) : ControllerBase
 {
     [HttpPost("CreateTest")]
-    public async Task CreateInterviewTest(InterviewDto interviewDto)
+    public async Task CreateInterviewTest(CreateInterviewRequest request)
     {
         await _bus.PubSub.PublishAsync(new InterviewCreatedMessage(
-            interviewDto.Name,
-            interviewDto.FromRole,
-            interviewDto.ToRole,
-            interviewDto.StartDate,
-            interviewDto.FromTime,
-            interviewDto.ToTime));
+            request.IntervieweeName,
+            request.FromRole,
+            request.ToRole,
+            request.Date,
+            request.FromTime,
+            request.ToTime));
     }
 
     [HttpPost]
-    public async Task<IActionResult> CreateInterview(InterviewDto interviewDto)
+    public async Task<IActionResult> CreateInterview(CreateInterviewRequest request)
     {
-        var isDateFree = !await dbContext.Interviews.AnyAsync(i => i.StartDate == interviewDto.StartDate);
+        var isDateFree = !await dbContext.Interviews.AnyAsync(i => i.Date.Date == request.Date);
         if (!isDateFree) 
             return BadRequest("Дата занята");
 
-        var interviewee = await dbContext.Users.FirstOrDefaultAsync(u => u.Name == interviewDto.Name);
+        var interviewee = await dbContext.Users.FirstOrDefaultAsync(u => u.Name == request.IntervieweeName);
         if (interviewee is null) 
             return BadRequest("Собеседуемый не найден");
 
-        var interview = new Interview()
-        {
-            Id = Guid.NewGuid(),
-            StartDate = interviewDto.StartDate,
-            FromTime = interviewDto.FromTime,
-            ToTime = interviewDto.ToTime,
-            FromRole = interviewDto.FromRole,
-            ToRole = interviewDto.ToRole,
-            IntervieweeId = interviewee.Id,
-            Review = string.Empty
-        };
+        var interviewDate = InterviewDate.Create(request.Date, request.FromTime, request.ToTime);
+        var roleEnhancement = RoleEnhancement.Create(request.FromRole, request.ToRole);
+        var interview = new Interview(Guid.NewGuid(), interviewDate, roleEnhancement, interviewee.Id);
 
         await dbContext.Interviews.AddAsync(interview);
         await dbContext.SaveChangesAsync();
 
         await _bus.PubSub.PublishAsync(new InterviewCreatedMessage(
-           interviewDto.Name,
-           interviewDto.FromRole,
-           interviewDto.ToRole,
-           interviewDto.StartDate,
-           interviewDto.FromTime,
-           interviewDto.ToTime));
+           request.IntervieweeName,
+           request.FromRole,
+           request.ToRole,
+           request.Date,
+           request.FromTime,
+           request.ToTime));
 
         return Ok();
     }
 
-    [HttpPost("GetAll")]
-    public async Task<IActionResult> GetAll(InterviewFilterDto interviewFilter)
+    [HttpPost(":get")]
+    public async Task<IActionResult> GetAll(GetInterviewsRequest request)
     {
         var querry = (IQueryable<Interview>)dbContext.Interviews;
 
-        if (interviewFilter.StartDate != null)
-            querry = querry.Where(i => i.StartDate == interviewFilter.StartDate.Value);
+        if (request.StartDate != null)
+            querry = querry.Where(i => i.Date.Date == request.StartDate.Value);
        
-        if (interviewFilter.Name != null) 
-            querry = querry.Where(i => i.Interviewee.Name == interviewFilter.Name);
+        if (request.IntervieweeName != null) 
+            querry = querry.Where(i => i.Interviewee.Name == request.IntervieweeName);
 
-        querry = querry.OrderBy(i => i.StartDate);
+        querry = querry.OrderBy(i => i.Date);
         return Ok(querry.ToList());
     }
 
-    [HttpPost("Complete")]
-    public async Task<IActionResult> Complete(Guid interviewId, InterviewCompletedDto completedDto )
+    [HttpPost("{id:guid}:complete")]
+    public async Task<IActionResult> Complete(Guid id, CompeteInterviewRequest request)
     {
-        var completedInterview = await dbContext.Interviews.FirstOrDefaultAsync(i => i.Id == interviewId);
+        var interview = await dbContext.Interviews.FirstOrDefaultAsync(i => i.Id == id);
         
-        if(completedInterview == null)
+        if(interview is null)
             return BadRequest("Такое собеседование не существует");
-        
-        if(!(completedInterview.StartDate < DateOnly.FromDateTime(DateTime.UtcNow)))
-            return BadRequest("Дата собеса не прошла еще!");
 
-        completedInterview.Review = completedDto.Review;
-        completedInterview.IsPassed = completedDto.IsPassed;
+        interview.Complete(request.Review, request.Status, DateTime.UtcNow);
 
         dbContext.SaveChanges();
-        return Ok(completedInterview);
+        return Ok(interview);
     }
 }
