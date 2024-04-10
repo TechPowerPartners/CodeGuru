@@ -24,7 +24,7 @@ internal class InterviewCreatedConsumer(
             .AddField("Участник", members.First().DisplayName)
             .AddField("Текущая роль", $"{message.FromRole}")
             .AddField("Следующая роль", $"{message.ToRole}")
-            .AddField("Дата проведения", $"{message.StartDate:dd.MM.yyyy}. С {message.FromTime}. По {message.ToTime}")
+            .AddField("Дата проведения", $"{message.FromTime:dd.MM.yyyy}. С {message.FromTime}. По {message.ToTime}")
             .WithTitle("Создано новое собеседование")
             .WithColor(DiscordColor.Orange);
 
