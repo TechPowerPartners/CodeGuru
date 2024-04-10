@@ -1,16 +1,20 @@
 ﻿using DSharpPlus;
 using DSharpPlus.Entities;
 using EasyNetQ.AutoSubscribe;
+using Guard.Bot.Settings;
+using Microsoft.Extensions.Options;
 using Nefarius.DSharpPlus.Extensions.Hosting;
 using Queue.Contracts;
 
 namespace Guard.Bot.Queue.Consumers;
 
-internal class InterviewCreatedConsumer(IDiscordClientService _discordClientService) : IConsumeAsync<InterviewCreatedMessage>
+internal class InterviewCreatedConsumer(
+    IDiscordClientService _discordClientService,
+    IOptions<TPPServerSettings> _tppServerSettings) : IConsumeAsync<InterviewCreatedMessage>
 {
     public async Task ConsumeAsync(InterviewCreatedMessage message, CancellationToken cancellationToken = default)
     {
-        var guild = _discordClientService.Client.GetGuildAsync(1105918327743844485).Result;
+        var guild = _discordClientService.Client.GetGuildAsync(_tppServerSettings.Value.Id).Result;
 
         var interviewModerationChannel = guild.Channels.Values.FirstOrDefault(c => c.Name == ChannelNameConsts.InterviewModeration);
 

@@ -16,6 +16,7 @@ var builder = Host.CreateDefaultBuilder()
     .ConfigureServices((hostContext, services) =>
     {
         services.Configure<ResourceSettings>(hostContext.Configuration.GetSection(nameof(ResourceSettings)));
+        services.Configure<TPPServerSettings>(hostContext.Configuration.GetSection(nameof(TPPServerSettings)));
         services.AddDiscord(config =>
         {
             config.Intents = DiscordIntents.All;
@@ -52,7 +53,7 @@ var builder = Host.CreateDefaultBuilder()
         services.AddDiscordHostedService();
 
         services.ConfigureIntergrations(hostContext.Configuration);
-        //services.ConfigureQueue(hostContext.Configuration);
+        services.ConfigureQueue(hostContext.Configuration);
     });
 
 builder.ConfigureAppConfiguration(conf =>
