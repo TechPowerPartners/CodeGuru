@@ -5,28 +5,28 @@ namespace Shared.Domain;
 
 public enum CareerRole
 {
-    [Description("Опыт не ивестен")]
+    [Description("\ud83e\udd77 Опыт не ивестен")]
     Unknown = 0,
 
-    [Description("Amateur")]
+    [Description("\ud83e\uddd1\u200d\ud83c\udfeb Amateur")]
     Amateur = 1,
 
-    [Description("Amateur+")]
+    [Description("\ud83e\uddd1\u200d\ud83c\udfeb Amateur +")]
     AmateurPlus = 11,
 
-    [Description("Intern")]
+    [Description("\ud83e\uddd1\u200d\ud83c\udf93 Intern")]
     Intern = 2,
 
-    [Description("Intern+")]
+    [Description("\ud83e\uddd1\u200d\ud83c\udf93 Intern +")]
     InternPlus = 22,
 
-    [Description("Junior")]
+    [Description("\ud83e\udd35 Junior")]
     Junior = 3,
 
-    [Description("Middle")]
+    [Description("\ud83e\udd35\u200d\u2642\ufe0f Middle")]
     Middle = 4,
 
-    [Description("Senior")]
+    [Description("\ud83e\uddb8\u200d\u2642\ufe0f Senior")]
     Senior = 5,
 }
 
