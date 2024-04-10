@@ -3,7 +3,7 @@
     "Guard.Bot": {
       "commandName": "Project",
       "environmentVariables": {
-        "EvilApiUrl": "http://localhost:8081"
+        "EvalApiUrl": "http://localhost:8081"
       }
     },
     "Container (Dockerfile)": {

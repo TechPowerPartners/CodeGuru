@@ -13,7 +13,7 @@ internal class EvalCommands(IHttpClientFactory clientFactory) : BaseCommandModul
     [Command("eval")]
     public async Task ProcessEvalCommand(CommandContext context, [RemainingText] string input)
     {
-        var uri = Environment.GetEnvironmentVariable("EvilApiUrl");
+        var uri = Environment.GetEnvironmentVariable("EvalApiUrl");
 
         if (uri is null)
             throw new Exception("EvilApiUrl environment variable not provided");
