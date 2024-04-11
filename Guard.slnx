@@ -1,0 +1,16 @@
+<Solution>
+  <Folder Name="/Eval/">
+    <Project Path="Guard.EvalApi\Guard.EvalApi.csproj" />
+  </Folder>
+  <Folder Name="/Bot/">
+    <Project Path="Guard.Bot\Guard.Bot.csproj" />
+  </Folder>
+  <Folder Name="/Api/">
+    <Project Path="Guard.Api\Guard.Api.csproj" />
+    <Project Path="Guard.Domain\Guard.Domain.csproj" />
+  </Folder>
+  <Project Path="docker-compose.dcproj" Type="{E53339B2-1760-4266-BCC7-CA923CBCF16C}" />
+  <Project Path="Guard.Api.Contracts\Guard.Api.Contracts.csproj" />
+  <Project Path="Queue.Contracts\Queue.Contracts.csproj" />
+  <Project Path="Shared.Domain\Domain.Shared.csproj" />
+</Solution>
