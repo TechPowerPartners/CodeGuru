@@ -12,6 +12,7 @@ builder.Services.AddControllers().AddJsonOptions(opt =>
 
 builder.Services.Configure<RouteOptions>(options => options.LowercaseUrls = true);
 builder.Services.AddDbContext<ApplicationDbContext>();
+AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
 
 builder.Services.AddDateOnlyTimeOnlyStringConverters();
 builder.Services.ConfigureAuthentication();

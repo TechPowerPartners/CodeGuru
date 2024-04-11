@@ -9,7 +9,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
-namespace botovskixAPI.Migrations
+namespace Guard.Api.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
     partial class ApplicationDbContextModelSnapshot : ModelSnapshot
@@ -30,7 +30,7 @@ namespace botovskixAPI.Migrations
                         .HasColumnType("uuid");
 
                     b.Property<DateTime?>("ComlitionDate")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("Comment")
                         .HasColumnType("text");
@@ -46,14 +46,11 @@ namespace botovskixAPI.Migrations
 
                     b.ComplexProperty<Dictionary<string, object>>("Date", "Guard.Domain.Entities.Interview.Date#InterviewDate", b1 =>
                         {
-                            b1.Property<DateOnly>("Date")
-                                .HasColumnType("date");
+                            b1.Property<DateTime>("From")
+                                .HasColumnType("timestamp without time zone");
 
-                            b1.Property<TimeOnly>("FromTime")
-                                .HasColumnType("time without time zone");
-
-                            b1.Property<TimeOnly>("ToTime")
-                                .HasColumnType("time without time zone");
+                            b1.Property<DateTime>("To")
+                                .HasColumnType("timestamp without time zone");
                         });
 
                     b.ComplexProperty<Dictionary<string, object>>("Role", "Guard.Domain.Entities.Interview.Role#RoleEnhancement", b1 =>

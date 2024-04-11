@@ -9,8 +9,8 @@ public class GuildMemberEventsSubscriberModule : IDiscordGuildMemberAddedEventSu
     public async Task DiscordOnGuildMemberAdded(DiscordClient sender, GuildMemberAddEventArgs args)
     {
         var generalChannel = args.Guild.Channels.Values.FirstOrDefault(channel =>
-            channel.Name == ChannelNameConsts.General &&
-            channel.Type == ChannelType.Text);
+             channel.Name == ChannelNameConsts.General &&
+             channel.Type == ChannelType.Text);
 
         var message = $"""
             Добро пожаловать {args.Member.Mention} в наш уютный {args.Guild.Name}!

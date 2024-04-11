@@ -3,32 +3,32 @@ using Domain.Shared;
 namespace Guard.Api.Contracts.Interviews;
 
 /// <summary>
-/// Èíôîðìàöèÿ äëÿ ñîçäàíèÿ ñîáåñåäîâàíèÿ.
+/// Информация для создания собеседования.
 /// </summary>
 public class CreateInterviewRequest
 {
     /// <summary>
-    /// Âðåìÿ ïðîâåäåíèÿ - ñ.
+    /// С.
     /// </summary>
-    public DateTime FromTime { get; set; }
+    public DateTime FromDate { get; set; }
 
     /// <summary>
-    /// Âðåìÿ ïðîâåäåíèÿ - ïî.
+    /// По.
     /// </summary>
-    public DateTime ToTime { get; set; }
+    public DateTime ToDate { get; set; }
 
     /// <summary>
-    /// Ðîëü ñ êîòîðîé áóäåò ïîâûøåíèå.
+    /// С роли.
     /// </summary>
     public CareerRole FromRole { get; set; }
 
     /// <summary>
-    /// Ðîëü íà êîòîðóþ áóäåò ïîâûøåíèå.
+    /// На роль.
     /// </summary>
     public CareerRole ToRole { get; set; }
 
     /// <summary>
-    /// Èìÿ ñîáåñåäóåìîãî.
+    /// Имя собеседуемого.
     /// </summary>
-    public string IntervieweeName { get; set; }
+    public string IntervieweeName { get; set; } = string.Empty;
 }

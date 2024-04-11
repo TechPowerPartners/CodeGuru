@@ -20,14 +20,14 @@ public class InterviewController(ApplicationDbContext dbContext, IBus _bus) : Co
             request.IntervieweeName,
             request.FromRole,
             request.ToRole,
-            request.FromTime,
-            request.ToTime));
+            request.FromDate,
+            request.ToDate));
     }
 
     [HttpPost]
     public async Task<IActionResult> CreateInterview(CreateInterviewRequest request)
     {
-        var isDateFree = !await dbContext.Interviews.AnyAsync(i => i.Date.FromTime == request.FromTime);
+        var isDateFree = !await dbContext.Interviews.AnyAsync(i => i.Date.From == request.FromDate);
         if (!isDateFree) 
             return BadRequest("Дата занята");
 
@@ -35,7 +35,7 @@ public class InterviewController(ApplicationDbContext dbContext, IBus _bus) : Co
         if (interviewee is null) 
             return BadRequest("Собеседуемый не найден");
 
-        var interviewDate = InterviewDate.Create(request.FromTime, request.ToTime);
+        var interviewDate = InterviewDate.Create(request.FromDate, request.ToDate);
         var roleEnhancement = RoleEnhancement.Create(request.FromRole, request.ToRole);
         var interview = new Interview(Guid.NewGuid(), interviewDate, roleEnhancement, interviewee.Id);
 
@@ -46,8 +46,8 @@ public class InterviewController(ApplicationDbContext dbContext, IBus _bus) : Co
            request.IntervieweeName,
            request.FromRole,
            request.ToRole,
-           request.FromTime,
-           request.ToTime));
+           request.FromDate,
+           request.ToDate));
 
         return Ok();
     }
@@ -57,10 +57,10 @@ public class InterviewController(ApplicationDbContext dbContext, IBus _bus) : Co
     {
         var querry = (IQueryable<Interview>)dbContext.Interviews;
 
-        if (request.StartDate != null)
-            querry = querry.Where(i => i.Date.FromTime == request.StartDate.Value);
+        if (request.Date is not null)
+            querry = querry.Where(i => DateOnly.FromDateTime(i.Date.From) == request.Date.Value);
        
-        if (request.IntervieweeName != null) 
+        if (request.IntervieweeName is not null) 
             querry = querry.Where(i => i.Interviewee.Name == request.IntervieweeName);
 
         querry = querry.OrderBy(i => i.Date);

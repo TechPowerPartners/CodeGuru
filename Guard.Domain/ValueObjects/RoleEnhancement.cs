@@ -7,6 +7,12 @@ namespace Guard.Domain.ValueObjects;
 /// </summary>
 public readonly record struct RoleEnhancement
 {
+    public RoleEnhancement(CareerRole from, CareerRole to)
+    {
+        From = from;
+        To = to;
+    }
+
     public CareerRole From { get; init; }
     public CareerRole To { get; init; }
 
@@ -15,6 +21,6 @@ public readonly record struct RoleEnhancement
         if (!from.HasNext(to))
             throw new ArgumentException("Роли невалидны");
 
-        return new RoleEnhancement() { From = from, To = to };
+        return new RoleEnhancement(from, to);
     }
 }

@@ -5,21 +5,27 @@
 /// </summary>
 public readonly record struct InterviewDate
 {
+    private InterviewDate(DateTime from, DateTime to)
+    {
+        From = from;
+        To = to;
+    }
+
     /// <summary>
     /// С.
     /// </summary>
-    public DateTime FromTime { get; init; }
+    public DateTime From { get; init; }
 
     /// <summary>
     /// По.
     /// </summary>
-    public DateTime ToTime { get; init; }
+    public DateTime To { get; init; }
 
-    public static InterviewDate Create(DateTime fromTime, DateTime toTime)
+    public static InterviewDate Create(DateTime from, DateTime to)
     {
-        if (fromTime >= toTime)
+        if (from >= to)
             throw new ArgumentException("Невалидная дата собеседования");
 
-        return new InterviewDate() {FromTime = fromTime, ToTime = toTime };
+        return new InterviewDate(from, to);
     }
 }
