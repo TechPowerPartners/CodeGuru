@@ -5,10 +5,10 @@ using Microsoft.Extensions.DependencyInjection;
 namespace Guard.Bot.Integrations;
 internal static class Entry
 {
-    public static IServiceCollection ConfigureIntergrations(this IServiceCollection services, IConfiguration configuration)
-    {
-        services.ConfigureGuardApiIntergration(configuration);
+	public static IServiceCollection ConfigureIntergrations(this IServiceCollection services, IConfiguration configuration)
+	{
+		services.ConfigureGuardApiIntergration(configuration);
 
-        return services;
-    }
+		return services;
+	}
 }

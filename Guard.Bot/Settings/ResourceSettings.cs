@@ -1,5 +1,5 @@
 ﻿namespace Guard.Bot.Settings;
 internal class ResourceSettings
 {
-    public string IsmaJokesPath { get; set; }
+	public string IsmaJokesPath { get; set; }
 }

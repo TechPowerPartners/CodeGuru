@@ -9,34 +9,34 @@ using Queue.Contracts;
 namespace Guard.Bot.Queue.Consumers;
 
 internal class InterviewCreatedConsumer(
-    IDiscordClientService _discordClientService,
-    IOptions<DiscordServerSettings> _tppServerSettings) : IConsumeAsync<InterviewCreatedMessage>
+	IDiscordClientService _discordClientService,
+	IOptions<DiscordServerSettings> _tppServerSettings) : IConsumeAsync<InterviewCreatedMessage>
 {
-    public async Task ConsumeAsync(InterviewCreatedMessage message, CancellationToken cancellationToken = default)
-    {
-        var guild = await _discordClientService.Client.GetGuildAsync(_tppServerSettings.Value.Id);
+	public async Task ConsumeAsync(InterviewCreatedMessage message, CancellationToken cancellationToken = default)
+	{
+		var guild = await _discordClientService.Client.GetGuildAsync(_tppServerSettings.Value.Id);
 
-        var interviewModerationChannel = guild.Channels.Values.FirstOrDefault(c => c.Name == ChannelNameConsts.InterviewModeration);
+		var interviewModerationChannel = guild.Channels.Values.FirstOrDefault(c => c.Name == ChannelNameConsts.InterviewModeration);
 
-        var members = await guild.SearchMembersAsync(message.Name);
+		var members = await guild.SearchMembersAsync(message.Name);
 
-        var discordEmbedBuilder = new DiscordEmbedBuilder()
-            .AddField("Участник", members.First().DisplayName)
-            .AddField("Текущая роль", $"{message.FromRole}")
-            .AddField("Следующая роль", $"{message.ToRole}")
-            .AddField("Дата проведения", $"{message.FromTime:dd.MM.yyyy}. С {message.FromTime}. По {message.ToTime}")
-            .WithTitle("Создано новое собеседование")
-            .WithColor(DiscordColor.Orange);
+		var discordEmbedBuilder = new DiscordEmbedBuilder()
+			.AddField("Участник", members.First().DisplayName)
+			.AddField("Текущая роль", $"{message.FromRole}")
+			.AddField("Следующая роль", $"{message.ToRole}")
+			.AddField("Дата проведения", $"{message.FromTime:dd.MM.yyyy}. С {message.FromTime}. По {message.ToTime}")
+			.WithTitle("Создано новое собеседование")
+			.WithColor(DiscordColor.Orange);
 
-        List<DiscordComponent> firstRow = [
-            new DiscordButtonComponent(ButtonStyle.Success, "interview-created-accept", "Подтвердить"),
-            new DiscordButtonComponent(ButtonStyle.Danger, "interview-created-decline", "Отказать"),
-            ];
+		List<DiscordComponent> firstRow = [
+			new DiscordButtonComponent(ButtonStyle.Success, "interview-created-accept", "Подтвердить"),
+			new DiscordButtonComponent(ButtonStyle.Danger, "interview-created-decline", "Отказать"),
+			];
 
-        var messageBuilder = new DiscordMessageBuilder()
-            .AddComponents(firstRow)
-            .AddEmbed(discordEmbedBuilder);
+		var messageBuilder = new DiscordMessageBuilder()
+			.AddComponents(firstRow)
+			.AddEmbed(discordEmbedBuilder);
 
-        await interviewModerationChannel!.SendMessageAsync(messageBuilder);
-    }
+		await interviewModerationChannel!.SendMessageAsync(messageBuilder);
+	}
 }

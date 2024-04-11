@@ -2,6 +2,6 @@
 
 public class GetPostResponse
 {
-    public Guid Id { get; set; }
-    public string PostContent { get; set; }
+	public Guid Id { get; set; }
+	public string PostContent { get; set; }
 }

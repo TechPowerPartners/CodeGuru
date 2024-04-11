@@ -5,13 +5,13 @@
 /// </summary>
 public enum InterviewResultStatus
 {
-    /// <summary>
-    /// Сдано.
-    /// </summary>
-    Successfully = 1,
+	/// <summary>
+	/// Сдано.
+	/// </summary>
+	Successfully = 1,
 
-    /// <summary>
-    /// Не сдано.
-    /// </summary>
-    Failure = 2,
+	/// <summary>
+	/// Не сдано.
+	/// </summary>
+	Failure = 2,
 }

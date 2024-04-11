@@ -5,8 +5,8 @@
 /// </summary>
 internal class DiscordServerSettings
 {
-    /// <summary>
-    /// Идентификатор сервера.
-    /// </summary>
-    public ulong Id { get; set; }
+	/// <summary>
+	/// Идентификатор сервера.
+	/// </summary>
+	public ulong Id { get; set; }
 }

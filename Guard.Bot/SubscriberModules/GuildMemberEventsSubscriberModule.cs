@@ -6,13 +6,13 @@ namespace Guard.Bot.SubscriberModules;
 
 public class GuildMemberEventsSubscriberModule : IDiscordGuildMemberAddedEventSubscriber
 {
-    public async Task DiscordOnGuildMemberAdded(DiscordClient sender, GuildMemberAddEventArgs args)
-    {
-        var generalChannel = args.Guild.Channels.Values.FirstOrDefault(channel =>
-             channel.Name == ChannelNameConsts.General &&
-             channel.Type == ChannelType.Text);
+	public async Task DiscordOnGuildMemberAdded(DiscordClient sender, GuildMemberAddEventArgs args)
+	{
+		var generalChannel = args.Guild.Channels.Values.FirstOrDefault(channel =>
+			 channel.Name == ChannelNameConsts.General &&
+			 channel.Type == ChannelType.Text);
 
-        var message = $"""
+		var message = $"""
             Добро пожаловать {args.Member.Mention} в наш уютный {args.Guild.Name}!
             Меня зовут Исмаил и я буду твоим наставником.
             Я буду сопровождать тебя на всем пути становления настоящим разработчиком!
@@ -22,6 +22,6 @@ public class GuildMemberEventsSubscriberModule : IDiscordGuildMemberAddedEventSu
             А пока что, расскажи о себе. Какой у тебя опыт? Какую сферу разработки ты выбрал?
             """;
 
-        await generalChannel.SendMessageAsync(message);
-    }
+		await generalChannel.SendMessageAsync(message);
+	}
 }

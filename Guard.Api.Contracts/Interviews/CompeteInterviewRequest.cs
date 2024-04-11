@@ -7,13 +7,13 @@ namespace Guard.Api.Contracts.Interviews;
 /// </summary>
 public class CompeteInterviewRequest
 {
-    /// <summary>
-    /// Отзыв.
-    /// </summary>
-    public string? Review { get; set; }
+	/// <summary>
+	/// Отзыв.
+	/// </summary>
+	public string? Review { get; set; }
 
-    /// <summary>
-    /// Статус.
-    /// </summary>
-    public InterviewResultStatus Status { get; set; }
+	/// <summary>
+	/// Статус.
+	/// </summary>
+	public InterviewResultStatus Status { get; set; }
 }

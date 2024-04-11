@@ -7,7 +7,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers().AddJsonOptions(opt =>
 {
-    opt.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+	opt.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
 });
 
 builder.Services.Configure<RouteOptions>(options => options.LowercaseUrls = true);
@@ -22,7 +22,7 @@ builder.Services.AddEndpointsApiExplorer();
 
 builder.Services.RegisterEasyNetQ("host=rabbitmq;username=rabbitmq;password=rabbitmq", register =>
 {
-    register.EnableConsoleLogger();
+	register.EnableConsoleLogger();
 });
 
 var app = builder.Build();
