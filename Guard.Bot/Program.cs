@@ -1,15 +1,11 @@
 ﻿using DSharpPlus;
-using Guard.Bot.Commands;
+using Guard.Bot.Common.Settings;
+using Guard.Bot.DiscordApi;
 using Guard.Bot.Integrations;
-using Guard.Bot.Queue;
-using Guard.Bot.Settings;
-using Guard.Bot.SubscriberModules;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Nefarius.DSharpPlus.CommandsNext.Extensions.Hosting;
 using Nefarius.DSharpPlus.Extensions.Hosting;
-using Nefarius.DSharpPlus.SlashCommands.Extensions.Hosting;
 using System.Reflection;
 
 var builder = Host.CreateDefaultBuilder()
@@ -17,6 +13,7 @@ var builder = Host.CreateDefaultBuilder()
 	{
 		services.Configure<ResourceSettings>(hostContext.Configuration.GetSection(nameof(ResourceSettings)));
 		services.Configure<DiscordServerSettings>(hostContext.Configuration.GetSection(nameof(DiscordServerSettings)));
+
 		services.AddDiscord(config =>
 		{
 			config.Intents = DiscordIntents.All;
@@ -25,35 +22,10 @@ var builder = Host.CreateDefaultBuilder()
 			config.AutoReconnect = true;
 		});
 
-		services.AddDiscordGuildMemberAddedEventSubscriber<GuildMemberEventsSubscriberModule>();
-		services.AddDiscordComponentInteractionCreatedEventSubscriber<DiscordComponentInteractionCreatedEventSubscriber>();
-		services.AddDiscordModalSubmittedEventSubscriber<DiscordModalSubmittedEventSubscriber>();
-
-		services.AddDiscordCommandsNext(
-			options =>
-			{
-				options.StringPrefixes = [hostContext.Configuration.GetValue<string>("BotSettings:CommandPrefix")!];
-				options.EnableDms = false;
-				options.EnableMentionPrefix = true;
-				options.EnableDefaultHelp = false;
-			},
-			extension =>
-			{
-				extension.RegisterCommands<CoreCommands>();
-				extension.RegisterCommands<JokeCommands>();
-				extension.RegisterCommands<EvalCommands>();
-
-			});
-
-		services.AddDiscordSlashCommands(extension: extension =>
-		{
-
-		});
-
 		services.AddDiscordHostedService();
 
+		services.ConfigureDiscordApi(hostContext.Configuration);
 		services.ConfigureIntergrations(hostContext.Configuration);
-		services.ConfigureQueue(hostContext.Configuration);
 	});
 
 builder.ConfigureAppConfiguration(conf =>

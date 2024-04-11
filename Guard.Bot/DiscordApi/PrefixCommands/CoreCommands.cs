@@ -3,7 +3,7 @@ using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Entities;
 
-namespace Guard.Bot.Commands;
+namespace Guard.Bot.DiscordApi.PrefixCommands;
 
 internal class CoreCommands : BaseCommandModule
 {

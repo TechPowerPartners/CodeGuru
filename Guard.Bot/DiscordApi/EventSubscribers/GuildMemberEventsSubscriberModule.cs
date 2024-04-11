@@ -1,8 +1,9 @@
 ﻿using DSharpPlus;
 using DSharpPlus.EventArgs;
+using Guard.Bot.Common;
 using Nefarius.DSharpPlus.Extensions.Hosting.Events;
 
-namespace Guard.Bot.SubscriberModules;
+namespace Guard.Bot.DiscordApi.EventSubscribers;
 
 public class GuildMemberEventsSubscriberModule : IDiscordGuildMemberAddedEventSubscriber
 {

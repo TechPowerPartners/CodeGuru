@@ -1,11 +1,11 @@
 ﻿using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
+using Guard.Bot.Common.Settings;
 using Guard.Bot.Integrations.GuardApi;
-using Guard.Bot.Settings;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 
-namespace Guard.Bot.Commands;
+namespace Guard.Bot.DiscordApi.PrefixCommands;
 
 internal class JokeCommands(
 	IGuardApi _guardApi,

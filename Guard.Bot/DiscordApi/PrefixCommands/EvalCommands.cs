@@ -4,7 +4,7 @@ using DSharpPlus.Entities;
 using System.Net;
 using System.Net.Http.Json;
 
-namespace Guard.Bot.Commands;
+namespace Guard.Bot.DiscordApi.PrefixCommands;
 
 internal class EvalCommands(IHttpClientFactory clientFactory) : BaseCommandModule
 {

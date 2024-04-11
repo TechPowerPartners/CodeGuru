@@ -5,9 +5,9 @@ using Guard.Api.Contracts.Users;
 using Guard.Bot.Integrations.GuardApi;
 using Nefarius.DSharpPlus.Extensions.Hosting.Events;
 
-namespace Guard.Bot.SubscriberModules;
+namespace Guard.Bot.DiscordApi.EventSubscribers;
 
-internal class DiscordComponentInteractionCreatedEventSubscriber(IGuardApi _guardApi)
+internal class ComponentInteractionCreatedEventSubscriber(IGuardApi _guardApi)
    : IDiscordComponentInteractionCreatedEventSubscriber
 {
 	public async Task DiscordOnComponentInteractionCreated(DiscordClient sender,

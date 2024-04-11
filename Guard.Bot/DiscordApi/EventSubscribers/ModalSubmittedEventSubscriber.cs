@@ -3,14 +3,14 @@ using DSharpPlus;
 using DSharpPlus.Entities;
 using DSharpPlus.EventArgs;
 using Guard.Api.Contracts.Interviews;
+using Guard.Bot.Common.Settings;
 using Guard.Bot.Integrations.GuardApi;
-using Guard.Bot.Settings;
 using Microsoft.Extensions.Options;
 using Nefarius.DSharpPlus.Extensions.Hosting.Events;
 
-namespace Guard.Bot.SubscriberModules;
+namespace Guard.Bot.DiscordApi.EventSubscribers;
 
-internal class DiscordModalSubmittedEventSubscriber(
+internal class ModalSubmittedEventSubscriber(
    IGuardApi _guardApi,
    IOptions<DiscordServerSettings> _tppServerSettings) : IDiscordModalSubmittedEventSubscriber
 {
