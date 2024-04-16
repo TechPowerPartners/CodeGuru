@@ -71,12 +71,23 @@ public class InterviewController(ApplicationDbContext dbContext, IBus _bus) : Co
 	public async Task<IActionResult> Complete(Guid id, CompeteInterviewRequest request)
 	{
 		var interview = await dbContext.Interviews.FirstOrDefaultAsync(i => i.Id == id);
-
+		
 		if (interview is null)
 			return BadRequest("Такое собеседование не существует");
 
 		interview.Complete(request.Review, request.Status, DateTime.UtcNow);
 
+		dbContext.SaveChanges();
+		return Ok(interview);
+	}
+
+	[HttpPost("{id:guid}:cancel")]
+	public async Task<IActionResult> Cancel(Guid id,string message)
+	{
+		var interview = await dbContext.Interviews.FirstOrDefaultAsync(x => x.Id == id);
+		if (interview is null)
+			return BadRequest("Такое собеседование не существует");
+		interview.Cancel(message);
 		dbContext.SaveChanges();
 		return Ok(interview);
 	}
