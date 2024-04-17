@@ -11,7 +11,7 @@ Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-co
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Guard.Api.Contracts", "Guard.Api.Contracts\Guard.Api.Contracts.csproj", "{B25DF6D9-858E-4590-AD16-6F96A2937E3A}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Domain.Shared", "Shared.Domain\Domain.Shared.csproj", "{FBD6854B-7269-4281-A600-B684C8974A4F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Domain.Shared", "Domain.Shared\Domain.Shared.csproj", "{FBD6854B-7269-4281-A600-B684C8974A4F}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Queue.Contracts", "Queue.Contracts\Queue.Contracts.csproj", "{468AB383-E75B-4CC5-A9A3-685BA672E58B}"
 EndProject

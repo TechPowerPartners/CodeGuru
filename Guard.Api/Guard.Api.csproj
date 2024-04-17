@@ -42,7 +42,7 @@
     <ProjectReference Include="..\Guard.Api.Contracts\Guard.Api.Contracts.csproj" />
     <ProjectReference Include="..\Guard.Domain\Guard.Domain.csproj" />
     <ProjectReference Include="..\Queue.Contracts\Queue.Contracts.csproj" />
-    <ProjectReference Include="..\Shared.Domain\Domain.Shared.csproj" />
+    <ProjectReference Include="..\Domain.Shared\Domain.Shared.csproj" />
   </ItemGroup>
 
 </Project>
