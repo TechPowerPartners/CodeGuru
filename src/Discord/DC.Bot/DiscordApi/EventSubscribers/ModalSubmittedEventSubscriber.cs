@@ -1,6 +1,6 @@
 ﻿using Api.Contracts.Interviews;
 using DC.Bot.Common.Settings;
-using DC.Bot.Integrations.GuardApi;
+using DC.Bot.Integrations.BackendApi;
 using Domain.Shared;
 using DSharpPlus;
 using DSharpPlus.Entities;
@@ -11,7 +11,7 @@ using Nefarius.DSharpPlus.Extensions.Hosting.Events;
 namespace DC.Bot.DiscordApi.EventSubscribers;
 
 internal class ModalSubmittedEventSubscriber(
-   IGuardApi _guardApi,
+   IBackendApi _guardApi,
    IOptions<DiscordServerSettings> _tppServerSettings) : IDiscordModalSubmittedEventSubscriber
 {
 	public async Task DiscordOnModalSubmitted(DiscordClient sender, ModalSubmitEventArgs args)

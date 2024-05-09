@@ -11,7 +11,6 @@ using System.Reflection;
 var builder = Host.CreateDefaultBuilder()
 	.ConfigureServices((hostContext, services) =>
 	{
-		services.Configure<ResourceSettings>(hostContext.Configuration.GetSection(nameof(ResourceSettings)));
 		services.Configure<DiscordServerSettings>(hostContext.Configuration.GetSection(nameof(DiscordServerSettings)));
 
 		services.AddDiscord(config =>
@@ -31,7 +30,6 @@ var builder = Host.CreateDefaultBuilder()
 builder.ConfigureAppConfiguration(conf =>
 {
 	conf.AddJsonFile("appsettings.json", optional: false, true)
-		.AddJsonFile("appsettings.Secrets.json", optional: true, true)
 		.AddUserSecrets(Assembly.GetExecutingAssembly(), true)
 		.AddEnvironmentVariables();
 });

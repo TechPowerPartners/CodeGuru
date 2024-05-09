@@ -41,9 +41,6 @@
     <None Update="appsettings.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="appsettings.Secrets.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
     <None Update="Resources\isma-jokes.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

@@ -2,15 +2,12 @@
 using Api.Contracts.Users;
 using Refit;
 
-namespace DC.Bot.Integrations.GuardApi;
+namespace DC.Bot.Integrations.BackendApi;
 
-public interface IGuardApi
+public interface IBackendApi
 {
 	[Post("/users/registration")]
 	Task<IApiResponse> RegisterAsync(RegisterRequest request);
-
-	[Get("/posts/random")]
-	Task<IApiResponse<string>> GetRandomPostContentAsync();
 
 	[Post("/interview")]
 	Task<IApiResponse> CreateInterviewAsync(CreateInterviewRequest request);

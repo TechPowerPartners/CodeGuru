@@ -1,13 +1,13 @@
-﻿using DC.Bot.Integrations.GuardApi;
-using DSharpPlus;
+﻿using DSharpPlus;
 using DSharpPlus.Entities;
 using DSharpPlus.EventArgs;
 using Api.Contracts.Users;
 using Nefarius.DSharpPlus.Extensions.Hosting.Events;
+using DC.Bot.Integrations.BackendApi;
 
 namespace DC.Bot.DiscordApi.EventSubscribers;
 
-internal class ComponentInteractionCreatedEventSubscriber(IGuardApi _guardApi)
+internal class ComponentInteractionCreatedEventSubscriber(IBackendApi _guardApi)
    : IDiscordComponentInteractionCreatedEventSubscriber
 {
 	public async Task DiscordOnComponentInteractionCreated(DiscordClient sender,
