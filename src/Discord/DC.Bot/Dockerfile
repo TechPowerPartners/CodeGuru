@@ -7,10 +7,14 @@ WORKDIR /app
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
-COPY ["DC.Bot/DC.Bot.csproj", "DC.Bot/"]
-RUN dotnet restore "./DC.Bot/DC.Bot.csproj"
+COPY ["src/Discord/DC.Bot/DC.Bot.csproj", "src/Discord/DC.Bot/"]
+COPY ["src/Backend/Api.Contracts/Api.Contracts.csproj", "src/Backend/Api.Contracts/"]
+COPY ["src/Backend/Domain/Domain.csproj", "src/Backend/Domain/"]
+COPY ["src/Common/Domain.Shared/Domain.Shared.csproj", "src/Common/Domain.Shared/"]
+COPY ["src/Common/Queue.Contracts/Queue.Contracts.csproj", "src/Common/Queue.Contracts/"]
+RUN dotnet restore "./src/Discord/DC.Bot/DC.Bot.csproj"
 COPY . .
-WORKDIR "/src/DC.Bot"
+WORKDIR "/src/src/Discord/DC.Bot"
 RUN dotnet build "./DC.Bot.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
 FROM build AS publish

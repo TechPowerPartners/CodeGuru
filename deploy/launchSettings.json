@@ -5,7 +5,9 @@
       "commandVersion": "1.0",
       "serviceActions": {
         "api": "StartDebugging",
-        "discord-bot": "StartDebugging"
+        "dc.bot": "StartDebugging",
+        "eval.api": "StartDebugging",
+        "tg.bot": "StartDebugging"
       }
     }
   }
