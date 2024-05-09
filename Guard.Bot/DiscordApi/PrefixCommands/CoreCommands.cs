@@ -15,7 +15,7 @@ internal class CoreCommands : BaseCommandModule
 		   .WithDescription("Для того чтобы обращаться ко мне используй !guard <команда>")
 		   .WithColor(DiscordColor.Gold)
 		   .AddField("panel", "Панель управления")
-		   .AddField("help-channels", "Обзор сервера")
+		   .AddField("help-channels", "Обзор сервера");
 
 		await context.RespondAsync(builder);
 	}
