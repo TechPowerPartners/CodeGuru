@@ -16,7 +16,6 @@ internal class CoreCommands : BaseCommandModule
 		   .WithColor(DiscordColor.Gold)
 		   .AddField("panel", "Панель управления")
 		   .AddField("help-channels", "Обзор сервера")
-		   .AddField("joke", "Рандомная шутка");
 
 		await context.RespondAsync(builder);
 	}
