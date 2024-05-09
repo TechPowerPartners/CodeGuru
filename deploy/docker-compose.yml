@@ -21,6 +21,7 @@ services:
     depends_on:
       rabbitmq:
         condition: service_started
+    restart: always
     environment:
         - ApiUrl=http://api
         # - BotSettings__Token=TOKEN
