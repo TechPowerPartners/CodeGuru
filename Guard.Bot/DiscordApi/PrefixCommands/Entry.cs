@@ -18,7 +18,6 @@ internal static class Entry
 			extension =>
 			{
 				extension.RegisterCommands<CoreCommands>();
-				extension.RegisterCommands<JokeCommands>();
 				extension.RegisterCommands<EvalCommands>();
 
 			});
