@@ -1,0 +1,40 @@
+version: '3.4'
+
+services:
+  api:
+    container_name: api
+    image: ${DOCKER_REGISTRY-}api
+    build:
+      context: .
+      dockerfile: ../src/Backend/Api/Dockerfile
+      
+  discord-bot:
+    container_name: discord-bot
+    image: ${DOCKER_REGISTRY-}discord-bot
+    build:
+      context: .
+      dockerfile: ../src/Discord/DC.Bot/Dockerfile
+    environment:
+        - ApiUrl=http://api
+        # - BotSettings__Token=TOKEN
+        - EvalApiUrl=http://eval-api
+
+  eval-api:
+    container_name: eval-api      
+    image: ${DOCKER_REGISTRY-}eval-api    
+    restart: always
+    build:
+      context: .
+      dockerfile: ../src/Eval/Eval.Api/Dockerfile
+
+  rabbitmq:
+    container_name: rabbitmq
+    image: "rabbitmq:3-management"
+    hostname: "rabbitmq"
+    environment:
+      RABBITMQ_DEFAULT_USER: "rabbitmq"
+      RABBITMQ_DEFAULT_PASS: "rabbitmq"
+      RABBITMQ_DEFAULT_VHOST: "/"
+    ports:
+      - "15672:15672"
+      - "5672:5672"
