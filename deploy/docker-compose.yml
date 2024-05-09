@@ -4,6 +4,9 @@ services:
   api:
     container_name: api
     image: ${DOCKER_REGISTRY-}api
+    depends_on:
+      rabbitmq:
+        condition: service_started
     build:
       context: .
       dockerfile: ../src/Backend/Api/Dockerfile
@@ -14,6 +17,9 @@ services:
     build:
       context: .
       dockerfile: ../src/Discord/DC.Bot/Dockerfile
+    depends_on:
+      rabbitmq:
+        condition: service_started
     environment:
         - ApiUrl=http://api
         # - BotSettings__Token=TOKEN
