@@ -18,7 +18,7 @@ public class UsersController(ApplicationDbContext _context) : ControllerBase
 	{
 
 		var findUser = _context.Users.FirstOrDefault(u => u.Name == request.Name);
-		if (findUser == null)
+		if (findUser == null || findUser.Name == null)
 		{
 			var secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("ismailismailismailismailismailismailismail"));
 			var loginCredential = new SigningCredentials(secretKey, SecurityAlgorithms.HmacSha256);
