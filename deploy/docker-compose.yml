@@ -43,6 +43,7 @@ services:
     build:
       context: ..
       dockerfile: src/Telegram/TG.Bot/Dockerfile
+    restart: always
 
 
   rabbitmq:
