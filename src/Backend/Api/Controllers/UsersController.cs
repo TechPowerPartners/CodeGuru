@@ -16,21 +16,24 @@ public class UsersController(ApplicationDbContext _context) : ControllerBase
 	[HttpPost("login")]
 	public IActionResult Login(LoginRequest request)
 	{
+
 		var findUser = _context.Users.FirstOrDefault(u => u.Name == request.Name);
+		if (findUser == null)
+		{
+			var secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("ismailismailismailismailismailismailismail"));
+			var loginCredential = new SigningCredentials(secretKey, SecurityAlgorithms.HmacSha256);
 
-		var secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("ismailismailismailismailismailismailismail"));
-		var loginCredential = new SigningCredentials(secretKey, SecurityAlgorithms.HmacSha256);
+			var tokenOptions = new JwtSecurityToken(
+				issuer: "Swagger",
+				audience: "Sms",
+				claims: [],
+				expires: DateTime.Now.AddMinutes(60),
+				signingCredentials: loginCredential);
 
-		var tokenOptions = new JwtSecurityToken(
-			issuer: "Swagger",
-			audience: "Sms",
-			claims: [],
-			expires: DateTime.Now.AddMinutes(60),
-			signingCredentials: loginCredential);
-
-		var tokenString = new JwtSecurityTokenHandler().WriteToken(tokenOptions);
-
-		return Ok(tokenString);
+			var tokenString = new JwtSecurityTokenHandler().WriteToken(tokenOptions);
+            return Ok(tokenString);
+        }
+		return BadRequest("Не существует такого пользователя");
 	}
 
 	[HttpPost("registration")]
