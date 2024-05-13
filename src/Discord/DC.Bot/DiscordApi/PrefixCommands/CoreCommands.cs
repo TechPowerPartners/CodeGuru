@@ -12,7 +12,7 @@ internal class CoreCommands : BaseCommandModule
 	{
 		var builder = new DiscordEmbedBuilder()
 		   .WithTitle("Команды")
-		   .WithDescription("Для того чтобы обращаться ко мне используй !guard <команда>")
+		   .WithDescription("Для того чтобы обращаться ко мне используй !guru <команда>")
 		   .WithColor(DiscordColor.Gold)
 		   .AddField("panel", "Панель управления")
 		   .AddField("help-channels", "Обзор сервера");
