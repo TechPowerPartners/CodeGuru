@@ -2,6 +2,7 @@
 using Api.Core.Extensions;
 using Api.Persistence;
 using Domain.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -11,6 +12,8 @@ namespace Api.Controllers;
 [ApiController]
 public class VacanciesController(ApplicationDbContext dbContext) : ControllerBase
 {
+
+
     [HttpPost(":get")]
     public async Task<IActionResult> GetAsync(GetVacanciesRequest request)
     {
@@ -23,14 +26,13 @@ public class VacanciesController(ApplicationDbContext dbContext) : ControllerBas
             query = query.Where(v => v.Keywords.Any(k => request.Keywords.Contains(k.Value)));
 
         query = query.ApplyDateFilter(request.PublicationDate, v => v.PublicationDate);
-
         var vacancies = await query
             .WithPage(request.Page.Number, request.Page.Size)
             .ToListAsync();
 
         return Ok();
     }
-
+    [Authorize]
     [HttpPost]
     public async Task<IActionResult> CreateAsync(CreateVacancyRequest request)
     {
@@ -38,13 +40,40 @@ public class VacanciesController(ApplicationDbContext dbContext) : ControllerBas
             .Where(k => request.Keywords.Contains(k.Value))
             .ToListAsync();
 
+        var currentUser = User.Claims.FirstOrDefault(c => c.Type == "name").Value.ToString();
+        
+        var findLeadId = dbContext.Users.FirstOrDefault(k => k.Name == currentUser).Id;
         if (existingKeywords.Count != request.Keywords.Count)
             return BadRequest("Указаные не существующие ключевые слова");
 
-        var vacancy = new Vacancy(Guid.NewGuid(), request.Title, request.Description, request.LeaderId, existingKeywords);
+        var vacancy = new Vacancy
+        {
+            Title = request.Title,
+            Description = request.Description,
+            LeaderId = findLeadId,
+            PublicationDate = DateTime.Now,
+            Keywords = existingKeywords,
+            ClosingDate = request.ClosingDate
+        };
         await dbContext.AddAsync(vacancy);
         await dbContext.SaveChangesAsync();
 
         return Ok();
+    }
+
+    [HttpPost("addkeyword")]
+    public async Task<IActionResult> CreateKeyword(string keyword)
+    {
+        keyword = keyword.ToLower();
+        var exists = dbContext.VacancyKeywords.FirstOrDefault(k => k.Value == keyword);
+
+        if (exists == null)
+        {
+            dbContext.VacancyKeywords.Add(new VacancyKeyword(keyword));
+            await dbContext.SaveChangesAsync();
+            return Ok();
+        }
+
+        return BadRequest("Ключевое слово уже существует");
     }
 }

@@ -1,10 +1,13 @@
-﻿namespace Api.Contracts;
+﻿using System.Text.Json.Serialization;
+
+namespace Api.Contracts;
 
 /// <summary>
 /// Фильтр по дате
 /// </summary>
 public record DateFilterDto
 {
+    [JsonConstructor]
     public DateFilterDto(DateTime? from, DateTime? to)
     {
         From = from;

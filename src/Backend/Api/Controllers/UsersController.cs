@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
 using System.Text;
 
 namespace Api.Controllers;
@@ -25,7 +26,8 @@ public class UsersController(ApplicationDbContext _context) : ControllerBase
 			var tokenOptions = new JwtSecurityToken(
 				issuer: "Swagger",
 				audience: "Sms",
-				claims: [],
+				claims: [
+					new Claim(JwtRegisteredClaimNames.Name, findUser.Name)],
 				expires: DateTime.Now.AddMinutes(60),
 				signingCredentials: loginCredential);
 
