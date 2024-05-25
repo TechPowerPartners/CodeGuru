@@ -6,7 +6,7 @@ namespace Domain.Entities;
 /// <summary>
 /// Собеседование.
 /// </summary>
-public class Interview : IAggregateRoot
+public class Interview
 {
 	private Interview() { }
 
