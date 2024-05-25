@@ -9,7 +9,7 @@ public static class FilterExpresions
     {
         if (filter is null)
             return query;
-
+        
         if (filter.Target.HasValue)
         {
             var equalExpression = Expression.Equal(selector, Expression.Constant(filter.Target.Value.ToDateTime(TimeOnly.MinValue)));

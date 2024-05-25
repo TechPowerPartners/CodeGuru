@@ -3,14 +3,7 @@
 /// <summary>Вакансия.</summary>
 public class Vacancy
 {
-    public Vacancy(Guid id, string title, string description, Guid leaderId, ICollection<VacancyKeyword> keywords)
-    {
-        Id = id;
-        Title = title;
-        Description = description;
-        LeaderId = leaderId;
-        Keywords = keywords;
-    }
+    
 
     public Guid Id { get; set; }
 
@@ -28,6 +21,9 @@ public class Vacancy
 
     /// <summary>Дата публикации.</summary>
     public DateTime PublicationDate { get; set; }
+
+    /// <summary>Дата закрытие вакансии.</summary>
+    public DateTime ClosingDate { get; set; }
 
     /// <summary>Ключевые слова.</summary>
     public ICollection<VacancyKeyword> Keywords { get; set; }
