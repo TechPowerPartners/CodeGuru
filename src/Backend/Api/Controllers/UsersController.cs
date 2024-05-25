@@ -16,7 +16,6 @@ public class UsersController(ApplicationDbContext _context) : ControllerBase
 	[HttpPost("login")]
 	public IActionResult Login(LoginRequest request)
 	{
-
 		var findUser = _context.Users.FirstOrDefault(u => u.Name == request.Name);
 		if (findUser != null)
 		{
