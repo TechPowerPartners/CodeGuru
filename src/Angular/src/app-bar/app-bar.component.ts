@@ -1,12 +1,13 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import {TuiActiveZoneModule, tuiIsString, TuiPortalModule} from '@taiga-ui/cdk';
+import {TuiActiveZoneModule, tuiIsString} from '@taiga-ui/cdk';
 import {TuiDataListModule, TuiHostedDropdownModule, TuiSvgModule } from '@taiga-ui/core';
 import { TuiTabsModule } from '@taiga-ui/kit';
 
 @Component({
   selector: 'app-app-bar',
   standalone: true,
-  imports: [TuiTabsModule,TuiHostedDropdownModule,TuiSvgModule,TuiDataListModule, TuiActiveZoneModule, TuiHostedDropdownModule],
+  imports: [TuiTabsModule,TuiHostedDropdownModule,TuiSvgModule,
+    TuiDataListModule, TuiActiveZoneModule],
   templateUrl: './app-bar.component.html',
   styleUrl: './app-bar.component.less',
   changeDetection: ChangeDetectionStrategy.OnPush,
