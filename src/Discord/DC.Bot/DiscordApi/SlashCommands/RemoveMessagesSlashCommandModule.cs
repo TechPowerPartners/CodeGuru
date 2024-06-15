@@ -9,35 +9,35 @@ namespace DC.Bot.DiscordApi.SlashCommands;
 /// </summary>
 public class RemoveMessagesSlashCommandModule : ApplicationCommandModule
 {
-	private const string Prefix = "remove-messages-";
+    private const string Prefix = "remove-messages-";
     private const int NumberOfDeletedMessages = 15;
 
     /// <summary>
     /// Удаляет сообщения которые были отправлены после указанной даты и времени
     /// </summary>
     [SlashCommand(Prefix + "after", "Удалить все сообщения после указанного времени")]
-	public async Task RemoveMessagesAfter(
-		InteractionContext ctx,
-		[Option("date", "Дата (ДД.ММ.ГГГГ)")] string dateString,
+    public async Task RemoveMessagesAfter(
+        InteractionContext ctx,
+        [Option("date", "Дата (ДД.ММ.ГГГГ)")] string dateString,
         [Option("time", "Время (ЧЧ:ММ:СС)")] TimeSpan? time)
-	{
+    {
         if (!CheckAccess(ctx))
             return;
 
         var isValidDate = DateTime.TryParseExact(dateString, "dd.MM.yyyy", provider: null, DateTimeStyles.None, out var date);
 
-		if (!isValidDate || !time.HasValue)
+        if (!isValidDate || !time.HasValue)
             return;
 
-		var afterDateTime = date.Add(time.Value);
-		var messages = ctx.Channel.GetMessagesAsync(limit: NumberOfDeletedMessages);
+        var afterDateTime = date.Add(time.Value);
+        var messages = ctx.Channel.GetMessagesAsync(limit: NumberOfDeletedMessages);
 
         List<DiscordMessage> messagesToDelete = [];
-        await foreach(var message in messages)
-			if(message.Timestamp > afterDateTime)
+        await foreach (var message in messages)
+            if (message.Timestamp > afterDateTime)
                 messagesToDelete.Add(message);
 
-        if(messagesToDelete.Count != 0)
+        if (messagesToDelete.Count != 0)
             await ctx.Channel.DeleteMessagesAsync(messagesToDelete);
 
         await Complete(ctx);
