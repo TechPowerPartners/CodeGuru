@@ -9,7 +9,7 @@ internal static class Entry
 	{
 		services.AddDiscordSlashCommands(extension: extension =>
 		{
-
+			extension!.RegisterCommands<RemoveMessagesSlashCommandModule>();
 		});
 
 		return services;
