@@ -7,7 +7,7 @@ using Telegram.Bot.Polling;
 using Telegram.Bot.Types;
 using Telegram.Bot.Types.Enums;
 
-var botClient = new TelegramBotClient("");
+var botClient = new TelegramBotClient("6562055962:AAF-jv3AGBLqYs-LGAXDH7afjaZnrQSj26c");
 
 using CancellationTokenSource cts = new();
 Dictionary<string, string> questions = new Dictionary<string, string>
