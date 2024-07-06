@@ -4,11 +4,9 @@ import { Component, EventEmitter, Output } from '@angular/core';
   selector: 'app-child',
   standalone: true,
   imports: [],
-  template: `
-    <button class="btn" (click)="addItem()">Add Item</button>
-  `,
+  templateUrl: './child.component.html',
   styleUrl: './child.component.scss'
 })
 export class ChildComponent {
-  addItem() {}
+  
 }
