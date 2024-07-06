@@ -1,4 +1,4 @@
-﻿namespace Api.Contracts.Tests;
+﻿namespace Api.Contracts.Tests.Requests;
 
 public class GetTestRequest
 {

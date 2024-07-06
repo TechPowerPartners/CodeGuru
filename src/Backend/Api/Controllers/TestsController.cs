@@ -1,4 +1,4 @@
-﻿using Api.Contracts.Tests;
+﻿using Api.Contracts.Tests.Requests;
 using Api.Persistence;
 using Domain.Entities;
 using Microsoft.AspNetCore.Mvc;

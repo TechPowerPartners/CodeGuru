@@ -1,4 +1,4 @@
-﻿namespace Api.Contracts.Tests;
+﻿namespace Api.Contracts.Tests.Dto;
 
 public class AnswerDto
 {

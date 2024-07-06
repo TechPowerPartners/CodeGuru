@@ -1,4 +1,4 @@
-﻿namespace Api.Contracts.Tests;
+﻿namespace Api.Contracts.Tests.Dto;
 
 public class QuestionDto
 {
@@ -6,5 +6,5 @@ public class QuestionDto
     public int NumberOfPoints { get; set; }
     public int DifficultyLevel { get; set; }
     public ICollection<Guid>? FileIds { get; set; }
-    public ICollection<AnswerDto> PossibleAnswers { get; set; } = default!;
+    public ICollection<AnswerDto> Answers { get; set; } = default!;
 }

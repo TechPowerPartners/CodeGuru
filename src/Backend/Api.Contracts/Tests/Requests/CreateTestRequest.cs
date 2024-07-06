@@ -1,6 +1,8 @@
-﻿namespace Api.Contracts.Tests;
+﻿using Api.Contracts.Tests.Dto;
 
-public class TestDto
+namespace Api.Contracts.Tests.Requests;
+
+public class CreateTestRequest
 {
     public string Name { get; set; } = default!;
     public string? Description { get; set; }

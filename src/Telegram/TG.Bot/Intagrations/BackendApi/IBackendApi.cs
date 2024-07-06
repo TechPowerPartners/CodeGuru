@@ -1,4 +1,5 @@
-﻿using Api.Contracts.Tests;
+﻿using Api.Contracts.Tests.Dto;
+using Api.Contracts.Tests.Requests;
 using Api.Contracts.Users;
 using Refit;
 
