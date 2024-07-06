@@ -1,7 +1,7 @@
 ﻿namespace Domain.Entities;
 
 /// <summary> Файл для вопроса </summary>
-public class FileForQuestion
+public class QuestionFiles
 {
     /// <summary> Идентификатор файла </summary>
     public Guid Id { get; set; }

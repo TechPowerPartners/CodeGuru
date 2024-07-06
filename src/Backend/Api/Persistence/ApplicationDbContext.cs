@@ -20,8 +20,8 @@ public class ApplicationDbContext : DbContext
 	public DbSet<Candidate> Candidates { get; set; }
     public DbSet<Test> Tests { get; set; }
     public DbSet<Question> Questions { get; set; }
-    public DbSet<FileForQuestion> FileForQuestions { get; set; }
     public DbSet<Answer> Answers { get; set; }
+    public DbSet<QuestionFiles> QuestionFiles { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 	{

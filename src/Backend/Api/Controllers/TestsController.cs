@@ -19,7 +19,7 @@ public class TestsController(ApplicationDbContext _context) : ControllerBase
             {
                 Text = question.Text,
                 DifficultyLevel = question.DifficultyLevel,
-                Answers = question.PossibleAnswers
+                Answers = question.Answers
                     .Select(answer => new Answer()
                     {
                         Text = answer.Text,

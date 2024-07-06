@@ -19,7 +19,7 @@ public class Question
     public Guid TestId { get; set; }
 
     /// <summary> Файлы вопроса </summary>
-    public ICollection<FileForQuestion>? Files { get; set; }
+    public ICollection<QuestionFiles>? Files { get; set; }
 
     /// <summary> Вырианты ответов </summary>
     public ICollection<Answer> Answers { get; set; } = default!;
