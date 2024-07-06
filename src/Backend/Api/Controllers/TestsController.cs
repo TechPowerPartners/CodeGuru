@@ -14,12 +14,25 @@ public class TestsController(ApplicationDbContext _context) : ControllerBase
     [HttpPost("create")]
     public async Task<IActionResult> CreateAsync(CreateTestRequest request)
     {
+        var questions = request.Questions
+            .Select(question => new Question()
+            {
+                Text = question.Text,
+                DifficultyLevel = question.DifficultyLevel,
+                PossibleAnswers = question.PossibleAnswers
+                    .Select(answer => new PossibleAnswer()
+                    {
+                        Text = answer.Text,
+                        IsCorreсt = answer.IsCorreсt
+                    }).ToList(),
+            }).ToList();
+
         var test = new Test()
         {
             Name = request.Name,
             Description = request.Description,
             TravelTime = request.TravelTime,
-            Questions = request.Questions,
+            Questions = questions,
         };
         await _context.AddAsync(test);
         await _context.SaveChangesAsync();
@@ -29,7 +42,7 @@ public class TestsController(ApplicationDbContext _context) : ControllerBase
 
     [HttpPost("get")]
     public async Task<IActionResult> GetAsync(GetTestRequest request)
-        => Ok(await _context.Tests.Where(t => t.Name == request.Name).ToListAsync());
+        => Ok(await _context.Tests.Where(t => t.Id == request.Id).ToListAsync());
 
     [HttpPost("all")]
     public async Task<IActionResult> GetAllAsync()

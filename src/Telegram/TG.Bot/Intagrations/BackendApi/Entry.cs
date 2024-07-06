@@ -6,7 +6,7 @@ namespace TG.Bot.Intagrations.BackendApi;
 
 internal static class Entry
 {
-    public static IServiceCollection ConfigureGuardApiIntergration(this IServiceCollection services, IConfiguration configuration)
+    public static IServiceCollection ConfigureApiIntergration(this IServiceCollection services, IConfiguration configuration)
     {
         services
             .AddRefitClient<IBackendApi>()

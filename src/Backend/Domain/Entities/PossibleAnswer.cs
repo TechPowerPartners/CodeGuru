@@ -1,27 +1,17 @@
 ﻿namespace Domain.Entities;
 
-/// <summary>
-/// Вариант ответа на вопрос
-/// </summary>
+/// <summary> Вариант ответа на вопрос </summary>
 public class PossibleAnswer
 {
-    /// <summary>
-    /// Идентификатор ответа на вопрос
-    /// </summary>
+    /// <summary> Идентификатор ответа на вопрос </summary>
     public Guid Id { get; set; }
 
-    /// <summary>
-    /// Текст ответа
-    /// </summary>
+    /// <summary> Текст ответа </summary>
     public string Text { get; set; } = default!;
 
-    /// <summary>
-    /// Является ли ответ правильным на вопрос
-    /// </summary>
+    /// <summary> Является ли ответ правильным на вопрос </summary>
     public bool IsCorreсt { get; set; }
 
-    /// <summary>
-    /// Идентификатор вопроса
-    /// </summary>
+    /// <summary> Идентификатор вопроса </summary>
     public Guid QuestionId { get; set; }
 }

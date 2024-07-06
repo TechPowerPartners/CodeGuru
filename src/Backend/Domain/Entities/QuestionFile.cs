@@ -5,18 +5,12 @@
 /// </summary>
 public class QuestionFile
 {
-    /// <summary>
-    /// Идентификатор
-    /// </summary>
+    /// <summary> Идентификатор </summary>
     public Guid Id { get; set; }
 
-    /// <summary>
-    /// Идентификатор вопроса
-    /// </summary>
+    /// <summary> Идентификатор вопроса </summary>
     public Guid QuestionId { get; set; }
 
-    /// <summary>
-    /// Идентификатор файла
-    /// </summary>
+    /// <summary> Идентификатор файла </summary>
     public Guid FileId { get; set; }
 }

@@ -1,42 +1,26 @@
 ﻿namespace Domain.Entities;
 
-/// <summary>
-/// Вопрос
-/// </summary>
+/// <summary> Вопрос </summary>
 public class Question
 {
-    /// <summary>
-    /// Идентификатор вопроса
-    /// </summary>
+    /// <summary> Идентификатор вопроса </summary>
     public Guid Id { get; set; }
 
-    /// <summary>
-    /// Текст вопроса на который нужно ответить
-    /// </summary>
+    /// <summary> Текст вопроса на который нужно ответить </summary>
     public string Text { get; set; } = default!;
 
-    /// <summary>
-    /// Количество баллов за правильный ответ на вопрос
-    /// </summary>
+    /// <summary> Количество баллов за правильный ответ на вопрос </summary>
     public int NumberOfPoints { get; set; }
 
-    /// <summary>
-    /// Уровень сложности вопроса
-    /// </summary>
+    /// <summary> Уровень сложности вопроса </summary>
     public int DifficultyLevel { get; set; }
 
-    /// <summary>
-    /// Идентификатор теста
-    /// </summary>
+    /// <summary> Идентификатор теста </summary>
     public Guid TestId { get; set; }
 
-    /// <summary>
-    /// Файлы вопроса
-    /// </summary>
+    /// <summary> Файлы вопроса </summary>
     public ICollection<FileForQuestion>? Files { get; set; }
 
-    /// <summary>
-    /// Вырианты ответов
-    /// </summary>
+    /// <summary> Вырианты ответов </summary>
     public ICollection<PossibleAnswer> PossibleAnswers { get; set; } = default!;
 }

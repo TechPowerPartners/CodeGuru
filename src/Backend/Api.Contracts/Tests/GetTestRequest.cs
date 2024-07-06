@@ -2,5 +2,5 @@
 
 public class GetTestRequest
 {
-    public string Name { get; set; } = default!;
+    public Guid Id { get; set; } = default!;
 }
