@@ -22,5 +22,5 @@ public class Question
     public ICollection<FileForQuestion>? Files { get; set; }
 
     /// <summary> Вырианты ответов </summary>
-    public ICollection<PossibleAnswer> PossibleAnswers { get; set; } = default!;
+    public ICollection<Answer> Answers { get; set; } = default!;
 }

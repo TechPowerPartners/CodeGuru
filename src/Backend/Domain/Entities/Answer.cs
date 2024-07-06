@@ -1,7 +1,7 @@
 ﻿namespace Domain.Entities;
 
 /// <summary> Вариант ответа на вопрос </summary>
-public class PossibleAnswer
+public class Answer
 {
     /// <summary> Идентификатор ответа на вопрос </summary>
     public Guid Id { get; set; }

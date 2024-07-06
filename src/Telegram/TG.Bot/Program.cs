@@ -3,8 +3,6 @@ using Telegram.Bot;
 using TelegramBotDependencyInjection.Contracts;
 using TelegramBotDependencyInjection;
 using TG.Bot.TelegramApi;
-using System;
-using TG.Bot.Intagrations.BackendApi;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Configuration;
 using System.Reflection;

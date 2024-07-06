@@ -21,7 +21,7 @@ public class ApplicationDbContext : DbContext
     public DbSet<Test> Tests { get; set; }
     public DbSet<Question> Questions { get; set; }
     public DbSet<FileForQuestion> FileForQuestions { get; set; }
-    public DbSet<PossibleAnswer> PossibleAnswers { get; set; }
+    public DbSet<Answer> Answers { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 	{
