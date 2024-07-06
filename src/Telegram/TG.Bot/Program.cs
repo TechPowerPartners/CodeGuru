@@ -11,9 +11,11 @@ using TG.Bot.Intagrations;
 var builder = Host.CreateDefaultBuilder()
     .ConfigureServices((hostContext, services) =>
     {
+        var token = hostContext.Configuration.GetValue<string>("BotSettings:Token")!;
+
         services
             .AddSingleton<ITelegramBotClient, TelegramBotClient>(x => new TelegramBotClient(
-                token: hostContext.Configuration.GetValue<string>("BotSettings:Token")!))
+                token: token))
             .AddSingleton<BotService>()
             .AddTransient<IBotController, MainHandler>();
 

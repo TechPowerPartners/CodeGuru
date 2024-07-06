@@ -12,8 +12,6 @@ namespace Api.Controllers;
 [ApiController]
 public class VacanciesController(ApplicationDbContext dbContext) : ControllerBase
 {
-
-
     [HttpPost(":get")]
     public async Task<IActionResult> GetAsync(GetVacanciesRequest request)
     {

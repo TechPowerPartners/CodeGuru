@@ -1,10 +1,10 @@
 ﻿namespace Api.Contracts.Tests.Dto;
 
-public class QuestionDto
+public class GetQuestionDto
 {
+    public Guid Id { get; set; }
     public string Text { get; set; } = default!;
     public int NumberOfPoints { get; set; }
     public int DifficultyLevel { get; set; }
-    public ICollection<Guid>? FileIds { get; set; }
-    public ICollection<AnswerDto> Answers { get; set; } = default!;
+    public ICollection<GetAnswerDto> Answers { get; set; } = default!;
 }

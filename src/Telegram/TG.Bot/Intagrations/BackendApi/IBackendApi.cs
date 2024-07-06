@@ -11,8 +11,8 @@ internal interface IBackendApi
     Task<IApiResponse> RegisterAsync(RegisterRequest request);
 
     [Post("/tests/get")]
-    Task<IApiResponse<TestDto>> GetTestAsync(GetTestRequest request);
+    Task<IApiResponse<GetTestDto>> GetTestAsync(Guid id);
 
-    [Post("/tests/all")]
-    Task<IApiResponse<IEnumerable<TestDto>>> GetAllTestsAsync();
+    [Post("/tests/gettestids")]
+    Task<IApiResponse<ICollection<Guid>>> GetTestIdsAsync();
 }
