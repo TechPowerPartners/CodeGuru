@@ -92,4 +92,27 @@ public class TestsController(ApplicationDbContext _context) : ControllerBase
 
         return Ok();
     }
+    /// <summary>
+    /// Тоже самое
+    /// </summary>
+    /// <returns></returns>
+    [HttpGet("GetLanguagesList")]
+    public async Task<IActionResult> GetLanguages()
+    {
+        return Ok(await _context.Tests.Select(t => t.Name).ToListAsync());
+    }
+
+    /// <summary>
+    /// Пример для будущего рефакторинга можно удалять к х*ям собачьим
+    /// </summary>
+    /// <param name="Name"></param>
+    /// <returns></returns>
+    [HttpPost("getrand")]
+    public async Task<IActionResult> GetRandomQuestion(string Name)
+    {
+        Random rand = new();
+        int toSkip = rand.Next(0, _context.Tests.Count());
+        return Ok(_context.Tests.Skip(toSkip).Take(1).First());
+    }
+
 }
