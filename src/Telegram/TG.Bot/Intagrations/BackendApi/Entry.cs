@@ -6,7 +6,7 @@ namespace TG.Bot.Intagrations.BackendApi;
 
 internal static class Entry
 {
-    public static IServiceCollection ConfigureApiIntergration(this IServiceCollection services, IConfiguration configuration)
+    public static IServiceCollection ConfigureBackendApiIntergration(this IServiceCollection services, IConfiguration configuration)
     {
         services
             .AddRefitClient<IBackendApi>()
@@ -14,7 +14,6 @@ internal static class Entry
             {
                 client.BaseAddress = new(configuration.GetValue<string>("ApiUrl")!);
             });
-
         return services;
     }
 }

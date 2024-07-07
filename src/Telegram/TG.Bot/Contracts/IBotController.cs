@@ -1,11 +1,10 @@
-﻿using Telegram.Bot;
-using Telegram.Bot.Types;
-using Telegram.Bot.Types.Enums;
+﻿using Telegram.Bot.Types.Enums;
+using TG.Bot.Common;
 
-namespace TelegramBotDependencyInjection.Contracts;
+namespace TG.Bot.Contracts;
 
 internal interface IBotController
 {
-    Task HandleUpdateAsync(ITelegramBotClient botClient, Update update, CancellationToken cancellationToken);
+    Task HandleUpdateAsync(TelegramContext context);
     List<UpdateType> UpdateTypes { get; }
 }
