@@ -1,62 +1,8 @@
-<div
-    tuiMode="onDark"
-    class="wrapper"
->
-    <h1 class="tui-text_h3 title">CodeGuru</h1>
-    <tui-tabs-with-more
-        class="tabs"
-        [activeItemIndex]="activeItemIndex"
-        [moreContent]="more"
-    >
-        <ng-container *ngFor="let tab of tabs">
-            
-            <ng-container *ngIf="isString(tab); else submenu">
-                <button
-                    *tuiItem
-                    tuiTab
-                    (click)="onClick(tab)"
-                >
-                    {{ tab }}
-                </button>
-            </ng-container>
-            <ng-template #submenu>
-                <tui-hosted-dropdown
-                    *tuiItem
-                    #hosted
-                    [content]="dropdown"
-                >
-                    <button
-                        tuiTab
-                        (tui-tab-activate)="stop($event)"
-                    >
-                        Collaborators
-                        <tui-svg
-                            src="tuiIconChevronDown"
-                            class="icon"
-                            [class.icon_rotated]="hosted.open"
-                        ></tui-svg>
-                    </button>
-                </tui-hosted-dropdown>
-            </ng-template>
-        </ng-container>
-    </tui-tabs-with-more>
+<div tuiMode="onDark" class="wrapper">
+  <h1 class="title"><a href="">CodeGuru</a></h1>
+  <div class="wrapper__nav">
+    <a routerLink="articles">Статьи</a>
+    <a routerLink="training">Обучение</a>
+    <a routerLink="vacancies">Вакансии</a>
+  </div>
 </div>
-<section class="content">Currently active: {{ activeElement }}</section>
-<ng-template
-    #dropdown
-    let-activeZone
-    let-close="close"
->
-    <tui-data-list [tuiActiveZoneParent]="activeZone">
-        <button
-            *ngFor="let collaborator of collaborators"
-            tuiOption
-            (click)="onClick(collaborator); close()"
-        >
-            {{ collaborator }}
-        </button>
-    </tui-data-list>
-</ng-template>
-<ng-template #more>
-    <tui-svg src="tuiIconMoreHorizontalLarge"></tui-svg>
-</ng-template>

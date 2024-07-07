@@ -2,16 +2,34 @@
 
 :host {
     display: block;
-    margin: -2rem;
-    background: #454e58;
+    background: #915ada;
     color: #fff;
+    & a {
+        text-decoration: none;
+        color: #fff;
+    }
 }
 
 .wrapper {
-    .inset-border(bottom, light);
     display: flex;
+    justify-content: space-between;
     align-items: center;
-    padding: 2rem 2rem 0;
+    padding: 2rem 4rem;
+    &__nav {
+        a {
+            margin-right: 2rem;
+            text-decoration: none;
+            color: #fff;
+            font-size: 1.5rem;
+            cursor: pointer;
+            &:hover {
+                text-decoration: underline;
+            }
+            &:last-child {
+                margin-right: 0;
+            }
+        }
+    }
 }
 
 .content {
@@ -21,6 +39,7 @@
 .title {
     min-width: 15.625rem;
     margin: 0;
+    font-size: 3rem;
 }
 
 .tabs {
