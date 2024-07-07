@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Api.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -12,9 +13,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Guard.Api.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240706164745_RenamedTableAnswers")]
+    partial class RenamedTableAnswers
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -67,6 +70,26 @@ namespace Guard.Api.Migrations
                     b.HasIndex("VacancyId1");
 
                     b.ToTable("Candidates");
+                });
+
+            modelBuilder.Entity("Domain.Entities.FileForQuestion", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Path")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<Guid?>("QuestionId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("QuestionId");
+
+                    b.ToTable("FileForQuestions");
                 });
 
             modelBuilder.Entity("Domain.Entities.Interview", b =>
@@ -139,26 +162,6 @@ namespace Guard.Api.Migrations
                     b.HasIndex("TestId");
 
                     b.ToTable("Questions");
-                });
-
-            modelBuilder.Entity("Domain.Entities.QuestionFiles", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
-
-                    b.Property<string>("Path")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<Guid?>("QuestionId")
-                        .HasColumnType("uuid");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("QuestionId");
-
-                    b.ToTable("QuestionFiles");
                 });
 
             modelBuilder.Entity("Domain.Entities.Test", b =>
@@ -288,6 +291,13 @@ namespace Guard.Api.Migrations
                     b.Navigation("Vacancy");
                 });
 
+            modelBuilder.Entity("Domain.Entities.FileForQuestion", b =>
+                {
+                    b.HasOne("Domain.Entities.Question", null)
+                        .WithMany("Files")
+                        .HasForeignKey("QuestionId");
+                });
+
             modelBuilder.Entity("Domain.Entities.Interview", b =>
                 {
                     b.HasOne("Domain.Entities.User", "Interviewee")
@@ -306,13 +316,6 @@ namespace Guard.Api.Migrations
                         .HasForeignKey("TestId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("Domain.Entities.QuestionFiles", b =>
-                {
-                    b.HasOne("Domain.Entities.Question", null)
-                        .WithMany("Files")
-                        .HasForeignKey("QuestionId");
                 });
 
             modelBuilder.Entity("Domain.Entities.Vacancy", b =>
