@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Api.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -12,9 +13,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Guard.Api.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240707123802_AddedArticleEntity_1")]
+    partial class AddedArticleEntity_1
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -43,7 +46,7 @@ namespace Guard.Api.Migrations
 
                     b.HasIndex("QuestionId");
 
-                    b.ToTable("Answers", (string)null);
+                    b.ToTable("Answers");
                 });
 
             modelBuilder.Entity("Domain.Entities.Articles", b =>
@@ -68,7 +71,7 @@ namespace Guard.Api.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Articles", (string)null);
+                    b.ToTable("Articles");
                 });
 
             modelBuilder.Entity("Domain.Entities.Candidate", b =>
@@ -91,7 +94,7 @@ namespace Guard.Api.Migrations
 
                     b.HasIndex("VacancyId1");
 
-                    b.ToTable("Candidates", (string)null);
+                    b.ToTable("Candidates");
                 });
 
             modelBuilder.Entity("Domain.Entities.Interview", b =>
@@ -137,7 +140,7 @@ namespace Guard.Api.Migrations
 
                     b.HasIndex("IntervieweeId");
 
-                    b.ToTable("Interviews", (string)null);
+                    b.ToTable("Interviews");
                 });
 
             modelBuilder.Entity("Domain.Entities.Question", b =>
@@ -163,7 +166,7 @@ namespace Guard.Api.Migrations
 
                     b.HasIndex("TestId");
 
-                    b.ToTable("Questions", (string)null);
+                    b.ToTable("Questions");
                 });
 
             modelBuilder.Entity("Domain.Entities.QuestionFiles", b =>
@@ -183,7 +186,7 @@ namespace Guard.Api.Migrations
 
                     b.HasIndex("QuestionId");
 
-                    b.ToTable("QuestionFiles", (string)null);
+                    b.ToTable("QuestionFiles");
                 });
 
             modelBuilder.Entity("Domain.Entities.Test", b =>
@@ -204,7 +207,7 @@ namespace Guard.Api.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Tests", (string)null);
+                    b.ToTable("Tests");
                 });
 
             modelBuilder.Entity("Domain.Entities.User", b =>
@@ -223,7 +226,7 @@ namespace Guard.Api.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Users", (string)null);
+                    b.ToTable("Users");
                 });
 
             modelBuilder.Entity("Domain.Entities.Vacancy", b =>
@@ -253,7 +256,7 @@ namespace Guard.Api.Migrations
 
                     b.HasIndex("LeaderId");
 
-                    b.ToTable("Vacancies", (string)null);
+                    b.ToTable("Vacancies");
                 });
 
             modelBuilder.Entity("Domain.Entities.VacancyKeyword", b =>
@@ -263,7 +266,7 @@ namespace Guard.Api.Migrations
 
                     b.HasKey("Value");
 
-                    b.ToTable("VacancyKeywords", (string)null);
+                    b.ToTable("VacancyKeywords");
                 });
 
             modelBuilder.Entity("VacancyVacancyKeyword", b =>
@@ -278,7 +281,7 @@ namespace Guard.Api.Migrations
 
                     b.HasIndex("VacancyId");
 
-                    b.ToTable("VacancyVacancyKeyword", (string)null);
+                    b.ToTable("VacancyVacancyKeyword");
                 });
 
             modelBuilder.Entity("Domain.Entities.Answer", b =>
