@@ -8,7 +8,7 @@ internal static class Entry
 {
     public static IServiceCollection ConfigureIntergrations(this IServiceCollection services, IConfiguration configuration)
     {
-        services.ConfigureApiIntergration(configuration);
+        services.ConfigureBackendApiIntergration(configuration);
 
         return services;
     }
