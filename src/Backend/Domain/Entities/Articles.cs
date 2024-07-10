@@ -26,7 +26,7 @@
         /// <summary>
         /// Создатель
         /// </summary>
-        //public User Creator { get; set; }
+        public string Creator { get; set; }
         
         public void EditedAt(DateTime date)
         {

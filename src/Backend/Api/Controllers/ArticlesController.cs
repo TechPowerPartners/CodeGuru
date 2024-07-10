@@ -31,7 +31,7 @@ namespace Api.Controllers
                 {
                     Title = request.Title,
                     Text = request.Text,
-                    //Creator = findCreator
+                    Creator = findCreator.Name
                 });
                 _context.SaveChanges();
                 return Ok("Статья создана");

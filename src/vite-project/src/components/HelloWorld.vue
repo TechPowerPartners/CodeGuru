@@ -1,11 +1,12 @@
 <script setup>
 import Test from './test.vue';
+import Header from './header/Header.vue'
 </script>
 
 <template>
+  <Header></Header>
   <div class="greetings">
-    <h1></h1>
-    <Test />
+    
   </div>
 </template>
 
