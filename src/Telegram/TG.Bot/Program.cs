@@ -5,7 +5,6 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Configuration;
 using System.Reflection;
 using TG.Bot.Intagrations;
-using TG.Bot.Contracts;
 using TG.Bot.Common.FiniteStateMachine;
 
 var builder = Host.CreateDefaultBuilder()
