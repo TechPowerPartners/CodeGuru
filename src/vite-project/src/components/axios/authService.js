@@ -17,7 +17,7 @@ const authApiClient = axios.create({
     'Content-Type': 'application/json;charset=UTF-8',
   },
 });
-
+//TODO завтра добавить логин и сохранение токена
 authApiClient.interceptors.request.use(
   (config) => {
     const token = localStorage.getItem('token');
