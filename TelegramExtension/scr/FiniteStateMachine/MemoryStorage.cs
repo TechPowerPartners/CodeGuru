@@ -1,6 +1,6 @@
 ﻿using System.Collections.Concurrent;
 
-namespace TG.Bot.Common.FiniteStateMachine;
+namespace TelegramBotExtension.FiniteStateMachine;
 
 public class MemoryStorage : IStorage
 {

@@ -1,4 +1,4 @@
-﻿namespace TG.Bot.Common.FiniteStateMachine;
+﻿namespace TelegramBotExtension.FiniteStateMachine;
 
 public interface IStorage
 {

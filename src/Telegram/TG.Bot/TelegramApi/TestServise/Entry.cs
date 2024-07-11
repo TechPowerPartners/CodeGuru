@@ -1,5 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using TG.Bot.Contracts;
+using TelegramBotExtension.Handling;
 using TG.Bot.TelegramApi.TestServise;
 
 namespace TG.Bot.TelegramApi.Test;
@@ -9,11 +9,11 @@ internal static class Entry
     public static IServiceCollection ConfigureTestServise(this IServiceCollection services)
     {
         services
-            .AddTransient<IBotController, TestsCommandController>()
-            .AddTransient<IBotController, StartTestCallbackQueryController>()
-            .AddTransient<IBotController, TestCallbackQueryController>()
-            .AddTransient<IBotController, SelectAnswerController>()
-            .AddTransient<IBotController, NextQuestionController>();
+            .AddTransient<IUpdateTypeHandler, TestsCommandHandler>()
+            .AddTransient<IUpdateTypeHandler, TestCallbackQueryHandler>()
+            .AddTransient<IUpdateTypeHandler, StartTestCallbackQueryHandler>()
+            .AddTransient<IUpdateTypeHandler, NextQuestionCallbackQueryHandlerHandler>()
+            .AddTransient<IUpdateTypeHandler, SelectAnswerCallbackQueryHandlerHandler>();
         return services;
     }
 }
