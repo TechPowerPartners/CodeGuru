@@ -29,6 +29,7 @@ internal class StartTestCallbackQueryController : IBotController
             await SendMessageAsync(context, userId, currentQuestion);
 
             await context.Storage.UpdateData(userId, nameof(currentQuestion), currentQuestion);
+            await context.Storage.UpdateData(userId, "index", 0);
             await context.Storage.SetState(userId, States.PassingTest.ToString());
         }
     }

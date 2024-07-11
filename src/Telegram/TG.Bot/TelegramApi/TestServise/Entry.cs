@@ -12,8 +12,8 @@ internal static class Entry
             .AddTransient<IBotController, TestsCommandController>()
             .AddTransient<IBotController, StartTestCallbackQueryController>()
             .AddTransient<IBotController, TestCallbackQueryController>()
-            .AddTransient<IBotController, SelectAnswerController>();
-
+            .AddTransient<IBotController, SelectAnswerController>()
+            .AddTransient<IBotController, NextQuestionController>();
         return services;
     }
 }

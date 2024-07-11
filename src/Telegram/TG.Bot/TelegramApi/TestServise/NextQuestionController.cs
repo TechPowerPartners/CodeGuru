@@ -35,8 +35,32 @@ internal class NextQuestionController : IBotController
         if (data != "Следующий вопрос") return;
 
         var userData = await context.Storage.GetData(userId);
-        GetQuestionDto currentQuestion = (GetQuestionDto)userData[nameof(currentQuestion)];
+        GetTestDto test = (GetTestDto)userData[nameof(test)];
 
-        
+        int index = (int)userData[nameof(index)];
+        index++;
+
+        if (index < test.Questions.Count)
+        {
+            await context.Storage.UpdateData(userId, nameof(index), index);
+
+            var currentQuestion = test.Questions.ElementAt(index);
+            await context.Storage.UpdateData(userId, nameof(currentQuestion), currentQuestion);
+
+            await context.BotClient.EditMessageTextAsync(
+                userId,
+                context.Update.CallbackQuery.Message!.MessageId,
+                currentQuestion.Text,
+                replyMarkup: UI.GetInlineAnswers(currentQuestion.Answers)
+                );
+
+            return;
+        }
+        await context.BotClient.EditMessageTextAsync(
+            userId,
+            context.Update.CallbackQuery.Message!.MessageId,
+            "Поздравляю!! тест пройден!!!"
+            );
+        await context.Storage.Clear(userId);
     }
 }
