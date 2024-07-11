@@ -10,9 +10,9 @@ internal interface IBackendApi
     [Post("/users/registration")]
     Task<IApiResponse> RegisterAsync(RegisterRequest request);
 
-    [Post("/tests/get")]
+    [Get("/tests/{id}")]
     Task<IApiResponse<GetTestDto>> GetTestAsync(Guid id);
 
-    [Post("/tests/gettestids")]
-    Task<IApiResponse<ICollection<Guid>>> GetTestIdsAsync();
+    [Get("/tests/NamesAndIds")]
+    Task<IApiResponse<ICollection<GetTestNameAndIdDto>>> GetTestIdsAsync();
 }
