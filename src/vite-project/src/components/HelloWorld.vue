@@ -1,13 +1,4 @@
 <script setup>
-import Test from './test.vue';
-import Header from './header/Header.vue'
-</script>
-
-<template>
-  <Header></Header>
-  <div class="greetings">
-    
-  </div>
 </template>
 
 <style scoped>
