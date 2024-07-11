@@ -31,7 +31,7 @@ namespace Api.Controllers
                 {
                     Title = request.Title,
                     Text = request.Text,
-                    Creator = findCreator
+                    Creator = findCreator.Name
                 });
                 _context.SaveChanges();
                 return Ok("Статья создана");
@@ -62,6 +62,10 @@ namespace Api.Controllers
 
             return Ok(result);
         }
-        
+        [HttpPost("getall")]
+        public async Task<IActionResult> GetAllArticleTemp()
+        {
+            return Ok(_context.Articles.ToList());
+        }
     }
 }
