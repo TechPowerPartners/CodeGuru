@@ -30,9 +30,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\TelegramExtension\TelegramExtension.csproj" />
     <ProjectReference Include="..\..\Backend\Api.Contracts\Api.Contracts.csproj" />
     <ProjectReference Include="..\..\Backend\Domain\Domain.csproj" />
+    <ProjectReference Include="..\TelegramExtension\TelegramExtension.csproj" />
   </ItemGroup>
 
   <ItemGroup>
