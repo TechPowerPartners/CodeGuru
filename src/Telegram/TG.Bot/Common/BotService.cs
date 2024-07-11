@@ -5,7 +5,7 @@ using Telegram.Bot.Types;
 using TG.Bot.Common.FiniteStateMachine;
 using TG.Bot.Contracts;
 
-namespace TG.Bot.TelegramApi;
+namespace TG.Bot.Common;
 
 internal class BotService(
     IEnumerable<IBotController> _botControllers,
@@ -18,20 +18,10 @@ internal class BotService(
         return Task.CompletedTask;
     }
 
-    public Task SetBotCommandsAsync()
-    {
-        _botClient.SetMyCommandsAsync([
-            new BotCommand() { Command = "/start", Description = "запустить бота" },
-            new BotCommand() { Command = "/auth", Description = "авторизация" },
-            new BotCommand() { Command = "/help", Description = "помощь" },
-            ]);
-        return Task.CompletedTask;
-    }
-
     public async Task HandleUpdateAsync(ITelegramBotClient botClient, Update update, CancellationToken cancellationToken)
     {
         var targetControllers = _botControllers.Where(controller
-            => controller.UpdateTypes.Contains(update.Type));
+           => controller.UpdateTypes.Contains(update.Type));
 
         Parallel.ForEach(targetControllers, (controller) =>
         {
@@ -49,6 +39,6 @@ internal class BotService(
         };
 
         Console.WriteLine(ErrorMessage);
-        return Task.CompletedTask;
+        throw exception;
     }
 }

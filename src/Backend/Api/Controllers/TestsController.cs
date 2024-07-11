@@ -12,7 +12,7 @@ namespace Api.Controllers;
 [ApiController]
 public class TestsController(ApplicationDbContext _context) : ControllerBase
 {
-    [HttpPost("create")]
+    [HttpPost]
     public async Task<IActionResult> CreateAsync(CreateTestRequest request)
     {
         var questions = request.Questions
@@ -42,7 +42,7 @@ public class TestsController(ApplicationDbContext _context) : ControllerBase
         return Ok(test.Id);
     }
 
-    [HttpPost("get")]
+    [HttpGet("{id:guid}")]
     public IActionResult Get(Guid id)
     {
         var test = _context.Tests
@@ -75,12 +75,7 @@ public class TestsController(ApplicationDbContext _context) : ControllerBase
         return Ok(testDto);
     }
 
-    [HttpPost("getTestIds")]
-    public IActionResult GetTestIds()
-        => Ok(_context.Tests.Select(t => t.Id));
-
-    [Authorize]
-    [HttpPost("delete")]
+    [HttpDelete("{id:guid}")]
     public async Task<IActionResult> DeleteAsync(Guid id)
     {
         var test =  await _context.Tests.Where(t => t.Id == id).FirstOrDefaultAsync();
@@ -92,27 +87,12 @@ public class TestsController(ApplicationDbContext _context) : ControllerBase
 
         return Ok();
     }
-    /// <summary>
-    /// Тоже самое
-    /// </summary>
-    /// <returns></returns>
-    [HttpGet("GetLanguagesList")]
-    public async Task<IActionResult> GetLanguages()
-    {
-        return Ok(await _context.Tests.Select(t => t.Name).ToListAsync());
-    }
 
-    /// <summary>
-    /// Пример для будущего рефакторинга можно удалять к х*ям собачьим
-    /// </summary>
-    /// <param name="Name"></param>
-    /// <returns></returns>
-    [HttpPost("getrand")]
-    public async Task<IActionResult> GetRandomQuestion(string Name)
-    {
-        Random rand = new();
-        int toSkip = rand.Next(0, _context.Tests.Count());
-        return Ok(_context.Tests.Skip(toSkip).Take(1).First());
-    }
-
+    [HttpGet("NamesAndIds")]
+    public async Task<IActionResult> GetTestNamesAndIdsAsync()
+        => Ok(await _context.Tests
+            .Select(t => new GetTestNameAndIdDto()
+            {
+                Id = t.Id, Name = t.Name
+            }).ToListAsync());
 }

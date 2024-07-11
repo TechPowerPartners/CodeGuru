@@ -5,7 +5,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Configuration;
 using System.Reflection;
 using TG.Bot.Intagrations;
-using TG.Bot.Common.FiniteStateMachine;
+using TG.Bot.Common;
 
 var builder = Host.CreateDefaultBuilder()
     .ConfigureServices((hostContext, services) =>
@@ -14,14 +14,14 @@ var builder = Host.CreateDefaultBuilder()
 
         services.AddSingleton<ITelegramBotClient, TelegramBotClient>(x => new TelegramBotClient(
                 token: token));
+
         services.ConfigureIntergrations(hostContext.Configuration);
-        services.ConfigureTelegramApi(hostContext.Configuration);
+        services.ConfigureTelegramApi();
 
         var botService = services
             .BuildServiceProvider()
             .GetRequiredService<BotService>();
 
-        botService.SetBotCommandsAsync();
         botService.StartBot();
     });
 
