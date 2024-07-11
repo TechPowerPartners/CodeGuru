@@ -1,6 +1,5 @@
 version: '3.4'
 
-
 services:
   api:
     container_name: api
@@ -11,8 +10,6 @@ services:
     depends_on:
       rabbitmq:
         condition: service_started
-    networks:
-        
 
 
   dc.bot:
