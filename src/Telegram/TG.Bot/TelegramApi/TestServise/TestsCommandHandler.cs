@@ -36,7 +36,7 @@ internal class TestsCommandHandler(IBackendApi _backendApi) : MessageHandler
         var testNamesAndIdsDict = testNamesAndIds.Select(a => (a.Name, a.Id.ToString()));
 
         await context.BotClient.SendTextMessageAsync(
-            context.Update.Message!.From!.Id,
+            context.UserId,
             "Выбери тест который будешь проходить",
             replyMarkup: UI.GetInlineButtons(testNamesAndIdsDict)
             );
