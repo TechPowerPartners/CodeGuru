@@ -7,7 +7,7 @@ using TG.Bot.Extensions;
 
 namespace TG.Bot.TelegramApi.TestServise;
 
-internal class SelectAnswerCallbackQueryHandlerHandler : CallbackQueryHandler
+internal class SelectAnswerCallbackQueryHandler : CallbackQueryHandler
 {
     [StateFilter(nameof(States.PassingTest))]
     public override async Task HandleUpdateAsync(TelegramContext context)

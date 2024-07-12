@@ -12,8 +12,8 @@ internal static class Entry
             .AddTransient<IUpdateTypeHandler, TestsCommandHandler>()
             .AddTransient<IUpdateTypeHandler, TestCallbackQueryHandler>()
             .AddTransient<IUpdateTypeHandler, StartTestCallbackQueryHandler>()
-            .AddTransient<IUpdateTypeHandler, NextQuestionCallbackQueryHandlerHandler>()
-            .AddTransient<IUpdateTypeHandler, SelectAnswerCallbackQueryHandlerHandler>();
+            .AddTransient<IUpdateTypeHandler, NextQuestionCallbackQueryHandler>()
+            .AddTransient<IUpdateTypeHandler, SelectAnswerCallbackQueryHandler>();
         return services;
     }
 }

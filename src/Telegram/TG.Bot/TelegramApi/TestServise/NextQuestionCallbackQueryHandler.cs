@@ -7,7 +7,7 @@ using TG.Bot.Extensions;
 
 namespace TG.Bot.TelegramApi.TestServise;
 
-internal class NextQuestionCallbackQueryHandlerHandler : CallbackQueryHandler
+internal class NextQuestionCallbackQueryHandler : CallbackQueryHandler
 {
     [StateFilter(nameof(States.PassingTest))]
     [DataFilter("Следующий вопрос")]
