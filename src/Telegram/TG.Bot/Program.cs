@@ -5,7 +5,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Configuration;
 using System.Reflection;
 using TG.Bot.Intagrations;
-using TG.Bot.Common;
+using TelegramBotExtension.Handling;
 
 var builder = Host.CreateDefaultBuilder()
     .ConfigureServices((hostContext, services) =>

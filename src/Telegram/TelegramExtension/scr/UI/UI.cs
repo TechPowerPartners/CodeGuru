@@ -1,9 +1,8 @@
-﻿using Api.Contracts.Tests.Dto;
-using Telegram.Bot.Types.ReplyMarkups;
+﻿using Telegram.Bot.Types.ReplyMarkups;
 
-namespace TG.Bot.Common;
+namespace TelegramBotExtension.UI;
 
-internal static class UI
+public static class UI
 {
     public static InlineKeyboardMarkup GetInlineButtons(IEnumerable<string> buttons)
     {
@@ -23,15 +22,5 @@ internal static class UI
             inlineKeyboardButtons.Add([new(button.Item1) { CallbackData = button.Item2 }]);
 
         return new InlineKeyboardMarkup(inlineKeyboardButtons);
-    }
-
-    public static InlineKeyboardMarkup GetInlineAnswers(ICollection<GetAnswerDto> answers)
-    {
-        var inlineAnswers = answers.Select(a => (a.Text, a.Id.ToString())).ToList();
-
-        var nextQuestionText = "Следующий вопрос";
-        inlineAnswers.Add((nextQuestionText, nextQuestionText));
-
-        return GetInlineButtons(inlineAnswers);
     }
 }

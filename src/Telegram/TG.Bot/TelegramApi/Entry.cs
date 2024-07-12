@@ -1,8 +1,8 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Telegram.Bot;
 using Telegram.Bot.Types;
-using TG.Bot.Common;
-using TG.Bot.Common.FiniteStateMachine;
+using TelegramBotExtension.FiniteStateMachine;
+using TelegramBotExtension.Handling;
 using TG.Bot.TelegramApi.Test;
 
 namespace TG.Bot.TelegramApi;
