@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using TelegramBotExtension.Handling;
-using TG.Bot.TelegramApi.TestServise;
+using TG.Bot.TelegramApi.TestServise.Handlers;
 
 namespace TG.Bot.TelegramApi.Test;
 

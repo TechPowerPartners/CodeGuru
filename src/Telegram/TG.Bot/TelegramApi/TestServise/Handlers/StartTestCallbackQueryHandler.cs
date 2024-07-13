@@ -1,13 +1,14 @@
-﻿using Telegram.Bot.Types.Enums;
-using Telegram.Bot;
-using Api.Contracts.Tests.Dto;
+﻿using Api.Contracts.Tests.Dto;
 using TelegramBotExtension.Handling;
 using TelegramBotExtension.Types;
 using TelegramBotExtension.Filters;
-using TG.Bot.Extensions;
+using TG.Bot.TelegramApi.TestServise.Views;
 
-namespace TG.Bot.TelegramApi.Test;
+namespace TG.Bot.TelegramApi.TestServise.Handlers;
 
+/// <summary>
+/// Обработчик нажатия кнопки "Начать тест", пользователь начинает проходить тест
+/// </summary>
 internal class StartTestCallbackQueryHandler : CallbackQueryHandler
 {
     [DataFilter("Начать тест")]
@@ -18,23 +19,16 @@ internal class StartTestCallbackQueryHandler : CallbackQueryHandler
         GetTestDto test = (GetTestDto)userData[nameof(test)];
         var currentQuestion = test.Questions.First();
 
-        await SendMessageAsync(context, context.UserId, currentQuestion);
+        var message = await QuestionView.ShowAsync(context, currentQuestion);
+
+        var messageId = message.MessageId;
 
         int index = 0;
-
         await context.State.UpdateData(new() {
             { nameof(currentQuestion), currentQuestion },
-            { nameof(index), index }
+            { nameof(index), index },
+            { nameof(messageId), messageId }
         });
         await context.State.SetState(nameof(States.PassingTest));
-    }
-
-    private async Task SendMessageAsync(TelegramContext context, long userId, GetQuestionDto question)
-    {
-        await context.BotClient.SendTextMessageAsync(
-            userId,
-            question.Text,
-            replyMarkup: question.Answers.ToInlineKeyboardMarkup(),
-            parseMode: ParseMode.Html);
     }
 }

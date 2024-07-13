@@ -20,7 +20,10 @@ public static class AnswerExtension
     {
         return answers.Select(answer =>
         {
-            if (answer.Id == Guid.Parse(data))
+            if (!Guid.TryParse(data, out Guid answerId))
+                return answer;
+
+            if (answer.Id == answerId)
                 answer = new GetAnswerDto { Id = answer.Id, Text = "☑️" + answer.Text };
             return answer;
         }).ToArray();

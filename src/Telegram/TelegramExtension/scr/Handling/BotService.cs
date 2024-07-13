@@ -68,8 +68,9 @@ public class BotService(
     private IEnumerable<IUpdateTypeHandler> GetHandlersByUpdateType(UpdateType updateType)
     {
         return _handlers
-            .Where(handler => handler
-                                .GetType()
-                                .GetCustomAttribute<HandlerAttribute>()!.UpdateType == updateType);
+            .Where(handler => 
+                handler
+                    .GetType()
+                    .GetCustomAttribute<HandlerAttribute>()!.UpdateType == updateType);
     }
 }

@@ -14,5 +14,5 @@ internal interface IBackendApi
     Task<IApiResponse<GetTestDto>> GetTestAsync(Guid id);
 
     [Get("/tests/NamesAndIds")]
-    Task<IApiResponse<ICollection<GetTestNameAndIdDto>>> GetTestIdsAsync();
+    Task<IApiResponse<ICollection<GetTestNameAndIdDto>>> GetTestNamesAndIdsAsync();
 }
