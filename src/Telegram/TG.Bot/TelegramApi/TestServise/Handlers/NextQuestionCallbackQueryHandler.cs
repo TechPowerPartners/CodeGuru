@@ -21,7 +21,7 @@ internal class NextQuestionCallbackQueryHandler : CallbackQueryHandler
 
         if (messageId != lastMessageId)
         {
-            await QuestionView.Error(context);
+            await QuestionView.ErrorAsync(context);
             return;
         }
 
@@ -35,6 +35,7 @@ internal class NextQuestionCallbackQueryHandler : CallbackQueryHandler
         if (index < test.Questions.Count)
         {
             await SendNextQuestionAsync(context, test, index);
+            return;
         }
         await context.BotClient.EditMessageTextAsync(
             context.UserId,

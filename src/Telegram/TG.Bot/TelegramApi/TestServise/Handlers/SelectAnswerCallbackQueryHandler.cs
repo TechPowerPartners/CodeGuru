@@ -25,7 +25,7 @@ internal class SelectAnswerCallbackQueryHandler : CallbackQueryHandler
 
         if (messageId != lastMessageId || !success)
         {
-            await QuestionView.Error(context);
+            await QuestionView.ErrorAsync(context);
             return;
         }
 

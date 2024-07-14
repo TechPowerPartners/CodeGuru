@@ -4,7 +4,7 @@ using TelegramBotExtension.UI;
 
 namespace TG.Bot.Extensions;
 
-public static class AnswerExtension
+public static class GetAnswerDtoCollectionExtension
 {
     public static InlineKeyboardMarkup ToInlineKeyboardMarkup(this ICollection<GetAnswerDto> answers)
     {

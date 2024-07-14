@@ -37,7 +37,7 @@ internal class QuestionView
             );
     }
 
-    public static async Task Error(TelegramContext context)
+    public static async Task ErrorAsync(TelegramContext context)
     {
         await context.BotClient.AnswerCallbackQueryAsync(
             context.Update.CallbackQuery!.Id,
