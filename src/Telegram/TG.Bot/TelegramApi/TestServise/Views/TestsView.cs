@@ -16,14 +16,14 @@ internal class TestsView
     /// Отправит сообщение в тг, в котором будут тесты в виде кнопок.
     /// </summary>
     /// <returns></returns>
-    public static async Task ShowAsync(TelegramContext context, ICollection<GetTestNameAndIdDto> testNamesAndIds)
+    public static async Task ShowAsync(TelegramContext context, ICollection<GetTestNameAndIdDto> testNameIdCollection)
     {
-        var testNamesAndIdsDict = testNamesAndIds.Select(a => (a.Name, a.Id.ToString()));
+        var NamesIds = testNameIdCollection.Select(a => (a.Name, a.Id.ToString()));
 
         await context.BotClient.SendTextMessageAsync(
             context.UserId,
             "Выбери тест который будешь проходить",
-            replyMarkup: UI.GetInlineButtons(testNamesAndIdsDict)
+            replyMarkup: UI.GetInlineButtons(NamesIds)
             );
     }
 }

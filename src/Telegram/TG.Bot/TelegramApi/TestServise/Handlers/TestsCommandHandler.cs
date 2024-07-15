@@ -1,4 +1,5 @@
-﻿using Telegram.Bot;
+﻿using System.Diagnostics;
+using Telegram.Bot;
 using TelegramBotExtension.Filters;
 using TelegramBotExtension.Handling;
 using TelegramBotExtension.Types;
@@ -16,6 +17,8 @@ internal class TestsCommandHandler(IBackendApi _backendApi) : MessageHandler
     [Command("tests")]
     public override async Task HandleUpdateAsync(TelegramContext context)
     {
+        ///TODO: Время выполнения запроса GetTestNamesAndIdsAsync в backend (276 мс)
+        ///нужна оптимизация (кэширование и/или обращение напрямую к контроллеру)
         var response = await _backendApi.GetTestNamesAndIdsAsync();
         var testNamesAndIds = response.Content!;
 

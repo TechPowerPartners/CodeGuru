@@ -25,6 +25,9 @@ public class BotService(
 
     public async Task HandleUpdateAsync(ITelegramBotClient botClient, Update update, CancellationToken cancellationToken)
     {
+        ///TODO: Нужна оптимизация телеграм бота так как он при большом потоке Updates медленно обрабатывает
+        ///Можно реализовать IUpdateReceiver
+        
         var handlers = GetHandlersByUpdateType(update.Type);
 
         foreach (var handler in handlers)

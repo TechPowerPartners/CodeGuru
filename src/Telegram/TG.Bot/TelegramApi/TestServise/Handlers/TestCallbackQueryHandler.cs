@@ -38,6 +38,8 @@ internal class TestCallbackQueryHandler(IBackendApi _backendApi) : CallbackQuery
         if (!Guid.TryParse(context.Data, out Guid testId))
             return null;
 
+        ///TODO: Время выполнения запроса _backendApi.GetTestAsync в backend (276 мс)
+        ///нужна оптимизация (кэширование и/или обращение напрямую к контроллеру)
         var response = await _backendApi.GetTestAsync(testId);
         return response.Content;
     }
