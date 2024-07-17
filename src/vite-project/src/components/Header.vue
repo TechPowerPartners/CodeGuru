@@ -1,14 +1,13 @@
 <template>
   <div>
-    <Menubar class="card" :model="items">
+    <Menubar class="nav p-menubar" :model="items">
       <template #start>
         <h1><router-link class="logo" to="/main">CodeGuru</router-link></h1>
       </template>
       <template #item="{ item, props, root }">
-        <a v-ripple class="flex items-center" v-bind="props.action">
+        <a class="flex items-center" v-bind="props.action">
           <span :class="item.icon" />
-          <span class="ml-2">
-            <router-link class="nav-link" v-if="item.link" :to="item.link">{{item.label}}</router-link></span>
+            <router-link class="nav-link" v-if="item.link" :to="item.link">{{item.label}}</router-link>
           <Badge
             v-if="item.badge"
             :class="{ 'ml-auto': !root, 'ml-2': root }"
@@ -17,14 +16,10 @@
           <span
             v-if="item.shortcut"
             class="ml-auto border border-surface rounded bg-emphasis text-muted-color text-xs p-1"
-            >{{ item.shortcut }}</span
-          >
+            >
+            {{ item.shortcut }}
+          </span>
         </a>
-      </template>
-      <template #end>
-        <div class="flex items-center gap-2">
-          <InputText placeholder="Search" type="text" class="w-32 sm:w-auto" />
-        </div>
       </template>
     </Menubar>
   </div>
@@ -32,7 +27,6 @@
 
 <script setup>
 import Menubar from "primevue/menubar";
-import InputText from "primevue/inputtext";
 import Badge from "primevue/badge";
 
 import { ref } from "vue";
@@ -57,14 +51,18 @@ const items = ref([
 </script>
 
 <style lang="sass">
+.p-menubar
+  display: flex
+  justify-content: space-between
 .nav-link
   text-decoration: none
   color: #000
   font-size: 1rem
-  margin-right: 1rem
+  width: 100%
 .logo
   text-decoration: none
   color: #000
-  font-size: 1.5rem
+  font-size: 2rem
   margin-right: 50px
+  margin-left: 3rem
 </style>
