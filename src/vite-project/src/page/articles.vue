@@ -28,51 +28,23 @@
 <script setup>
 import Card from "primevue/card";
 import Button from "primevue/button";
+import ApiService from '../axios/authService'
+import { ref, onMounted } from "vue";
+onMounted(() => {
+    fetchCards();
+})
+const cards = ref([]);
 
-import { ref } from "vue";
+const fetchCards = async () => {
+    try {
+        const response = await ApiService.post('api/articles/getall');
+        cards.value = response.data;
+        
+    } catch (error) {
 
-const cards = ref([
-  {
-    title: "Абобус на занянге 1",
-    subtitle: "Card subtitle 1",
-    description: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Lorem ipsum dolor sit amet consectetur adipisicing elit. Lorem ipsum dolor sit amet consectetur adipisicing elit. ", 
-  },
-  {
-    title: "Абобус на занянге 2",
-    subtitle: "Card subtitle 2",
-    description: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Lorem ipsum dolor sit amet consectetur adipisicing elit. ", 
-  },
-  {
-    title: "Абобус на занянге 3",
-    subtitle: "Card subtitle 3",
-    description: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Lorem ipsum dolor sit amet consectetur adipisicing elit. ", 
-  },
-  {
-    title: "Абобус на занянге 3",
-    subtitle: "Card subtitle 3",
-    description: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Lorem ipsum dolor sit amet consectetur adipisicing elit. ", 
-  },
-  {
-    title: "Advanced Card 3",
-    subtitle: "Card subtitle 3",
-    description: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Lorem ipsum dolor sit amet consectetur adipisicing elit. ", 
-  },
-  {
-    title: "Advanced Card 3",
-    subtitle: "Card subtitle 3",
-    description: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Lorem ipsum dolor sit amet consectetur adipisicing elit. ", 
-  },
-  {
-    title: "Advanced Card 3",
-    subtitle: "Card subtitle 3",
-    description: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Lorem ipsum dolor sit amet consectetur adipisicing elit. ", 
-  },
-  {
-    title: "Advanced Card 3",
-    subtitle: "Card subtitle 3",
-    description: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Lorem ipsum dolor sit amet consectetur adipisicing elit. ", 
-  },
-]);
+        console.error("shit");
+    }
+}
 </script>
 
 <style lang="sass" scoped>
