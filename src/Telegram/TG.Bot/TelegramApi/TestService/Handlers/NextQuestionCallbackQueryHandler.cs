@@ -5,13 +5,14 @@ using Telegram.Bot;
 using TelegramBotExtension.Filters;
 using TelegramBotExtension.Handling;
 using TelegramBotExtension.Types;
-using TG.Bot.TelegramApi.TestServise.Views;
+using TG.Bot.enums;
+using TG.Bot.TelegramApi.TestService.Views;
 
-namespace TG.Bot.TelegramApi.TestServise.Handlers;
+namespace TG.Bot.TelegramApi.TestService.Handlers;
 
 internal class NextQuestionCallbackQueryHandler : CallbackQueryHandler
 {
-    [StateFilter(nameof(States.PassingTest))]
+    [StateFilter(nameof(TestState.PassingTest))]
     [DataFilter("Следующий вопрос")]
     public override async Task HandleUpdateAsync(TelegramContext context)
     {

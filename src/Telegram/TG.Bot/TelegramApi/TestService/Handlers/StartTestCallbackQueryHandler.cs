@@ -2,9 +2,10 @@
 using TelegramBotExtension.Handling;
 using TelegramBotExtension.Types;
 using TelegramBotExtension.Filters;
-using TG.Bot.TelegramApi.TestServise.Views;
+using TG.Bot.TelegramApi.TestService.Views;
+using TG.Bot.enums;
 
-namespace TG.Bot.TelegramApi.TestServise.Handlers;
+namespace TG.Bot.TelegramApi.TestService.Handlers;
 
 /// <summary>
 /// Обработчик нажатия кнопки "Начать тест", пользователь начинает проходить тест
@@ -12,7 +13,7 @@ namespace TG.Bot.TelegramApi.TestServise.Handlers;
 internal class StartTestCallbackQueryHandler : CallbackQueryHandler
 {
     [DataFilter("Начать тест")]
-    [StateFilter(nameof(States.StartTest))]
+    [StateFilter(nameof(TestState.StartTest))]
     public override async Task HandleUpdateAsync(TelegramContext context)
     {
         var userData = await context.State.GetData();
@@ -29,6 +30,6 @@ internal class StartTestCallbackQueryHandler : CallbackQueryHandler
             { nameof(index), index },
             { nameof(messageId), messageId }
         });
-        await context.State.SetState(nameof(States.PassingTest));
+        await context.State.SetState(nameof(TestState.PassingTest));
     }
 }

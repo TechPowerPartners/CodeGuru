@@ -3,7 +3,7 @@ using Telegram.Bot;
 using TelegramBotExtension.UI;
 using Api.Contracts.Tests.Dto;
 
-namespace TG.Bot.TelegramApi.TestServise.Views;
+namespace TG.Bot.TelegramApi.TestService.Views;
 
 /// <summary>
 /// Отображение тестов

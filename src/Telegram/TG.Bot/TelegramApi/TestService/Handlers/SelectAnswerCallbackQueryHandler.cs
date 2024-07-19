@@ -2,17 +2,18 @@
 using TelegramBotExtension.Filters;
 using TelegramBotExtension.Handling;
 using TelegramBotExtension.Types;
+using TG.Bot.enums;
 using TG.Bot.Extensions;
-using TG.Bot.TelegramApi.TestServise.Views;
+using TG.Bot.TelegramApi.TestService.Views;
 
-namespace TG.Bot.TelegramApi.TestServise.Handlers;
+namespace TG.Bot.TelegramApi.TestService.Handlers;
 
 /// <summary>
 /// Обработчик нажатия кнопки варианта ответа
 /// </summary>
 internal class SelectAnswerCallbackQueryHandler : CallbackQueryHandler
 {
-    [StateFilter(nameof(States.PassingTest))]
+    [StateFilter(nameof(TestState.PassingTest))]
     public override async Task HandleUpdateAsync(TelegramContext context)
     {
         var userData = await context.State.GetData();

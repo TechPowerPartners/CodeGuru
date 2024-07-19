@@ -3,10 +3,11 @@ using Telegram.Bot;
 using TelegramBotExtension.Filters;
 using TelegramBotExtension.Handling;
 using TelegramBotExtension.Types;
+using TG.Bot.enums;
 using TG.Bot.Intagrations.BackendApi;
-using TG.Bot.TelegramApi.TestServise.Views;
+using TG.Bot.TelegramApi.TestService.Views;
 
-namespace TG.Bot.TelegramApi.TestServise.Handlers;
+namespace TG.Bot.TelegramApi.TestService.Handlers;
 
 /// <summary>
 /// Обработчик команды /tests. Отображаются список тестов в виде кнопок
@@ -32,6 +33,6 @@ internal class TestsCommandHandler(IBackendApi _backendApi) : MessageHandler
         await TestsView.ShowAsync(context, testNamesAndIds);
 
         await context.State.Clear();
-        await context.State.SetState(nameof(States.SelectingTest));
+        await context.State.SetState(nameof(TestState.SelectingTest));
     }
 }

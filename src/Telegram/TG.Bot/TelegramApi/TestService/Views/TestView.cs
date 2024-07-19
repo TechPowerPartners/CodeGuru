@@ -4,7 +4,7 @@ using TelegramBotExtension.UI;
 using Api.Contracts.Tests.Dto;
 using Telegram.Bot.Types.Enums;
 
-namespace TG.Bot.TelegramApi.TestServise.Views;
+namespace TG.Bot.TelegramApi.TestService.Views;
 
 /// <summary>
 /// Отображение теста

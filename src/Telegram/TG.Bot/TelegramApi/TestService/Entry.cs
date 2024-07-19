@@ -1,12 +1,12 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using TelegramBotExtension.Handling;
-using TG.Bot.TelegramApi.TestServise.Handlers;
+using TG.Bot.TelegramApi.TestService.Handlers;
 
-namespace TG.Bot.TelegramApi.Test;
+namespace TG.Bot.TelegramApi.TestService;
 
 internal static class Entry
 {
-    public static IServiceCollection ConfigureTestServise(this IServiceCollection services)
+    public static IServiceCollection ConfigureTestService(this IServiceCollection services)
     {
         services
             .AddTransient<IUpdateTypeHandler, TestsCommandHandler>()

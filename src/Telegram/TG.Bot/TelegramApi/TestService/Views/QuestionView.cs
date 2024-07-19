@@ -5,7 +5,7 @@ using Telegram.Bot.Types.Enums;
 using TelegramBotExtension.Types;
 using TG.Bot.Extensions;
 
-namespace TG.Bot.TelegramApi.TestServise.Views;
+namespace TG.Bot.TelegramApi.TestService.Views;
 
 internal class QuestionView
 {

@@ -24,7 +24,7 @@ public class UsersController(ApplicationDbContext _context) : ControllerBase
 	public IActionResult Login(LoginRequest request)
 	{
 		var findUser = _context.Users.FirstOrDefault(u => u.Name == request.Name);
-        if (User == null)
+        if (findUser == null)
         {
 			return Unauthorized("Не существует такого пользователя");
         }

@@ -3,10 +3,11 @@ using Api.Contracts.Tests.Dto;
 using TelegramBotExtension.Types;
 using TelegramBotExtension.Handling;
 using TelegramBotExtension.Filters;
-using TG.Bot.TelegramApi.TestServise.Views;
+using TG.Bot.TelegramApi.TestService.Views;
 using Telegram.Bot;
+using TG.Bot.enums;
 
-namespace TG.Bot.TelegramApi.TestServise.Handlers;
+namespace TG.Bot.TelegramApi.TestService.Handlers;
 
 /// <summary>
 /// Обработчик нажатия кнопки на стадии выбора теста
@@ -14,7 +15,7 @@ namespace TG.Bot.TelegramApi.TestServise.Handlers;
 /// <param name="_backendApi"></param>
 internal class TestCallbackQueryHandler(IBackendApi _backendApi) : CallbackQueryHandler
 {
-    [StateFilter(nameof(States.SelectingTest))]
+    [StateFilter(nameof(TestState.SelectingTest))]
     public override async Task HandleUpdateAsync(TelegramContext context)
     {
         var test = await GetTestAsync(context);
@@ -29,7 +30,7 @@ internal class TestCallbackQueryHandler(IBackendApi _backendApi) : CallbackQuery
         }
         await TestView.ShowAsync(context, test!);
 
-        await context.State.SetState(nameof(States.StartTest));
+        await context.State.SetState(nameof(TestState.StartTest));
         await context.State.UpdateData(nameof(test), test!);
     }
 
