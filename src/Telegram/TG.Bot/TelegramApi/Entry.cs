@@ -3,7 +3,10 @@ using Telegram.Bot;
 using Telegram.Bot.Types;
 using TelegramBotExtension.FiniteStateMachine;
 using TelegramBotExtension.Handling;
-using TG.Bot.TelegramApi.Test;
+using TG.Bot.TelegramApi.AuthService;
+using TG.Bot.TelegramApi.HelpService;
+using TG.Bot.TelegramApi.StartService;
+using TG.Bot.TelegramApi.TestService;
 
 namespace TG.Bot.TelegramApi;
 
@@ -18,12 +21,17 @@ internal static class Entry
         var botClient = services.BuildServiceProvider().GetRequiredService<ITelegramBotClient>();
 
         botClient.SetMyCommandsAsync([
-            new BotCommand() { Command = "/start", Description = "запустить бота" },
-            new BotCommand() { Command = "/auth", Description = "авторизация" },
-            new BotCommand() { Command = "/help", Description = "помощь" },
+            new BotCommand() { Command = "/start", Description = "Запустить бота" },
+            new BotCommand() { Command = "/tests", Description = "Показать тесты" },
+            new BotCommand() { Command = "/auth", Description = "Aвторизация" },
+            new BotCommand() { Command = "/help", Description = "Помощь" },
             ]);
 
-        services.ConfigureTestServise();
+        services
+            .ConfigureStartService()
+            .ConfigureHelpService()
+            .ConfigureAuthService()
+            .ConfigureTestService();
 
         return services;
     }

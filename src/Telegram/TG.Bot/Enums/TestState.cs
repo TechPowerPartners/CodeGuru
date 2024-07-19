@@ -1,6 +1,6 @@
-﻿namespace TG.Bot.TelegramApi;
+﻿namespace TG.Bot.enums;
 
-enum States
+enum TestState
 {
     SelectingTest = 0,
     StartTest = 1,
