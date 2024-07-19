@@ -5,6 +5,7 @@ using Domain.Entities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Security.Claims;
 
 namespace Api.Controllers;
 
@@ -38,7 +39,7 @@ public class VacanciesController(ApplicationDbContext dbContext) : ControllerBas
             .Where(k => request.Keywords.Contains(k.Value))
             .ToListAsync();
 
-        var currentUser = User.Claims.FirstOrDefault(c => c.Type == "name").Value.ToString();
+        var currentUser = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Name).Value.ToString();
         
         var findLeadId = dbContext.Users.FirstOrDefault(k => k.Name == currentUser).Id;
         if (existingKeywords.Count != request.Keywords.Count)
@@ -59,7 +60,7 @@ public class VacanciesController(ApplicationDbContext dbContext) : ControllerBas
         return Ok();
     }
 
-    [HttpPost("addkeyword")]
+    [HttpPost("keywords")]
     public async Task<IActionResult> CreateKeyword(string keyword)
     {
         keyword = keyword.ToLower();

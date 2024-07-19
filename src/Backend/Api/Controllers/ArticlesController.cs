@@ -3,69 +3,64 @@ using Api.Contracts.Articles;
 using Api.Core.Extensions;
 using Api.Persistence;
 using Domain.Entities;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
 
-namespace Api.Controllers
+namespace Api.Controllers;
+
+[Route("api/[controller]")]
+[ApiController]
+public class ArticlesController(ApplicationDbContext _context) : ControllerBase
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    public class ArticlesController(ApplicationDbContext _context) : ControllerBase
+    [HttpGet]
+    public async Task<IActionResult> GetAsync()
     {
-        [HttpPost("create")]
-        public async Task<IActionResult> CreateArticle(CreateArticleRequest request)
-        {
-            if (request.CheckIfNull() is false)
+        return Ok(await _context.Articles.ToListAsync());
+    }
+
+    [HttpPost("/page")]
+    public async Task<IActionResult> GetPageAsync(PageRequest page)
+    {
+        var articles = await _context.Articles
+            .OrderBy(date => date.CreatedAt)
+            .Skip((page.Number - 1) * page.Size)
+            .Take(page.Size)
+            .Select(article => new GetArticlesResponse
             {
-                return BadRequest("Одна или несколько полей пустое");
-            }
-            var creator = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Name)?.Value;
+                Title = article.Title,
+                Content = article.Content,
+            })
+            .ToListAsync();
 
-            var findCreator = _context.Users.FirstOrDefault(c => c.Name == creator);
-            if (findCreator != null)
+        var count = await _context.Articles.CountAsync();
+        var totalPages = (int)Math.Ceiling(count / (double)page.Size);
+        var result = new ListPaginations<GetArticlesResponse>(articles, count, totalPages);
+
+        return Ok(result);
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> CreateAsync(CreateArticleRequest request)
+    {
+        if (request.CheckIfNull() is false)
+            return BadRequest("Одна или несколько полей пустое");
+
+        var authorName = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Name)?.Value;
+        var existingAuthor = await _context.Users.FirstOrDefaultAsync(c => c.Name == authorName);
+
+        if (existingAuthor != null)
+        {
+            _context.Articles.Add(new Article
             {
-                _context.Articles.Add(new Articles
-                {
-                    Title = request.Title,
-                    Text = request.Text,
-                    Creator = findCreator.Name
-                });
-                _context.SaveChanges();
-                return Ok("Статья создана");
-            }
-
-            return BadRequest("Ошибка");
-
+                Title = request.Title,
+                Content = request.Content,
+                AuthorId = existingAuthor.Id
+            });
+            _context.SaveChanges();
+            return Ok("Статья создана");
         }
 
-        [HttpPost("getpaginated")]
-        public async Task<IActionResult> GetArticlesPaginated(PageRequest page)
-        {
-            var articles = await _context.Articles
-                .OrderBy(date => date.CreatedAt)
-                .Skip((page.Number - 1) * page.Size)
-                .Take(page.Size)
-                .Select(article => new GetArticlesRequest
-                {
-                    Title = article.Title,
-                    Text = article.Text,
-                })
-                .ToListAsync();
-
-            var count = await _context.Articles.CountAsync();
-            var totalPages = (int)Math.Ceiling(count / (double)page.Size);
-            ListPaginations<GetArticlesRequest> result = new ListPaginations<GetArticlesRequest>
-            (articles, count,totalPages);
-
-            return Ok(result);
-        }
-        [HttpPost("getall")]
-        public async Task<IActionResult> GetAllArticleTemp()
-        {
-            return Ok(_context.Articles.ToList());
-        }
+        return BadRequest("Ошибка");
     }
 }

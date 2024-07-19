@@ -22,7 +22,7 @@ public class ApplicationDbContext : DbContext
     public DbSet<Question> Questions { get; set; }
     public DbSet<Answer> Answers { get; set; }
     public DbSet<QuestionFiles> QuestionFiles { get; set; }
-	public DbSet<Articles> Articles { get; set; }
+	public DbSet<Article> Articles { get; set; }
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 	{
 		optionsBuilder.UseNpgsql(_configuration.GetConnectionString("ConnectionDb"));
