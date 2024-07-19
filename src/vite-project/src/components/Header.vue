@@ -27,7 +27,7 @@
               </div>
               <div class="flex items-center gap-4 mb-8">
                 <label for="password" class="font-semibold w-24">Пароль</label>
-                <Password class="flex-auto" autocomplete="off" v-model="loginParams.password" toggleMask />
+                <Password class="flex-auto" autocomplete="off" v-model="loginParams.password" :feedback="false" />
               </div>
               <div class="flex justify-end gap-2">
                 <Button type="button" label="Cancel" severity="secondary" @click="visible = false"></Button>

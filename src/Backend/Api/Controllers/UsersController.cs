@@ -36,8 +36,25 @@ public class UsersController(ApplicationDbContext _context) : ControllerBase
 
 		return Ok(auth.GenerateToken(request));
 	}
+    [HttpGet("userinfo")]
+    public async Task<IActionResult> GetUserInfo()
+    {
+        var userClaims = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Name)?.Value;
+        if (userClaims == null)
+        {
+            return Unauthorized("Не найдено имя пользователя в токене");
+        }
 
-	[HttpPost("registration")]
+        var userInfo = await _context.Users.FirstOrDefaultAsync(u => u.Name == userClaims);
+        if (userInfo == null)
+        {
+            return NotFound("Пользователь не найден");
+        }
+
+        return Ok(userInfo);
+    }
+
+    [HttpPost("registration")]
 	public async Task<IActionResult> RegistrationAsync(RegisterRequest request)
 	{
 		if (request.Validator != 765123)
@@ -63,4 +80,10 @@ public class UsersController(ApplicationDbContext _context) : ControllerBase
 
 		return Ok();
 	}
+    /// <summary>
+    /// Добавь свойства 
+    /// </summary>
+    /// <param name="userName"></param>
+    /// <param name=""></param>
+    public record UserDto(string userName,string userId);
 }
