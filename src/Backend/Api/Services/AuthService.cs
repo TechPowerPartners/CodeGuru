@@ -24,7 +24,7 @@ namespace Api.Services
                 Expires = DateTime.UtcNow.AddMinutes(120),
                 SigningCredentials = credentials
                 };
-
+            
             var token = handler.CreateToken(tokenDescriptor);
 
             return handler.WriteToken(token);
