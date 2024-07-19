@@ -18,42 +18,33 @@
       </template>
       <template #end>
         <div class="card flex justify-center">
-          <div class="card flex justify-center">
-            <template v-if="!userStore.isAuthenticated">
-              <Button label="Login" @click="visible = true" />
-            </template>
-            <template v-else>
-              <!-- <span>{{ userStore.userInfo.name }}</span> -->
-              <PanelMenu :model="loggedInOptions" class="w-full md:w-80">
-
-              </PanelMenu>
-              <Dialog v-model:visible="visible" modal header="Логин" :style="{ width: '25rem' }">
-              <span class="text-surface-500 dark:text-surface-400 block mb-8"></span>
-              <div class="flex items-center gap-4 mb-4">
-                <label for="username" class="font-semibold w-24">Логин</label>
-                <InputText class="flex-auto" autocomplete="off" v-model="loginParams.name" />
-              </div>
-              <div class="flex items-center gap-4 mb-8">
-                <label for="password" class="font-semibold w-24">Пароль</label>
-                <Password class="flex-auto" autocomplete="off" v-model="loginParams.password" :feedback="false" />
-              </div>
-              <div class="flex justify-end gap-2">
-                <Button type="button" label="Cancel" severity="secondary" @click="visible = false"></Button>
-                <Button type="button" label="Save" @click="login"></Button>
-              </div>
-            </Dialog>
-              <!-- <Button label="Logout" @click="logout" /> -->
-            </template>
-            
+          <template v-if="!userStore.isAuthenticated">
+            <Button label="Login" @click="handleLoginClick" />
+          </template>
+          <template v-else>
+            <PanelMenu :model="loggedInOptions" class="w-full md:w-80" />
             <InputText placeholder="Search" type="text" class="w-32 sm:w-auto" />
-
-          </div>
+          </template>
         </div>
+        <Dialog v-model:visible="visible" modal header="Логин" :style="{ width: '25rem' }">
+          <span class="text-surface-500 dark:text-surface-400 block mb-8"></span>
+          <div class="flex items-center gap-4 mb-4">
+            <label for="username" class="font-semibold w-24">Логин</label>
+            <InputText class="flex-auto" autocomplete="off" v-model="loginParams.name" />
+          </div>
+          <div class="flex items-center gap-4 mb-8">
+            <label for="password" class="font-semibold w-24">Пароль</label>
+            <Password class="flex-auto" autocomplete="off" v-model="loginParams.password" :feedback="false" />
+          </div>
+          <div class="flex justify-end gap-2">
+            <Button type="button" label="Cancel" severity="secondary" @click="visible = false"></Button>
+            <Button type="button" label="Save" @click="login"></Button>
+          </div>
+        </Dialog>
       </template>
     </Menubar>
   </div>
 </template>
-
 <script setup>
 import { ref, onMounted } from 'vue';
 import { useUserStore } from '@/axios/userStore'; // Ensure correct path
@@ -127,6 +118,11 @@ const logout = () => {
   userStore.clearUser();
 };
 
+const handleLoginClick = () => {
+  console.log('Login button clicked');
+  visible.value = true;
+};
+
 onMounted(async () => {
   const token = window.localStorage.getItem('token');
   if (token) {
@@ -135,13 +131,13 @@ onMounted(async () => {
   }
 });
 </script>
-
 <style lang="sass">
 .nav-link
   text-decoration: none
   color: #000
   font-size: 1rem
   margin-right: 1rem
+
 .logo
   text-decoration: none
   color: #000

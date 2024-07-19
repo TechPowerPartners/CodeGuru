@@ -40,7 +40,11 @@ namespace Api.Controllers
             return BadRequest("Ошибка");
 
         }
-
+        [HttpPost("getarticle")]
+        public async Task<IActionResult> GetArticleById(Guid guid)
+        {
+            return Ok(await _context.Articles.FirstAsync(u => u.Id == guid));
+        }
         [HttpPost("getpaginated")]
         public async Task<IActionResult> GetArticlesPaginated(PageRequest page)
         {

@@ -22,7 +22,7 @@ namespace Api.Contracts.Articles
         public DateTime? CreatedAt { get; protected set; }
 
 
-
+        
         public bool CheckIfNull()
         {
             if (Title.Length < 1) return false;

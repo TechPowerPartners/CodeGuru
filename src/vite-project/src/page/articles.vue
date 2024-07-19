@@ -9,18 +9,14 @@
             />
           </template>
           <template #title><p class="cards__title">{{ card.title }}</p></template>
-          <template #subtitle><p class="cards__subtitle">{{ card.subtitle }}</p></template>
+          <template #subtitle><p class="cards__subtitle">{{ card.id }}</p></template>
+          
           <template #content>
             <p class="m-0">
              {{ card.description }}
             </p>
           </template>
-          <template #footer>
-            <div class="flex gap-4 mt-1">
-              <Button label="Cancel" severity="secondary" outlined class="w-full cards__btn" />
-              <Button label="Save" class="w-full" />
-            </div>
-          </template>
+          
         </Card>
     </div>
 </template>
@@ -44,6 +40,14 @@ const fetchCards = async () => {
 
         console.error("shit");
     }
+}
+
+const GetArticle = async () => {
+  try {
+    
+  } catch (error) {
+    
+  }
 }
 </script>
 
