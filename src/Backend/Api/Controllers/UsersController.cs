@@ -50,8 +50,11 @@ public class UsersController(ApplicationDbContext _context) : ControllerBase
         {
             return NotFound("Пользователь не найден");
         }
-
-        return Ok(userInfo);
+        UserDto userDto = new(
+            userInfo.Name,
+            userInfo.Id
+            );
+        return Ok(userDto);
     }
 
     [HttpPost("registration")]
@@ -85,5 +88,5 @@ public class UsersController(ApplicationDbContext _context) : ControllerBase
     /// </summary>
     /// <param name="userName"></param>
     /// <param name=""></param>
-    public record UserDto(string userName,string userId);
+    public record UserDto(string userName,Guid userId);
 }

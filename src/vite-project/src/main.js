@@ -21,13 +21,11 @@ import Badge from 'primevue/badge';
 import BlockUI from 'primevue/blockui';
 import ButtonGroup from 'primevue/buttongroup';
 import Breadcrumb from 'primevue/breadcrumb';
-import Calendar from 'primevue/calendar';
 import Card from 'primevue/card';
 import CascadeSelect from 'primevue/cascadeselect';
 import Carousel from 'primevue/carousel';
 import Checkbox from 'primevue/checkbox';
 import Chip from 'primevue/chip';
-import Chips from 'primevue/chips';
 import ColorPicker from 'primevue/colorpicker';
 import Column from 'primevue/column';
 import ColumnGroup from 'primevue/columngroup';
@@ -40,7 +38,6 @@ import Dialog from 'primevue/dialog';
 import Divider from 'primevue/divider';
 import Dock from 'primevue/dock';
 import Drawer from 'primevue/drawer';
-import Dropdown from 'primevue/dropdown';
 import DynamicDialog from 'primevue/dynamicdialog';
 import Fieldset from 'primevue/fieldset';
 import FileUpload from 'primevue/fileupload';
@@ -49,7 +46,6 @@ import Galleria from 'primevue/galleria';
 import IconField from 'primevue/iconfield';
 import InputIcon from 'primevue/inputicon';
 import Image from 'primevue/image';
-import InlineMessage from 'primevue/inlinemessage';
 import Inplace from 'primevue/inplace';
 import InputChips from 'primevue/inputchips';
 import InputGroup from 'primevue/inputgroup';
@@ -96,7 +92,6 @@ import SplitterPanel from 'primevue/splitterpanel';
 import Stepper from 'primevue/stepper';
 import StepperPanel from 'primevue/stepperpanel';
 import Steps from 'primevue/steps';
-import StyleClass from 'primevue/styleclass';
 import TabMenu from 'primevue/tabmenu';
 import Tabs from 'primevue/tabs';
 import TabList from 'primevue/tablist';
@@ -111,16 +106,14 @@ import TieredMenu from 'primevue/tieredmenu';
 import Timeline from 'primevue/timeline';
 import ToggleButton from 'primevue/togglebutton';
 import ToggleSwitch from 'primevue/toggleswitch';
-import Tooltip from 'primevue/tooltip';
 import Toast from 'primevue/toast';
-import ToastService from 'primevue/toastservice';
 import Toolbar from 'primevue/toolbar';
 import Tree from 'primevue/tree';
 import TreeSelect from 'primevue/treeselect';
 import TreeTable from 'primevue/treetable';
 import VirtualScroller from 'primevue/virtualscroller';
-
-
+import Editor from 'primevue/editor';
+import '@vueup/vue-quill/dist/vue-quill.snow.css';
 const app = createApp(App)
 
 app.use(PrimeVue, {
@@ -135,6 +128,7 @@ app.use(PrimeVue, {
 });
 
 app.use(createPinia())
+app.component('Editor', Editor)
 app.component('Button', Button);
 app.component('Toast', Toast);
 app.component('Accordion', Accordion);

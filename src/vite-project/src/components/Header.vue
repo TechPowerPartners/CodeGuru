@@ -8,7 +8,8 @@
         <a v-ripple class="flex items-center" v-bind="props.action">
           <span :class="item.icon" />
           <span class="ml-2">
-            <router-link class="nav-link" v-if="item.link" :to="item.link">{{ item.label }}</router-link></span>
+            <router-link class="nav-link" v-if="item.link" :to="item.link">{{ item.label }}</router-link>
+          </span>
           <Badge v-if="item.badge" :class="{ 'ml-auto': !root, 'ml-2': root }" :value="item.badge" />
           <span v-if="item.shortcut"
             class="ml-auto border border-surface rounded bg-emphasis text-muted-color text-xs p-1">{{ item.shortcut
@@ -18,8 +19,15 @@
       <template #end>
         <div class="card flex justify-center">
           <div class="card flex justify-center">
-            <Button label="Login" @click="visible = true" />
-            <Dialog v-model:visible="visible" modal header="Логин" :style="{ width: '25rem' }">
+            <template v-if="!userStore.isAuthenticated">
+              <Button label="Login" @click="visible = true" />
+            </template>
+            <template v-else>
+              <!-- <span>{{ userStore.userInfo.name }}</span> -->
+              <PanelMenu :model="loggedInOptions" class="w-full md:w-80">
+
+              </PanelMenu>
+              <Dialog v-model:visible="visible" modal header="Логин" :style="{ width: '25rem' }">
               <span class="text-surface-500 dark:text-surface-400 block mb-8"></span>
               <div class="flex items-center gap-4 mb-4">
                 <label for="username" class="font-semibold w-24">Логин</label>
@@ -34,9 +42,12 @@
                 <Button type="button" label="Save" @click="login"></Button>
               </div>
             </Dialog>
+              <!-- <Button label="Logout" @click="logout" /> -->
+            </template>
+            
             <InputText placeholder="Search" type="text" class="w-32 sm:w-auto" />
+
           </div>
-          
         </div>
       </template>
     </Menubar>
@@ -44,13 +55,18 @@
 </template>
 
 <script setup>
-import Menubar from "primevue/menubar";
-import InputText from "primevue/inputtext";
-import Badge from "primevue/badge";
+import { ref, onMounted } from 'vue';
+import { useUserStore } from '@/axios/userStore'; // Ensure correct path
+import Menubar from 'primevue/menubar';
+import InputText from 'primevue/inputtext';
+import Badge from 'primevue/badge';
+import Button from 'primevue/button';
+import Dialog from 'primevue/dialog';
+import Password from 'primevue/password';
+import ApiService from '../axios/authService';
 
-import { ref } from "vue";
-import ApiService from '../axios/authService'
 const visible = ref(false);
+const userStore = useUserStore();
 const items = ref([
   {
     label: "Cтатьи",
@@ -67,24 +83,57 @@ const items = ref([
     icon: "pi pi-search",
     link: "/Project",
   },
-
+  {
+    label: "Создать статью",
+    icon: "pi pi-pencil",
+    link: '/CreateArticle'
+  }
 ]);
+const loggedInOptions = ref([
+  {
+    label: 'Профиль',
+    icon: 'pi pi-user',
+    items: [
+      {
+        label: 'Личные настройки',
+        icon: 'pi pi-cog',
+        
+      },
+      {
+        label: 'Выйти',
+        icon: 'pi logout',
+        command: () => logout()
+      }
+    ]
+  }
+])
 let loginParams = {
   name: "",
   password: ""
-}
-const login = async () => {
-    try {
-        const response = await ApiService.post('/users/login',
-          loginParams
-        );
-        window.localStorage.setItem('token',response.data);
-        
-    } catch (error) {
+};
 
-        console.error(error);
-    }
-}
+const login = async () => {
+  try {
+    const response = await ApiService.post('/users/login', loginParams);
+    userStore.setToken(response.data);
+    await userStore.fetchUser();
+    visible.value = false;
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+const logout = () => {
+  userStore.clearUser();
+};
+
+onMounted(async () => {
+  const token = window.localStorage.getItem('token');
+  if (token) {
+    userStore.setToken(token);
+    await userStore.fetchUser();
+  }
+});
 </script>
 
 <style lang="sass">

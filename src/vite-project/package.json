@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@primevue/themes": "^4.0.0",
+    "@vueup/vue-quill": "^1.2.0",
     "axios": "^1.7.2",
     "pinia": "^2.1.7",
     "primeicons": "^7.0.0",
