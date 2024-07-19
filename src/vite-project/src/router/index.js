@@ -3,7 +3,7 @@ import Main from '../page/main.vue'
 import Articles from '../page/articles.vue'
 import Jobs from '../page/jobs.vue'
 import Project from '../page/project.vue'
-import Login from '../page/login.vue'
+
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -27,11 +27,7 @@ const router = createRouter({
       name: 'Project',
       component: Project
     },
-    {
-      path: '/Login',
-      name: 'Login',
-      component: Login
-    }
+    
   ]
 })
 
