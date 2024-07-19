@@ -3,15 +3,17 @@ using Api.Contracts.Articles;
 using Api.Core.Extensions;
 using Api.Persistence;
 using Domain.Entities;
+using EasyNetQ;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Queue.Contracts;
 using System.Security.Claims;
 
 namespace Api.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-public class ArticlesController(ApplicationDbContext _context) : ControllerBase
+public class ArticlesController(ApplicationDbContext _context, IBus _bus) : ControllerBase
 {
     [HttpGet]
     public async Task<IActionResult> GetAsync()
@@ -50,17 +52,26 @@ public class ArticlesController(ApplicationDbContext _context) : ControllerBase
         var existingAuthor = await _context.Users.FirstOrDefaultAsync(c => c.Name == authorName);
 
         if (existingAuthor != null)
-        {
-            _context.Articles.Add(new Article
-            {
-                Title = request.Title,
-                Content = request.Content,
-                AuthorId = existingAuthor.Id
-            });
-            _context.SaveChanges();
-            return Ok("Статья создана");
-        }
+            return BadRequest("Ошибка");
 
-        return BadRequest("Ошибка");
+        var article = new Article
+        {
+            Title = request.Title,
+            Content = request.Content,
+            AuthorId = existingAuthor.Id
+        };
+
+        // TODO: Использовать Transaction Outbox pattern.
+        _context.Articles.Add(article);
+        _context.SaveChanges();
+
+        _bus.PubSub.Publish(new ArticleCreatedMessage()
+        {
+            Id = existingAuthor.Id,
+            Title = article.Title,
+            Content = article.Content,
+            AuthorName = existingAuthor.Name,
+        });
+        return Ok("Статья создана");
     }
 }
