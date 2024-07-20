@@ -1,11 +1,11 @@
 ﻿using TG.Bot.Intagrations.BackendApi;
-using Api.Contracts.Tests.Dto;
 using TelegramBotExtension.Types;
 using TelegramBotExtension.Handling;
 using TelegramBotExtension.Filters;
 using TG.Bot.TelegramApi.TestService.Views;
 using Telegram.Bot;
 using TG.Bot.Enums;
+using TestingPlatform.Api.Contracts.Dto;
 
 namespace TG.Bot.TelegramApi.TestService.Handlers;
 
@@ -40,7 +40,7 @@ internal class TestCallbackQueryHandler(IBackendApi _backendApi) : CallbackQuery
             return null;
 
         ///TODO: Время выполнения запроса _backendApi.GetTestAsync в backend (276 мс)
-        ///нужна оптимизация (кэширование и/или обращение напрямую к контроллеру)
+        ///нужна оптимизация (кэширование)
         var response = await _backendApi.GetTestAsync(testId);
         return response.Content;
     }

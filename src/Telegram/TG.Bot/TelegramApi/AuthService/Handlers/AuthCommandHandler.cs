@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using Telegram.Bot;
+﻿using Telegram.Bot;
 using TelegramBotExtension.Filters;
 using TelegramBotExtension.Handling;
 using TelegramBotExtension.Types;

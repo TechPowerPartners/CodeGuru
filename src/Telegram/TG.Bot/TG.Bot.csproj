@@ -32,6 +32,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\Backend\Api.Contracts\Api.Contracts.csproj" />
     <ProjectReference Include="..\..\Backend\Domain\Domain.csproj" />
+    <ProjectReference Include="..\..\TestingPlatform\TestingPlatform.Api.Contracts\TestingPlatform.Api.Contracts.csproj" />
     <ProjectReference Include="..\TelegramExtension\TelegramExtension.csproj" />
   </ItemGroup>
 

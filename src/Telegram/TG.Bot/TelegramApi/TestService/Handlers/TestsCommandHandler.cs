@@ -19,8 +19,10 @@ internal class TestsCommandHandler(IBackendApi _backendApi) : MessageHandler
     public override async Task HandleUpdateAsync(TelegramContext context)
     {
         ///TODO: Время выполнения запроса GetTestNamesAndIdsAsync в backend (276 мс)
-        ///нужна оптимизация (кэширование и/или обращение напрямую к контроллеру)
+        ///нужна оптимизация (кэширование)
         var response = await _backendApi.GetTestNamesAndIdsAsync();
+        
+        ///TODO: обработка не успешных запросов
         var testNamesAndIds = response.Content!;
 
         if (testNamesAndIds.Count == 0)

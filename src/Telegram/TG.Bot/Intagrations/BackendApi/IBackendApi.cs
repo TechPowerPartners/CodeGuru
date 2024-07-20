@@ -1,7 +1,7 @@
 ﻿using Api.Contracts.Links;
-using Api.Contracts.Tests.Dto;
 using Api.Contracts.Users;
 using Refit;
+using TestingPlatform.Api.Contracts.Dto;
 
 namespace TG.Bot.Intagrations.BackendApi;
 
