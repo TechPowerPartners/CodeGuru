@@ -1,7 +1,7 @@
-﻿namespace Domain.Entities;
+﻿namespace TestingPlatform.Domain.Entities;
 
 /// <summary> Файл для вопроса </summary>
-public class QuestionFiles
+public class QuestionFile
 {
     /// <summary> Идентификатор файла </summary>
     public Guid Id { get; set; }

@@ -1,6 +1,6 @@
-﻿using Api.Contracts.Tests.Dto;
+﻿using TestingPlatform.Api.Contracts.Dto;
 
-namespace Api.Contracts.Tests.Requests;
+namespace TestingPlatform.Api.Contracts.Requests;
 
 public class CreateTestRequest
 {
