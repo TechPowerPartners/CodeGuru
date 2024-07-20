@@ -1,10 +1,10 @@
-﻿using Api.Contracts.Tests.Dto;
-using Api.Contracts.Tests.Requests;
-using Api.Persistence;
-using Domain.Entities;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using TestingPlatform.Api.Contracts.Dto;
+using TestingPlatform.Api.Contracts.Requests;
+using TestingPlatform.Api.Persistence;
+using TestingPlatform.Domain.Entities;
 
 namespace Api.Controllers;
 
