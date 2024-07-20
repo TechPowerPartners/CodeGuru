@@ -6,7 +6,7 @@ import axios from 'axios';
  const deployed = 'http://api:8080';
 
 const apiClient = axios.create({
-  baseURL: development,
+  baseURL: deployed,
   headers: {
     'Content-Type': 'application/json',
   },
