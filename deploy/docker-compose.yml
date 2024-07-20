@@ -59,7 +59,6 @@ services:
       - "5672:5672"
 
   node:
-    platform: linux/arm64 #this line is optional if you are using Mac Silicon chip (M1/M2/M3)
     build:
       context: ../src/vite-project
       dockerfile: Dockerfile
