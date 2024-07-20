@@ -57,3 +57,21 @@ services:
     ports:
       - "15672:15672"
       - "5672:5672"
+
+  node:
+    platform: linux/arm64/v8 #this line is optional if you are using Mac Silicon chip (M1/M2/M3)
+    build:
+      context: ../src/vite-project
+      dockerfile: Dockerfile
+    image: my-front
+    container_name: my-front
+    ports:
+    - "5173:5173"
+    restart: unless-stopped
+    working_dir: /app
+    networks:
+      - app-network 
+
+networks:
+  app-network:
+    driver: bridge
