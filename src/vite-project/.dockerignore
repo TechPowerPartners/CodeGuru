@@ -1,0 +1,21 @@
+# Ignore node_modules directory
+node_modules
+
+# Ignore log files
+*.log
+
+# Ignore build directories
+dist
+build
+
+# Ignore environment variables
+.env
+
+# Ignore Docker-related files
+Dockerfile
+docker-compose.yml
+
+# Ignore any other files or directories you don't want to include in the image
+.git
+.vscode
+.idea
