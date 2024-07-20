@@ -3,7 +3,9 @@ using TestingPlatform.Domain.Entities;
 
 namespace TestingPlatform.Api.Persistence;
 
-public class ApplicationDbContext : DbContext
+public class ApplicationDbContext(
+    DbContextOptions<ApplicationDbContext> options
+    ) : DbContext(options)
 {
     public DbSet<Test> Tests { get; set; }
     public DbSet<Answer> Answers { get; set; }
