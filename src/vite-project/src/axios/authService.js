@@ -1,12 +1,11 @@
 import axios from 'axios';
 
-//const development = 'http://localhost:8080';
+const development = 'http://localhost:8080';
 //TODO Используй этот url если собираешься работать, не делай временные данные, работай с существующими апи!
-//const forFrontendDeveloper = 'http://codeguru.ovh:8080';
- const deployed = 'http://api:8080';
+//const forFrontendDeveloper = 'http://codeguru.ovh:8080';const deployed = 'http://api:8080';
 
 const apiClient = axios.create({
-  baseURL: deployed,
+  baseURL: development,
   headers: {
     'Content-Type': 'application/json',
   },
