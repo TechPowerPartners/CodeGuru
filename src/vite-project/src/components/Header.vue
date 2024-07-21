@@ -23,7 +23,7 @@
           </template>
           <template v-else>
             <PanelMenu :model="loggedInOptions" class="w-full md:w-80" />
-            <InputText placeholder="Search" type="text" class="w-32 sm:w-auto" />
+            
           </template>
         </div>
         <Dialog v-model:visible="visible" modal header="Логин" :style="{ width: '25rem' }">

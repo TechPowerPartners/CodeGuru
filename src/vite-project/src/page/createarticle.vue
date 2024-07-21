@@ -3,33 +3,40 @@
         
         <div class="title">
             
-            <InputText type="text" placeholder="Название статьи" size="large" class="input-title" v-model="params.title" />
+            <InputText type="text" placeholder="Название статьи" size="large" class="input-title" v-model="params.Title" />
         </div>
         <div class="quill-container">
             <h1>Статья</h1>
-            <Editor editor-style="height: 400px" v-model="params.body" class="editr" />
+            <Editor editor-style="height: 400px" v-model="params.Text" class="editr" />
         </div>
         <div class="card flex flex-col md:flex-row gap-4">
             <InputGroup class="keyword-input">
                 <InputText placeholder="Keyword" />
-                <Button icon="pi pi-search" severity="warn" @click="info()" />
+                <Button icon="pi pi-search" severity="warn" />
             </InputGroup>
         </div>
     </div>
     
-    <Button label="Создать" icon="pi pi-check" iconPos="left" @click="info" />
+    <Button label="Создать" icon="pi pi-check" iconPos="left" @click="publishPost" />
 
 </template>
 <script setup>
+import ApiService from '@/axios/authService';
+
 var params = {
-    title: "",
-    body: "",
+    Title: "",
+    Text: "",
 }
 
-const info = () => {
-    console.log(".editr".root.innerHtml)
-    console.log("clicked")
-    console.log(params)
+const publishPost = async () => {
+    try {
+        const response = await ApiService.post('api/articles/create',
+            params,true
+        )
+        window.refresh()
+    } catch (error) {
+        
+    }
 }
 </script>
 <style lang="sass" scoped>

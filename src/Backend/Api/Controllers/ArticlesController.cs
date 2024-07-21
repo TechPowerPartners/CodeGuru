@@ -40,6 +40,8 @@ namespace Api.Controllers
             return BadRequest("Ошибка");
 
         }
+
+
         [HttpPost("getarticle")]
         public async Task<IActionResult> GetArticleById(Guid guid)
         {

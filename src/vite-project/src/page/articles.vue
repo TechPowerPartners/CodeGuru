@@ -1,22 +1,21 @@
 <template>
     <h1 class="title">Статьи</h1>
-    <div class="cards">
-        <Card style="width: 25rem; overflow: hidden" class="card" v-for="card in cards" key="card">
-          <template #header>
+    <div class="cards" @click="">
+        <Card style="width: 25rem; overflow: hidden" class="card" v-for="card in cards" key="card" @click="selectedCard(card.id)">
+          <!-- <div class="selectedCard" @click="selectedCard(card.id)"> -->
+          <!-- <template #header>
             <img
               alt="user header"
               src="https://primefaces.org/cdn/primevue/images/usercard.png"
             />
-          </template>
+          </template> -->
           <template #title><p class="cards__title">{{ card.title }}</p></template>
           <template #subtitle><p class="cards__subtitle">{{ card.id }}</p></template>
           
           <template #content>
-            <p class="m-0">
-             {{ card.description }}
-            </p>
+            <div v-html="card.text" class="text-container"></div>
           </template>
-          
+        <!-- </div> -->
         </Card>
     </div>
 </template>
@@ -26,10 +25,14 @@ import Card from "primevue/card";
 import Button from "primevue/button";
 import ApiService from '../axios/authService'
 import { ref, onMounted } from "vue";
+import { useRouter } from "vue-router";
+
+const router = useRouter();
 onMounted(() => {
     fetchCards();
 })
 const cards = ref([]);
+const selectedCardId = ref(null);
 
 const fetchCards = async () => {
     try {
@@ -42,13 +45,18 @@ const fetchCards = async () => {
     }
 }
 
-const GetArticle = async () => {
-  try {
+const selectedCard = (id) => {
+    selectedCardId.value = id;
     
-  } catch (error) {
+    router.push({
+      name: 'ReadArticle',
+      params: {
+        id
+      }
+    })
     
-  }
-}
+};
+
 </script>
 
 <style lang="sass" scoped>

@@ -4,6 +4,7 @@ import Articles from '../page/articles.vue'
 import Jobs from '../page/jobs.vue'
 import Project from '../page/project.vue'
 import CreateArticle from '../page/createarticle.vue'
+import ReadArticle from '../page/readarticle.vue'
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -31,6 +32,11 @@ const router = createRouter({
       path: '/CreateArticle',
       name: 'CreateArticle',
       component: CreateArticle
+    },
+    {
+      path: '/ReadArticle/:id',
+      name: 'ReadArticle',
+      component: ReadArticle
     }
     
   ]
