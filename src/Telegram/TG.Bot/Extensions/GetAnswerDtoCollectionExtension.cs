@@ -1,6 +1,6 @@
-﻿using Api.Contracts.Tests.Dto;
-using Telegram.Bot.Types.ReplyMarkups;
+﻿using Telegram.Bot.Types.ReplyMarkups;
 using TelegramBotExtension.UI;
+using TestingPlatform.Api.Contracts.Dto;
 
 namespace TG.Bot.Extensions;
 
