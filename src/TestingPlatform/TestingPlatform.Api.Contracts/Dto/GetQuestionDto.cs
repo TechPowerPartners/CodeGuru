@@ -1,4 +1,4 @@
-﻿namespace Api.Contracts.Tests.Dto;
+﻿namespace TestingPlatform.Api.Contracts.Dto;
 
 public class GetQuestionDto
 {

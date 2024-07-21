@@ -1,3 +1,4 @@
+﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.8.34525.116
@@ -35,6 +36,14 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Eval.Api", "src\Eval\Eval.Api\Eval.Api.csproj", "{2E09E651-2787-4664-B261-6130B398F3BE}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TelegramExtension", "src\Telegram\TelegramExtension\TelegramExtension.csproj", "{991FEC4C-F8C4-4EFF-AEB5-D0B56A3C5B6D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "TestingPlatform", "TestingPlatform", "{7DFD2213-3580-4C46-BFC8-1DF1BCFFF8B3}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestingPlatform.Domain", "src\TestingPlatform\TestingPlatform.Domain\TestingPlatform.Domain.csproj", "{086B644C-560C-4BB5-B8CA-9D852F332971}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestingPlatform.Api.Contracts", "src\TestingPlatform\TestingPlatform.Api.Contracts\TestingPlatform.Api.Contracts.csproj", "{6C791B82-7194-4FBE-BE5D-DCC571C710A9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestingPlatform.Api", "src\TestingPlatform\TestingPlatform.Api\TestingPlatform.Api.csproj", "{40565F2F-25A7-4929-84D9-B7DA00CA8D10}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -82,6 +91,18 @@ Global
 		{991FEC4C-F8C4-4EFF-AEB5-D0B56A3C5B6D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{991FEC4C-F8C4-4EFF-AEB5-D0B56A3C5B6D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{991FEC4C-F8C4-4EFF-AEB5-D0B56A3C5B6D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{086B644C-560C-4BB5-B8CA-9D852F332971}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{086B644C-560C-4BB5-B8CA-9D852F332971}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{086B644C-560C-4BB5-B8CA-9D852F332971}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{086B644C-560C-4BB5-B8CA-9D852F332971}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6C791B82-7194-4FBE-BE5D-DCC571C710A9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6C791B82-7194-4FBE-BE5D-DCC571C710A9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6C791B82-7194-4FBE-BE5D-DCC571C710A9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6C791B82-7194-4FBE-BE5D-DCC571C710A9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{40565F2F-25A7-4929-84D9-B7DA00CA8D10}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{40565F2F-25A7-4929-84D9-B7DA00CA8D10}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{40565F2F-25A7-4929-84D9-B7DA00CA8D10}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{40565F2F-25A7-4929-84D9-B7DA00CA8D10}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -102,6 +123,10 @@ Global
 		{414E73D5-B362-4995-8E22-F818235B9BF0} = {DD44B4D0-2DA0-4752-BC43-E1F303273CA3}
 		{2E09E651-2787-4664-B261-6130B398F3BE} = {7F5B5EDA-6EEF-41C9-90DF-405B602ED1E1}
 		{991FEC4C-F8C4-4EFF-AEB5-D0B56A3C5B6D} = {FC99E733-6865-4BB5-8F86-8023F465E929}
+		{7DFD2213-3580-4C46-BFC8-1DF1BCFFF8B3} = {DD44B4D0-2DA0-4752-BC43-E1F303273CA3}
+		{086B644C-560C-4BB5-B8CA-9D852F332971} = {7DFD2213-3580-4C46-BFC8-1DF1BCFFF8B3}
+		{6C791B82-7194-4FBE-BE5D-DCC571C710A9} = {7DFD2213-3580-4C46-BFC8-1DF1BCFFF8B3}
+		{40565F2F-25A7-4929-84D9-B7DA00CA8D10} = {7DFD2213-3580-4C46-BFC8-1DF1BCFFF8B3}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {46DC610A-DE1B-46A3-834E-6800AF158536}

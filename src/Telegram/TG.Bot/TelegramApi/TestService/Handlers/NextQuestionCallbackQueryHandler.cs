@@ -1,11 +1,9 @@
-﻿using Api.Contracts.Tests.Dto;
-using Domain.Entities;
-using System;
-using Telegram.Bot;
+﻿using Telegram.Bot;
 using TelegramBotExtension.Filters;
 using TelegramBotExtension.Handling;
 using TelegramBotExtension.Types;
-using TG.Bot.enums;
+using TestingPlatform.Api.Contracts.Dto;
+using TG.Bot.Enums;
 using TG.Bot.TelegramApi.TestService.Views;
 
 namespace TG.Bot.TelegramApi.TestService.Handlers;
@@ -29,7 +27,7 @@ internal class NextQuestionCallbackQueryHandler : CallbackQueryHandler
         GetTestDto test = (GetTestDto)userData[nameof(test)];
         int index = (int)userData[nameof(index)];
 
-        await SaveAnswerAsync(test.Questions.ElementAt(index), context.Data);
+        //await SaveAnswerAsync(test.Questions.ElementAt(index), context.Data);
 
         index++;
 

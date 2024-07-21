@@ -1,4 +1,4 @@
-﻿namespace Domain.Entities;
+﻿namespace TestingPlatform.Domain.Entities;
 
 /// <summary> Тест </summary>
 public class Test

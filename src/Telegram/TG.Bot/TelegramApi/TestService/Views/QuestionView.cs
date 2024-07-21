@@ -1,8 +1,8 @@
-﻿using Api.Contracts.Tests.Dto;
-using Telegram.Bot;
+﻿using Telegram.Bot;
 using Telegram.Bot.Types;
 using Telegram.Bot.Types.Enums;
 using TelegramBotExtension.Types;
+using TestingPlatform.Api.Contracts.Dto;
 using TG.Bot.Extensions;
 
 namespace TG.Bot.TelegramApi.TestService.Views;

@@ -1,4 +1,4 @@
-﻿namespace Domain.Entities;
+﻿namespace TestingPlatform.Domain.Entities;
 
 /// <summary> Вариант ответа на вопрос </summary>
 public class Answer

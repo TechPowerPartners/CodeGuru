@@ -1,4 +1,4 @@
-﻿namespace Domain.Entities;
+﻿namespace TestingPlatform.Domain.Entities;
 
 /// <summary> Вопрос </summary>
 public class Question
@@ -19,7 +19,7 @@ public class Question
     public Guid TestId { get; set; }
 
     /// <summary> Файлы вопроса </summary>
-    public ICollection<QuestionFiles>? Files { get; set; }
+    public ICollection<QuestionFile>? Files { get; set; }
 
     /// <summary> Вырианты ответов </summary>
     public ICollection<Answer> Answers { get; set; } = default!;
