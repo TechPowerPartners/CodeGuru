@@ -3,25 +3,35 @@
         
         <div class="title">
             
-            <InputText type="text" placeholder="Название статьи" size="large" class="input-title" />
+            <InputText type="text" placeholder="Название статьи" size="large" class="input-title" v-model="params.title" />
         </div>
         <div class="quill-container">
             <h1>Статья</h1>
-            <Editor editor-style="height: 400px" />
-            <QuillEditor theme="snow" content-type="html" toolbar="full" />
+            <Editor editor-style="height: 400px" v-model="params.body" class="editr" />
         </div>
         <div class="card flex flex-col md:flex-row gap-4">
             <InputGroup class="keyword-input">
                 <InputText placeholder="Keyword" />
-                <Button icon="pi pi-search" severity="warn" />
+                <Button icon="pi pi-search" severity="warn" @click="info()" />
             </InputGroup>
         </div>
     </div>
     
-    <Button label="Создать" icon="pi pi-check" iconPos="left" />
+    <Button label="Создать" icon="pi pi-check" iconPos="left" @click="info" />
 
 </template>
+<script setup>
+var params = {
+    title: "",
+    body: "",
+}
 
+const info = () => {
+    console.log(".editr".root.innerHtml)
+    console.log("clicked")
+    console.log(params)
+}
+</script>
 <style lang="sass" scoped>
 .container
     display: flex
