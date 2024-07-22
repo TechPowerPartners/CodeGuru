@@ -16,13 +16,10 @@ public static class GetAnswerDtoCollectionExtension
         return UI.GetInlineButtons(inlineAnswers);
     }
 
-    public static ICollection<GetAnswerDto> MarkAnswer(this ICollection<GetAnswerDto> answers, string data)
+    public static ICollection<GetAnswerDto> MarkAnswer(this ICollection<GetAnswerDto> answers, Guid answerId)
     {
         return answers.Select(answer =>
         {
-            if (!Guid.TryParse(data, out Guid answerId))
-                return answer;
-
             if (answer.Id == answerId)
                 answer = new GetAnswerDto { Id = answer.Id, Text = "☑️" + answer.Text };
             return answer;

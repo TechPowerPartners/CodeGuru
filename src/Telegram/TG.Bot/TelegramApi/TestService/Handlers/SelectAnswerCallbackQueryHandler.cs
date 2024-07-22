@@ -5,6 +5,7 @@ using TestingPlatform.Api.Contracts.Dto;
 using TG.Bot.Enums;
 using TG.Bot.Extensions;
 using TG.Bot.TelegramApi.TestService.Views;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace TG.Bot.TelegramApi.TestService.Handlers;
 
@@ -30,7 +31,7 @@ internal class SelectAnswerCallbackQueryHandler : CallbackQueryHandler
             return;
         }
 
-        var answers = currentQuestion.Answers.MarkAnswer(context.Data);
+        var answers = currentQuestion.Answers.MarkAnswer(answerId);
         await QuestionView.EditAnswerAsync(context, answers);
         await context.State.UpdateData(nameof(answerId), answerId);
     }

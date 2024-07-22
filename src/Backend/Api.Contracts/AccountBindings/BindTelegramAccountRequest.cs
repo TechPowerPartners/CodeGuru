@@ -1,6 +1,6 @@
-﻿namespace Api.Contracts.Links;
+﻿namespace Api.Contracts.AccountBindings;
 
-public class LinkTelegramRequest
+public class BindTelegramAccountRequest
 {
     public string Name { get; set; } = default!;
     public string Password { get; set; } = default!;

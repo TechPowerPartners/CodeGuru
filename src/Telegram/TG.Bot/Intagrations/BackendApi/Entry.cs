@@ -11,9 +11,8 @@ internal static class Entry
         services
             .AddRefitClient<IBackendApi>()
             .ConfigureHttpClient(client =>
-            {
-                client.BaseAddress = new(configuration.GetValue<string>("ApiUrl")!);
-            });
+                client.BaseAddress = new(configuration.GetValue<string>("ApiBackendUrl")!)
+                );
         return services;
     }
 }
