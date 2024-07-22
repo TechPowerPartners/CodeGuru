@@ -27,7 +27,7 @@ internal class NextQuestionCallbackQueryHandler : CallbackQueryHandler
         GetTestDto test = (GetTestDto)userData[nameof(test)];
         int index = (int)userData[nameof(index)];
 
-        //await SaveAnswerAsync(test.Questions.ElementAt(index), context.Data);
+        await SaveAnswerAsync(context, test.Questions.ElementAt(index));
 
         index++;
 
@@ -39,7 +39,7 @@ internal class NextQuestionCallbackQueryHandler : CallbackQueryHandler
         await context.BotClient.EditMessageTextAsync(
             context.UserId,
             messageId,
-            "Поздравляю!! тест пройден!!!"
+            "Поздравляю!! тест пройден!!! "
             );
         await context.State.Clear();
     }
@@ -55,7 +55,7 @@ internal class NextQuestionCallbackQueryHandler : CallbackQueryHandler
 
     }
 
-    public Task SaveAnswerAsync(GetQuestionDto question, string data)
+    public Task SaveAnswerAsync(TelegramContext context, GetQuestionDto question)
     {
         return default!;
     }

@@ -28,7 +28,7 @@ public class UsersController(ApplicationDbContext _context) : ControllerBase
         {
 			return Unauthorized("Не существует такого пользователя");
         }
-		var isPasswordValid = BCrypt.Net.BCrypt.Verify(request.Password, findUser.Password);
+		var isPasswordValid = new PasswordHasher().Verify(request.Password, findUser.Password);
         if (!isPasswordValid)
         {
             return Unauthorized("Не существует такого пользователя");

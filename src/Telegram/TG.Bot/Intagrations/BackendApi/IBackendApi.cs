@@ -10,5 +10,5 @@ internal interface IBackendApi
     Task<IApiResponse<string>> LoginAsync(LoginRequest request);
 
     [Post("/api/accounts-bindings/telegram")]
-    Task<IApiResponse<string>> BindTelegramAccountAsync(BindTelegramAccountRequest request);
+    Task<IApiResponse> BindTelegramAccountAsync(BindTelegramAccountRequest request);
 }
