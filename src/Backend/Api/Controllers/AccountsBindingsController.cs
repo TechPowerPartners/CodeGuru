@@ -1,5 +1,7 @@
 ﻿using Api.Contracts.AccountBindings;
 using Api.Persistence;
+using Api.Services;
+using Domain.Entities;
 using EasyNetQ.Events;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -9,7 +11,7 @@ namespace Api.Controllers;
 
 [Route("api/accounts-bindings")]
 [ApiController]
-public class AccountsBindingsController(ApplicationDbContext _context) : ControllerBase
+public class AccountsBindingsController(ApplicationDbContext _context, IPasswordHasher _passwordHasher) : ControllerBase
 {
     [Authorize]
     [HttpPost("telegram")]
@@ -20,12 +22,16 @@ public class AccountsBindingsController(ApplicationDbContext _context) : Control
         if (user == null)
             return Unauthorized("Неверный логин или пароль");
 
-        var isCorrectPassword = new Services.PasswordHasher().Verify(user.Password, request.Password);
+        var isCorrectPassword = _passwordHasher.Verify(user.PasswordHash, request.Password);
 
         if (!isCorrectPassword)
             return Unauthorized("Неверный логин или пароль");
 
-        // TODO: Сохранить в бд User
+        user.TelegramId = request.TelegramId;
+
+        _context.Update(user);
+
+        _context.SaveChanges();
 
         return Ok();
     }

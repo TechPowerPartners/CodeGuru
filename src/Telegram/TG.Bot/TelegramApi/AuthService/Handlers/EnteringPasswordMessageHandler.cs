@@ -17,7 +17,7 @@ internal class EnteringPasswordMessageHandler(IBackendApi backendApi) : MessageH
         var name = (string)userData[nameof(AuthState.Name)];
         var password = context.Data;
 
-        var response = await backendApi.BindTelegramAccountAsync(new() { Name = name, Password = password, TelegramUserId = context.UserId });
+        var response = await backendApi.BindTelegramAccountAsync(new() { Name = name, Password = password, TelegramId = context.UserId });
         if (response.IsSuccessStatusCode)
         {
             await context.BotClient.SendTextMessageAsync(
