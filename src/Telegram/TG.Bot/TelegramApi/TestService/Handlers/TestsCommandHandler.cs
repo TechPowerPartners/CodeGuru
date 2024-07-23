@@ -14,11 +14,24 @@ namespace TG.Bot.TelegramApi.TestService.Handlers;
 /// Обработчик команды /tests. Отображаются список тестов в виде кнопок
 /// </summary>
 /// <param name="_testingPlatformApi"></param>
-internal class TestsCommandHandler(ITestingPlatformApi _testingPlatformApi) : MessageHandler
+internal class TestsCommandHandler(
+    ITestingPlatformApi _testingPlatformApi,
+    IBackendApi _backendApi) : MessageHandler
 {
     [Command("tests")]
     public override async Task HandleUpdateAsync(TelegramContext context)
     {
+        // нужна оптимизация (кэширование)
+        var backendResponse = await _backendApi.GetUserIdByTelegramAsync(context.UserId);
+
+        if (!backendResponse.IsSuccessStatusCode)
+        {
+            await context.BotClient.SendTextMessageAsync(
+                context.UserId,
+                "Авторизируйтесь с помощью команды /auth");
+            return;
+        }
+
         // TODO: Время выполнения запроса GetTestNamesAndIdsAsync в backend (276 мс)
         // нужна оптимизация (кэширование)
         var response = await _testingPlatformApi.GetTestNamesAndIdsAsync();

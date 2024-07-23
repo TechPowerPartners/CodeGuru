@@ -6,6 +6,7 @@ using EasyNetQ.Events;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace Api.Controllers;
 
@@ -13,11 +14,10 @@ namespace Api.Controllers;
 [ApiController]
 public class AccountsBindingsController(ApplicationDbContext _context, IPasswordHasher _passwordHasher) : ControllerBase
 {
-    [Authorize]
     [HttpPost("telegram")]
     public async Task<IActionResult> BindTelegramAccountAsync(BindTelegramAccountRequest request)
     {
-        var user = _context.Users.FirstOrDefault(user => user.Name == request.Name);
+        var user = await _context.Users.FirstOrDefaultAsync(user => user.Name == request.Name);
 
         if (user == null)
             return Unauthorized("Неверный логин или пароль");
@@ -33,6 +33,17 @@ public class AccountsBindingsController(ApplicationDbContext _context, IPassword
 
         _context.SaveChanges();
 
-        return Ok();
+        return Ok(user.Id);
+    }
+
+    [HttpGet("GetUserId/byTelegram/{id:long}")]
+    public async Task<IActionResult> GetUserIdByTelegramIdAsync(long id)
+    {
+        var user = await _context.Users.FirstOrDefaultAsync(user => user.TelegramId == id);
+
+        if (user == null)
+            return BadRequest("Not Found");
+
+        return Ok(user.Id);
     }
 }
