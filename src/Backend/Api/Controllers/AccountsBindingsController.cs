@@ -47,9 +47,9 @@ public class AccountsBindingsController(ApplicationDbContext _context, IPassword
         var response = new GetTelegramAccountBindingResponse()
         {
             UserId = user.Id,
-            TelegramId = user.TelegramId
+            TelegramId = user.TelegramId!.Value,
         };
 
-        return Ok();
+        return Ok(response);
     }
 }
