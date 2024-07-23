@@ -31,7 +31,7 @@ public class AccountsBindingsController(ApplicationDbContext _context, IPassword
 
         _context.Update(user);
 
-        _context.SaveChanges();
+        await _context.SaveChangesAsync();
 
         return Ok(user.Id);
     }
@@ -42,7 +42,7 @@ public class AccountsBindingsController(ApplicationDbContext _context, IPassword
         var user = await _context.Users.FirstOrDefaultAsync(user => user.TelegramId == telegramId);
 
         if (user == null)
-            return BadRequest("Not Found");
+            return NotFound("Not Found");
 
         var response = new GetTelegramAccountBindingResponse()
         {
