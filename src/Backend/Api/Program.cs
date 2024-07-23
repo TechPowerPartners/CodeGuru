@@ -1,5 +1,6 @@
 using Api;
 using Api.Persistence;
+using Api.Services;
 using EasyNetQ;
 using System.Text.Json.Serialization;
 
@@ -22,6 +23,7 @@ builder.Services.AddCors(options =>
 
 builder.Services.Configure<RouteOptions>(options => options.LowercaseUrls = true);
 builder.Services.AddDbContext<ApplicationDbContext>();
+builder.Services.AddTransient<IPasswordHasher, PasswordHasher>();
 AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
 
 builder.Services.AddDateOnlyTimeOnlyStringConverters();

@@ -24,10 +24,11 @@ internal class StartTestCallbackQueryHandler : CallbackQueryHandler
 
         var messageId = message.MessageId;
 
-        int index = 0;
+        int questionIndex = 0;
+
         await context.State.UpdateData(new() {
             { nameof(currentQuestion), currentQuestion },
-            { nameof(index), index },
+            { nameof(questionIndex), questionIndex },
             { nameof(messageId), messageId }
         });
         await context.State.SetState(nameof(TestState.PassingTest));

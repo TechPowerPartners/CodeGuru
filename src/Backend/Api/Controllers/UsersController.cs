@@ -16,7 +16,7 @@ namespace Api.Controllers;
 
 [Route("[controller]")]
 [ApiController]
-public class UsersController(ApplicationDbContext _context) : ControllerBase
+public class UsersController(ApplicationDbContext _context, IPasswordHasher _passwordHasher) : ControllerBase
 {
     AuthService auth = new AuthService();
 
@@ -28,7 +28,7 @@ public class UsersController(ApplicationDbContext _context) : ControllerBase
         {
 			return Unauthorized("Не существует такого пользователя");
         }
-		var isPasswordValid = BCrypt.Net.BCrypt.Verify(request.Password, findUser.Password);
+		var isPasswordValid = _passwordHasher.Verify(findUser.PasswordHash, request.Password);
         if (!isPasswordValid)
         {
             return Unauthorized("Не существует такого пользователя");
@@ -68,15 +68,15 @@ public class UsersController(ApplicationDbContext _context) : ControllerBase
 		if (findUser is not null)
 		{
 			findUser.Name = request.Name;
-			findUser.Password = request.Password;
+			findUser.PasswordHash = request.Password;
 
 			return StatusCode(StatusCodes.Status409Conflict, $"User already exist");
 		}
-        var hashedPassword = BCrypt.Net.BCrypt.HashPassword(request.Password);
+        var hashedPassword = _passwordHasher.HashPassword(request.Password);
         _context.Users.Add(new User
 		{
 			Name = request.Name,
-			Password = hashedPassword,
+			PasswordHash = hashedPassword,
 		});
 
 		await _context.SaveChangesAsync();
