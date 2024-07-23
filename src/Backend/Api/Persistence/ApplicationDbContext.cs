@@ -25,11 +25,11 @@ public class ApplicationDbContext : DbContext
 	public DbSet<Article> Articles { get; set; }
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 	{
-		optionsBuilder.UseNpgsql(_configuration.GetConnectionString("ConnectionDb"));
+        optionsBuilder.UseNpgsql(_configuration.GetConnectionString("ConnectionDb"));
 	}
 
 	protected override void OnModelCreating(ModelBuilder modelBuilder)
 	{
-		modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
+        modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
 	}
 }

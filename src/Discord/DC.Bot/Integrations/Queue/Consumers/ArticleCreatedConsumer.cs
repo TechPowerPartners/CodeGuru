@@ -15,9 +15,5 @@ internal class ArticleCreatedConsumer(
         var guild = await _discordClientService.Client.GetGuildAsync(_tppServerSettings.Value.Id);
 
         var articlesChannel = guild.Channels.Values.FirstOrDefault(c => c.Name == ChannelNameConsts.Articles);
-        articlesChannel.SendMessageAsync(b =>
-        {
-            b.
-        })
     }
 }

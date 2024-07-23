@@ -40,7 +40,7 @@ public class VacanciesController(ApplicationDbContext dbContext) : ControllerBas
             .ToListAsync();
 
         var currentUser = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Name).Value.ToString();
-        
+
         var findLeadId = dbContext.Users.FirstOrDefault(k => k.Name == currentUser).Id;
         if (existingKeywords.Count != request.Keywords.Count)
             return BadRequest("Указаные не существующие ключевые слова");

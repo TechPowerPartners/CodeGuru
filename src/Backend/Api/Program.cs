@@ -1,5 +1,7 @@
 using Api;
+using Api.Abstractions;
 using Api.Persistence;
+using Api.Services;
 using EasyNetQ;
 using System.Text.Json.Serialization;
 
@@ -27,6 +29,8 @@ AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
 builder.Services.AddDateOnlyTimeOnlyStringConverters();
 builder.Services.ConfigureAuthentication();
 builder.Services.ConfigureSwagger();
+
+builder.Services.AddScoped<ICurrentUser, CurrentUser>();
 
 builder.Services.AddEndpointsApiExplorer();
 
