@@ -22,7 +22,7 @@ internal class TestsCommandHandler(
     public override async Task HandleUpdateAsync(TelegramContext context)
     {
         // нужна оптимизация (кэширование)
-        var backendResponse = await _backendApi.GetUserIdByTelegramAsync(context.UserId);
+        var backendResponse = await _backendApi.GetTelegramAccountBindingAsync(context.UserId);
 
         if (!backendResponse.IsSuccessStatusCode)
         {

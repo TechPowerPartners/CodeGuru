@@ -12,6 +12,6 @@ internal interface IBackendApi
     [Post("/api/accounts-bindings/telegram")]
     Task<IApiResponse> BindTelegramAccountAsync(BindTelegramAccountRequest request);
 
-    [Get("/api/accounts-bindings/GetUserId/byTelegram/{id}")]
-    Task<IApiResponse> GetUserIdByTelegramAsync(long id);
+    [Get("/api/accounts-bindings/telegram/{id}")]
+    Task<IApiResponse<GetTelegramAccountBindingResponse>> GetTelegramAccountBindingAsync(long id);
 }

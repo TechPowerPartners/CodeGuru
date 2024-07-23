@@ -36,14 +36,20 @@ public class AccountsBindingsController(ApplicationDbContext _context, IPassword
         return Ok(user.Id);
     }
 
-    [HttpGet("GetUserId/byTelegram/{id:long}")]
-    public async Task<IActionResult> GetUserIdByTelegramIdAsync(long id)
+    [HttpGet("telegram/{telegramId:long}")]
+    public async Task<IActionResult> GetTelegramAccountBindingAsync(long telegramId)
     {
-        var user = await _context.Users.FirstOrDefaultAsync(user => user.TelegramId == id);
+        var user = await _context.Users.FirstOrDefaultAsync(user => user.TelegramId == telegramId);
 
         if (user == null)
             return BadRequest("Not Found");
 
-        return Ok(user.Id);
+        var response = new GetTelegramAccountBindingResponse()
+        {
+            UserId = user.Id,
+            TelegramId = user.TelegramId
+        };
+
+        return Ok();
     }
 }
