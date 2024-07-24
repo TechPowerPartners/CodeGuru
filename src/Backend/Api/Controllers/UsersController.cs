@@ -1,16 +1,9 @@
 ﻿using Api.Contracts.Users;
 using Api.Persistence;
 using Api.Services;
-using BCrypt.Net;
 using Domain.Entities;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.IdentityModel.Tokens;
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
-using System.Security.Cryptography;
-using System.Text;
 
 namespace Api.Controllers;
 
@@ -18,7 +11,7 @@ namespace Api.Controllers;
 [ApiController]
 public class UsersController(ApplicationDbContext _context, IPasswordHasher _passwordHasher) : ControllerBase
 {
-    AuthService auth = new AuthService();
+    TokenService tokenService = new TokenService();
 
     [HttpPost("login")]
 	public IActionResult Login(LoginRequest request)
@@ -26,7 +19,7 @@ public class UsersController(ApplicationDbContext _context, IPasswordHasher _pas
 		var findUser = _context.Users.FirstOrDefault(u => u.Name == request.Name);
         if (findUser == null)
         {
-			return Unauthorized("Не существует такого пользователя");
+            return Unauthorized("Не существует такого пользователя");
         }
 		var isPasswordValid = _passwordHasher.Verify(findUser.PasswordHash, request.Password);
         if (!isPasswordValid)
@@ -34,7 +27,7 @@ public class UsersController(ApplicationDbContext _context, IPasswordHasher _pas
             return Unauthorized("Не существует такого пользователя");
         }
 
-		return Ok(auth.GenerateToken(request));
+		return Ok(tokenService.GenerateToken(request));
 	}
     [HttpGet("userinfo")]
     public async Task<IActionResult> GetUserInfo()
@@ -79,7 +72,7 @@ public class UsersController(ApplicationDbContext _context, IPasswordHasher _pas
 			PasswordHash = hashedPassword,
 		});
 
-		await _context.SaveChangesAsync();
+        await _context.SaveChangesAsync();
 
 		return Ok();
 	}
