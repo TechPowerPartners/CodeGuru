@@ -18,6 +18,8 @@ var builder = Host.CreateDefaultBuilder()
         services.ConfigureIntergrations(hostContext.Configuration);
         services.ConfigureTelegramApi();
 
+        services.AddMemoryCache();
+
         var botService = services
             .BuildServiceProvider()
             .GetRequiredService<BotService>();
