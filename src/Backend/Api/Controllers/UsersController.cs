@@ -4,15 +4,17 @@ using Api.Services;
 using Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Security.Claims;
 
 namespace Api.Controllers;
 
 [Route("[controller]")]
 [ApiController]
-public class UsersController(ApplicationDbContext _context, IPasswordHasher _passwordHasher) : ControllerBase
+public class UsersController(
+    ApplicationDbContext _context,
+    IPasswordHasher _passwordHasher,
+    TokenService tokenService) : ControllerBase
 {
-    TokenService tokenService = new TokenService();
-
     [HttpPost("login")]
 	public IActionResult Login(LoginRequest request)
 	{
@@ -27,7 +29,7 @@ public class UsersController(ApplicationDbContext _context, IPasswordHasher _pas
             return Unauthorized("Не существует такого пользователя");
         }
 
-		return Ok(tokenService.GenerateToken(request));
+		return Ok(tokenService.GenerateToken(request, findUser));
 	}
     [HttpGet("userinfo")]
     public async Task<IActionResult> GetUserInfo()

@@ -33,6 +33,7 @@ builder.Services.ConfigureAuthentication();
 builder.Services.ConfigureSwagger();
 
 builder.Services.AddScoped<ICurrentUser, CurrentUser>();
+builder.Services.AddScoped<TokenService>();
 
 builder.Services.AddEndpointsApiExplorer();
 
