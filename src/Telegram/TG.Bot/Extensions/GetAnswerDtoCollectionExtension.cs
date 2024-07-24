@@ -16,7 +16,7 @@ public static class GetAnswerDtoCollectionExtension
         return UI.GetInlineButtons(inlineAnswers);
     }
 
-    public static ICollection<GetAnswerDto> MarkAnswer(this ICollection<GetAnswerDto> answers, Guid answerId)
+    public static ICollection<GetAnswerDto> CopyThisSelectingAnswer(this ICollection<GetAnswerDto> answers, Guid answerId)
     {
         return answers.Select(answer =>
         {
