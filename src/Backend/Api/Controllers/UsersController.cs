@@ -1,32 +1,27 @@
 ﻿using Api.Contracts.Users;
 using Api.Persistence;
 using Api.Services;
-using BCrypt.Net;
 using Domain.Entities;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.IdentityModel.Tokens;
-using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
-using System.Security.Cryptography;
-using System.Text;
 
 namespace Api.Controllers;
 
 [Route("[controller]")]
 [ApiController]
-public class UsersController(ApplicationDbContext _context, IPasswordHasher _passwordHasher) : ControllerBase
+public class UsersController(
+    ApplicationDbContext _context,
+    IPasswordHasher _passwordHasher,
+    TokenService tokenService) : ControllerBase
 {
-    AuthService auth = new AuthService();
-
     [HttpPost("login")]
 	public IActionResult Login(LoginRequest request)
 	{
 		var findUser = _context.Users.FirstOrDefault(u => u.Name == request.Name);
         if (findUser == null)
         {
-			return Unauthorized("Не существует такого пользователя");
+            return Unauthorized("Не существует такого пользователя");
         }
 		var isPasswordValid = _passwordHasher.Verify(findUser.PasswordHash, request.Password);
         if (!isPasswordValid)
@@ -34,7 +29,7 @@ public class UsersController(ApplicationDbContext _context, IPasswordHasher _pas
             return Unauthorized("Не существует такого пользователя");
         }
 
-		return Ok(auth.GenerateToken(request));
+		return Ok(tokenService.GenerateToken(request, findUser));
 	}
     [HttpGet("userinfo")]
     public async Task<IActionResult> GetUserInfo()
@@ -58,10 +53,10 @@ public class UsersController(ApplicationDbContext _context, IPasswordHasher _pas
     }
 
     [HttpPost("registration")]
-	public async Task<IActionResult> RegistrationAsync(RegisterRequest request)
-	{
-		if (request.Validator != 765123)
-			return BadRequest("низя");
+    public async Task<IActionResult> RegistrationAsync(RegisterRequest request)
+    {
+        if (request.Validator != 765123)
+            return BadRequest("низя");
 
 		var findUser = await _context.Users.FirstOrDefaultAsync(u => u.Name == request.Name);
 		
@@ -79,7 +74,7 @@ public class UsersController(ApplicationDbContext _context, IPasswordHasher _pas
 			PasswordHash = hashedPassword,
 		});
 
-		await _context.SaveChangesAsync();
+        await _context.SaveChangesAsync();
 
 		return Ok();
 	}
