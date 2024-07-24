@@ -1,5 +1,4 @@
-﻿using Api.Contracts.Tests.Dto;
-using Api.Contracts.Tests.Requests;
+﻿using Api.Contracts.AccountBindings;
 using Api.Contracts.Users;
 using Refit;
 
@@ -7,12 +6,12 @@ namespace TG.Bot.Intagrations.BackendApi;
 
 internal interface IBackendApi
 {
-    [Post("/users/registration")]
-    Task<IApiResponse> RegisterAsync(RegisterRequest request);
+    [Post("/users/login")]
+    Task<IApiResponse<string>> LoginAsync(LoginRequest request);
 
-    [Get("/tests/{id}")]
-    Task<IApiResponse<GetTestDto>> GetTestAsync(Guid id);
+    [Post("/api/accounts-bindings/telegram")]
+    Task<IApiResponse> BindTelegramAccountAsync(BindTelegramAccountRequest request);
 
-    [Get("/tests/NamesAndIds")]
-    Task<IApiResponse<ICollection<GetTestNameAndIdDto>>> GetTestIdsAsync();
+    [Get("/api/accounts-bindings/telegram/{id}")]
+    Task<IApiResponse<GetTelegramAccountBindingResponse>> GetTelegramAccountBindingAsync(long id);
 }

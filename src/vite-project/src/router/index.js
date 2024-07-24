@@ -3,14 +3,15 @@ import Main from '../page/main.vue'
 import Articles from '../page/articles.vue'
 import Jobs from '../page/jobs.vue'
 import Project from '../page/project.vue'
-import Login from '../page/login.vue'
+import CreateArticle from '../page/createarticle.vue'
+import ReadArticle from '../page/readarticle.vue'
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
       path: '/Main',
       name: 'Main',
-      component: Main
+      component: Articles
     },
     {
       path: '/Articles',
@@ -28,10 +29,16 @@ const router = createRouter({
       component: Project
     },
     {
-      path: '/Login',
-      name: 'Login',
-      component: Login
+      path: '/CreateArticle',
+      name: 'CreateArticle',
+      component: CreateArticle
+    },
+    {
+      path: '/ReadArticle/:id',
+      name: 'ReadArticle',
+      component: ReadArticle
     }
+    
   ]
 })
 

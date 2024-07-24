@@ -25,6 +25,7 @@ builder.Services.AddCors(options =>
 builder.Services.AddHttpContextAccessor();
 builder.Services.Configure<RouteOptions>(options => options.LowercaseUrls = true);
 builder.Services.AddDbContext<ApplicationDbContext>();
+builder.Services.AddTransient<IPasswordHasher, PasswordHasher>();
 AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
 
 builder.Services.AddDateOnlyTimeOnlyStringConverters();

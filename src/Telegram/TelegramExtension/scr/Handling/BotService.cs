@@ -25,6 +25,9 @@ public class BotService(
 
     public async Task HandleUpdateAsync(ITelegramBotClient botClient, Update update, CancellationToken cancellationToken)
     {
+        ///TODO: Нужна оптимизация телеграм бота так как он при большом потоке Updates медленно обрабатывает
+        ///Можно реализовать IUpdateReceiver
+        
         var handlers = GetHandlersByUpdateType(update.Type);
 
         foreach (var handler in handlers)
@@ -32,7 +35,7 @@ public class BotService(
             var methodInfo = handler.GetType().GetMethod(nameof(handler.HandleUpdateAsync));
             var context = handler.GetContext(botClient, update);
 
-            if (await CheckFiltersAsync(methodInfo, context))
+            if (await CheckFiltersAsync(methodInfo!, context))
             {
                 await handler.HandleUpdateAsync(context);
                 return;
@@ -67,14 +70,10 @@ public class BotService(
 
     private IEnumerable<IUpdateTypeHandler> GetHandlersByUpdateType(UpdateType updateType)
     {
-        return _handlers.Where(handler => Check(handler, updateType));
-    }
-
-    private bool Check(IUpdateTypeHandler handler, UpdateType updateType)
-    {
-        var type = handler.GetType();
-        var attribute = type.GetCustomAttribute<HandlerAttribute>();
-        var result = attribute.UpdateType == updateType;
-        return result;
+        return _handlers
+            .Where(handler => 
+                handler
+                    .GetType()
+                    .GetCustomAttribute<HandlerAttribute>()!.UpdateType == updateType);
     }
 }
