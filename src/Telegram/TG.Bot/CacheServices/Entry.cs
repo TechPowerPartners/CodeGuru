@@ -6,7 +6,7 @@ namespace TG.Bot.CacheServices;
 
 internal static class Entry
 {
-    public static IServiceCollection ConfigureIntergrations(this IServiceCollection services)
+    public static IServiceCollection AddCacheSrevices(this IServiceCollection services)
     {
         services
             .AddTransient<ICachedBackendApiService, CachedBackendApiService>()

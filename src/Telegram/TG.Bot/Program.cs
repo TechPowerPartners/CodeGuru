@@ -6,6 +6,7 @@ using Microsoft.Extensions.Configuration;
 using System.Reflection;
 using TG.Bot.Intagrations;
 using TelegramBotExtension.Handling;
+using TG.Bot.CacheServices;
 
 var builder = Host.CreateDefaultBuilder()
     .ConfigureServices((hostContext, services) =>
@@ -19,6 +20,7 @@ var builder = Host.CreateDefaultBuilder()
         services.ConfigureTelegramApi();
 
         services.AddMemoryCache();
+        services.AddCacheSrevices();
 
         var botService = services
             .BuildServiceProvider()
