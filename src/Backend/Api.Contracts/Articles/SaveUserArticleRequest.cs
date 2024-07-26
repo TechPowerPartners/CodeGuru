@@ -1,9 +1,9 @@
 ﻿namespace Api.Contracts.Articles;
 
 /// <summary>
-/// Запрос для сохранения черновика статьи.
+/// Запрос для сохранения статьи пользователя.
 /// </summary>
-public class SaveDraftArticleRequest
+public class SaveUserArticleRequest
 {
     /// <summary>
     /// Название.
@@ -14,6 +14,8 @@ public class SaveDraftArticleRequest
     /// Содержимое.
     /// </summary>
     public string Content { get; set; } = default!;
+
+    public string Description { get; set; }
 
     /// <summary>
     /// Тэги.

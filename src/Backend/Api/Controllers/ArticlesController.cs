@@ -15,27 +15,48 @@ public class ArticlesController(ApplicationDbContext _context) : ControllerBase
     [HttpGet("{id:guid}")]
     public async Task<IActionResult> GetByIdAsync(Guid id)
     {
-        return Ok(await _context.Articles.WithState(ArticleState.Published).FirstOrDefaultAsync(a => a.Id == id));
+        var article = await _context.Articles
+            .Include(a => a.Author)
+            .WithStates(ArticleState.Published)
+            .FirstOrDefaultAsync(a => a.Id == id);
+
+        return Ok(new GetArticleResponse()
+        {
+            Title = article.Title,
+            Tags = article.Tags,
+            Content = article.Content,
+            PublishedAt = article.PublishedAt,
+            Author = new ArticleAuthorDto()
+            {
+                Name = article.Author.Name,
+            }
+        });
     }
 
     [HttpPost("/page")]
     public async Task<IActionResult> GetPageAsync(PageRequest page)
     {
         var articles = await _context.Articles
-            .WithState(ArticleState.Published)
+            .WithStates(ArticleState.Published)
             .OrderBy(date => date.CreatedAt)
             .Skip((page.Number - 1) * page.Size)
             .Take(page.Size)
-            .Select(article => new GetArticlesResponse
+            .Select(article => new GetPageOfArticlesResponse
             {
                 Title = article.Title,
-                Content = article.Content,
+                Description = article.Description,
+                Tags = article.Tags,
+                PublishedAt = article.PublishedAt,
+                Author = new ArticleAuthorDto()
+                {
+                    Name = article.Author.Name,
+                }
             })
             .ToListAsync();
 
         var count = await _context.Articles.CountAsync();
         var totalPages = (int)Math.Ceiling(count / (double)page.Size);
-        var result = new ListPaginations<GetArticlesResponse>(articles, count, totalPages);
+        var result = new ListPaginations<GetPageOfArticlesResponse>(articles, count, totalPages);
 
         return Ok(result);
     }
