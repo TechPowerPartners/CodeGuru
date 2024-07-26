@@ -1,15 +1,12 @@
 ﻿using Api.Abstractions;
-using Api.Contracts;
 using Api.Contracts.Articles;
 using Api.Core.Extensions;
 using Api.Persistence;
-using Api.Services;
 using Domain.Entities;
 using Domain.Enums;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Caching.Distributed;
 
 namespace Api.Controllers;
 
@@ -18,7 +15,6 @@ namespace Api.Controllers;
 [Authorize]
 public class UserArticlesController(
     ApplicationDbContext _context,
-    //IDistributedCache _distributedCache,
     ICurrentUser _currentUser) : ControllerBase
 {
     [HttpGet("{id:guid}")]
@@ -31,35 +27,48 @@ public class UserArticlesController(
         if (article is null)
             return NotFound();
 
-        return Ok(article);
+        return Ok(new GetUserArticleResponse()
+        {
+            Title = article.Title,
+            Tags = article.Tags,
+            Content = article.Content,
+            State = article.State
+        });
     }
 
     [HttpPost("/page")]
-    public async Task<IActionResult> GetPageAsync(PageRequest page)
+    public async Task<IActionResult> GetPageAsync(GetPageOfUserArticlesRequest request)
     {
-        var articles = await _context.Articles
-            .WithDraftState()
-            .Where(a => a.AuthorId == _currentUser.Id!.Value)
-            .OrderBy(a => a.CreatedAt)
-            .Skip((page.Number - 1) * page.Size)
-            .Take(page.Size)
-            .Select(article => new GetArticlesResponse
+        var query = _context.Articles
+            .Where(a => a.AuthorId == _currentUser.Id!.Value);
+
+        if (request.States is [..])
+            query = query.Where(a => request.States.Contains(a.State));
+
+        if (request.Tags is [..])
+            query = query.Where(a => a.Tags.Any(t => request.Tags.Contains(t)));
+
+        var articles = await query.OrderBy(a => a.CreatedAt)
+            .Skip((request.Page.Number - 1) * request.Page.Size)
+            .Take(request.Page.Size)
+            .Select(article => new GetPageOfUserArticlesResponse
             {
                 Title = article.Title,
-                Content = article.Content,
-                Tags = article.Tags
+                Description = article.Description,
+                Tags = article.Tags,
+                State = article.State
             })
             .ToListAsync();
 
-        var count = await _context.Articles.CountAsync(a => a.State == ArticleState.Draft);
-        var totalPages = (int)Math.Ceiling(count / (double)page.Size);
-        var result = new ListPaginations<GetArticlesResponse>(articles, count, totalPages);
+        var count = await _context.Articles.CountAsync();
+        var totalPages = (int)Math.Ceiling(count / (double)request.Page.Size);
+        var result = new ListPaginations<GetPageOfUserArticlesResponse>(articles, count, totalPages);
 
         return Ok(result);
     }
 
     [HttpPost]
-    public async Task<IActionResult> CreateAsync(SaveDraftArticleRequest request)
+    public async Task<IActionResult> CreateAsync(SaveUserArticleRequest request)
     {
         if (string.IsNullOrWhiteSpace(request.Title))
             return BadRequest("Название статьи не заполнено");
@@ -84,7 +93,7 @@ public class UserArticlesController(
     }
 
     [HttpPut("{id:guid}")]
-    public async Task<IActionResult> UpdateAsync(Guid id, SaveDraftArticleRequest request)
+    public async Task<IActionResult> UpdateAsync(Guid id, SaveUserArticleRequest request)
     {
         if (string.IsNullOrWhiteSpace(request.Title))
             return BadRequest("Название статьи не заполнено");
@@ -95,33 +104,25 @@ public class UserArticlesController(
             return Unauthorized();
 
         var existingArticle = await _context.Articles
-            .WithDraftState()
             .FirstOrDefaultAsync(a => a.Id == id && a.AuthorId == _currentUser.Id!.Value);
 
         if (existingArticle is null)
             return NotFound();
 
-        //#region Если статья закеширована, обновляем в кэше.
-        //var cachedArticle = await _distributedCache.GetAsync<Article>(ArticleCacheKeyFactory.CreateForDraft(existingArticle.Id));
+        if (existingArticle.State == ArticleState.Published)
+            return BadRequest("Нельзя редактировать опубликованную статью");
 
-        //if (cachedArticle is not null)
-        //{
-        //    cachedArticle.Title = request.Title;
-        //    cachedArticle.Content = request.Content;
-        //    cachedArticle.Tags = request.Tags;
-
-        //    await _distributedCache.SetAsync(ArticleCacheKeyFactory.CreateForDraft(existingArticle.Id), cachedArticle);
-        //    return NoContent();
-        //}
-        //#endregion
+        if (existingArticle.State == ArticleState.OnModeration)
+            return BadRequest("Нельзя редактировать статью отправленную на модерацию");
 
         existingArticle.Title = request.Title;
         existingArticle.Content = request.Content;
         existingArticle.Tags = request.Tags;
 
-        await _context.SaveChangesAsync();
-        //await _distributedCache.SetAsync(ArticleCacheKeyFactory.CreateForDraft(existingArticle.Id), existingArticle);
+        if (existingArticle.State == ArticleState.Rejected)
+            existingArticle.State = ArticleState.Draft;
 
+        await _context.SaveChangesAsync();
         return NoContent();
     }
 
@@ -140,7 +141,7 @@ public class UserArticlesController(
         if (existingArticle is null)
             return NotFound();
 
-        if (existingArticle.State is not ArticleState.Rejected or ArticleState.Draft)
+        if (existingArticle.State != ArticleState.Draft)
             return BadRequest("Нельзя отправить на модерацию статью из текущего состояния");
 
         existingArticle.State = ArticleState.OnModeration;

@@ -18,6 +18,11 @@ public class Article
     public string Title { get; set; }
 
     /// <summary>
+    /// Описание статьи. Отображается например при просмотре списка статей.
+    /// </summary>
+    public string Description { get; set; }
+
+    /// <summary>
     /// Содержимое.
     /// </summary>
     public string Content { get; set; } = default!;
@@ -40,7 +45,7 @@ public class Article
     /// <summary>
     /// Дата опубликования.
     /// </summary>
-    public DateTime PublichedAt { get; set; }
+    public DateTime PublishedAt { get; set; }
 
     /// <summary>
     /// День последного изменение.
@@ -51,6 +56,8 @@ public class Article
     /// Идентификатор автора.
     /// </summary>
     public Guid AuthorId { get; set; }
+
+    public User Author { get; set; }
 
     public void EditedAt(DateTime date)
     {
