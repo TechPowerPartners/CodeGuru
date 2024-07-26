@@ -83,7 +83,8 @@ public class UserArticlesController(
             Title = request.Title,
             Content = request.Content,
             AuthorId = author!.Id,
-            State = ArticleState.Draft
+            State = ArticleState.Draft,
+            Description = request.Description,
         };
 
         _context.Articles.Add(article);
@@ -118,6 +119,7 @@ public class UserArticlesController(
         existingArticle.Title = request.Title;
         existingArticle.Content = request.Content;
         existingArticle.Tags = request.Tags;
+        existingArticle.Description = request.Description;
 
         if (existingArticle.State == ArticleState.Rejected)
             existingArticle.State = ArticleState.Draft;
