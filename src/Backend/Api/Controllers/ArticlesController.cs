@@ -33,7 +33,7 @@ public class ArticlesController(ApplicationDbContext _context) : ControllerBase
         });
     }
 
-    [HttpPost("/page")]
+    [HttpPost("page")]
     public async Task<IActionResult> GetPageAsync(PageRequest page)
     {
         var articles = await _context.Articles

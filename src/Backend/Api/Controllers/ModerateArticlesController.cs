@@ -36,7 +36,7 @@ public class ModerateArticlesController(ApplicationDbContext _context) : Control
         });
     }
 
-    [HttpPost("/page")]
+    [HttpPost("page")]
     public async Task<IActionResult> GetPageAsync(PageRequest page)
     {
         var articles = await _context.Articles

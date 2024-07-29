@@ -36,7 +36,7 @@ public class UserArticlesController(
         });
     }
 
-    [HttpPost("/page")]
+    [HttpPost("page")]
     public async Task<IActionResult> GetPageAsync(GetPageOfUserArticlesRequest request)
     {
         var query = _context.Articles
