@@ -35,7 +35,7 @@ public class Article
     /// <summary>
     /// Тэги.
     /// </summary>
-    public ICollection<string> Tags { get; set; }
+    public List<string> Tags { get; set; }
 
     /// <summary>
     /// Дата создания.
