@@ -10,7 +10,7 @@
             />
           </template> -->
           <template #title><p class="cards__title">{{ card.title }}</p></template>
-          <template #subtitle><p class="cards__subtitle">{{ card.id }}</p></template>
+          <template #subtitle><p class="cards__subtitle">{{ card.description }}</p></template>
           <template #id><p>{{ card.id }}</p></template>
           <template #content>
             <div v-html="card.text" class="text-container"></div>

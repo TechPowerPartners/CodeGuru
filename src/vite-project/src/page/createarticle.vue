@@ -5,6 +5,9 @@
             
             <InputText type="text" placeholder="Название статьи" size="large" class="input-title" v-model="params.Title" />
         </div>
+        <div class="description">
+            <InputText type="text" placeholder="Описание" size="large" v-model="params.Description"></InputText>
+        </div>
         <div class="quill-container">
             <h1>Статья</h1>
             <Editor editor-style="height: 400px" v-model="params.Content" class="editr" />
@@ -26,13 +29,13 @@ import ApiService from '@/axios/authService';
 var params = {
     Title: "",
     Content: "",
-    Description: "test",
+    Description: "",
 
 }
 
 const publishPost = async () => {
     try {
-        const response = await ApiService.post('api/articles/create',
+        const response = await ApiService.post('api/users/me/articles',
             params,true
         )
         window.refresh()
