@@ -7,7 +7,7 @@
         </div>
         <div class="quill-container">
             <h1>Статья</h1>
-            <Editor editor-style="height: 400px" v-model="params.Text" class="editr" />
+            <Editor editor-style="height: 400px" v-model="params.Content" class="editr" />
         </div>
         <div class="card flex flex-col md:flex-row gap-4">
             <InputGroup class="keyword-input">
@@ -25,7 +25,9 @@ import ApiService from '@/axios/authService';
 
 var params = {
     Title: "",
-    Text: "",
+    Content: "",
+    Description: "test",
+
 }
 
 const publishPost = async () => {

@@ -35,7 +35,7 @@ public class UserArticlesController(
             State = article.State
         });
     }
-
+    [AllowAnonymous]
     [HttpPost("page")]
     public async Task<IActionResult> GetPageAsync(GetPageOfUserArticlesRequest request)
     {
@@ -57,6 +57,7 @@ public class UserArticlesController(
                 Description = article.Description,
                 Tags = article.Tags,
                 State = article.State
+               
             })
             .ToListAsync();
 
@@ -83,8 +84,10 @@ public class UserArticlesController(
             Title = request.Title,
             Content = request.Content,
             AuthorId = author!.Id,
-            State = ArticleState.Draft,
+            State = ArticleState.Published,//TODO поменять обратно на драфт
             Description = request.Description,
+            CreatedAt = new DateTime(),
+            Tags = request.Tags
         };
 
         _context.Articles.Add(article);

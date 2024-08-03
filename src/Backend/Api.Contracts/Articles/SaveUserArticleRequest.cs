@@ -20,5 +20,5 @@ public class SaveUserArticleRequest
     /// <summary>
     /// Тэги.
     /// </summary>
-    public ICollection<string> Tags { get; set; } = [];
+    public ICollection<string>? Tags { get; set; } = [];
 }

@@ -11,7 +11,7 @@
           </template> -->
           <template #title><p class="cards__title">{{ card.title }}</p></template>
           <template #subtitle><p class="cards__subtitle">{{ card.id }}</p></template>
-          
+          <template #id><p>{{ card.id }}</p></template>
           <template #content>
             <div v-html="card.text" class="text-container"></div>
           </template>
@@ -34,11 +34,17 @@ onMounted(() => {
 const cards = ref([]);
 const selectedCardId = ref(null);
 
+var pagination = {
+  number: 1,
+  size: 10,
+}
+
 const fetchCards = async () => {
     try {
-        const response = await ApiService.post('api/articles/getall');
-        cards.value = response.data;
-        
+        const response = await ApiService.post('/api/articles/page',pagination);
+        cards.value = response.data.items;
+        console.log(response.data.items.id)
+        console.log(response.data.items)
     } catch (error) {
 
         console.error("shit");

@@ -20,7 +20,7 @@ onMounted(() => {
 const fetchArticle = async () => {
     try {
         console.log(route.params.id)
-        const response = await ApiService.post(`api/articles/getarticle?guid=${route.params.id}`);
+        const response = await ApiService.get(`api/articles/${route.params.id}`);
         article.value = response.data
     } catch (error) {
 

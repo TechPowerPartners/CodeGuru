@@ -43,6 +43,7 @@ public class ArticlesController(ApplicationDbContext _context) : ControllerBase
             .Take(page.Size)
             .Select(article => new GetPageOfArticlesResponse
             {
+                Id = article.Id,
                 Title = article.Title,
                 Description = article.Description,
                 Tags = article.Tags,

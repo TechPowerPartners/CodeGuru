@@ -78,6 +78,11 @@ const items = ref([
     label: "Создать статью",
     icon: "pi pi-pencil",
     link: '/CreateArticle'
+  },
+  {
+    label: "Ресурсы/Книги",
+    icon: "pi pi-book",
+    link: "/Resources"
   }
 ]);
 const loggedInOptions = ref([
