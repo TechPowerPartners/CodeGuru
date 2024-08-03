@@ -2,76 +2,62 @@
 using Api.Contracts.Articles;
 using Api.Core.Extensions;
 using Api.Persistence;
-using Domain.Entities;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
+using Domain.Enums;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using System.Security.Claims;
 
-namespace Api.Controllers
+namespace Api.Controllers;
+
+[Route("api/[controller]")]
+[ApiController]
+public class ArticlesController(ApplicationDbContext _context) : ControllerBase
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    public class ArticlesController(ApplicationDbContext _context) : ControllerBase
+    [HttpGet("{id:guid}")]
+    public async Task<IActionResult> GetByIdAsync(Guid id)
     {
-        [HttpPost("create")]
-        public async Task<IActionResult> CreateArticle(CreateArticleRequest request)
+        var article = await _context.Articles
+            .Include(a => a.Author)
+            .WithStates(ArticleState.Published)
+            .FirstOrDefaultAsync(a => a.Id == id);
+
+        return Ok(new GetArticleResponse()
         {
-            if (request.CheckIfNull() is false)
+            Title = article.Title,
+            Tags = article.Tags,
+            Content = article.Content,
+            PublishedAt = article.PublishedAt,
+            Author = new ArticleAuthorDto()
             {
-                return BadRequest("Одна или несколько полей пустое");
+                Name = article.Author.Name,
             }
-            var creator = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Name)?.Value;
+        });
+    }
 
-            var findCreator = _context.Users.FirstOrDefault(c => c.Name == creator);
-            if (findCreator != null)
+    [HttpPost("page")]
+    public async Task<IActionResult> GetPageAsync(PageRequest page)
+    {
+        var articles = await _context.Articles
+            .WithStates(ArticleState.Published)
+            .OrderBy(date => date.CreatedAt)
+            .Skip((page.Number - 1) * page.Size)
+            .Take(page.Size)
+            .Select(article => new GetPageOfArticlesResponse
             {
-                _context.Articles.Add(new Articles
+                Title = article.Title,
+                Description = article.Description,
+                Tags = article.Tags,
+                PublishedAt = article.PublishedAt,
+                Author = new ArticleAuthorDto()
                 {
-                    Title = request.Title,
-                    Text = request.Text,
-                    Creator = findCreator.Name
-                });
-                _context.SaveChanges();
-                return Ok("Статья создана");
-            }
+                    Name = article.Author.Name,
+                }
+            })
+            .ToListAsync();
 
-            return BadRequest("Ошибка");
+        var count = await _context.Articles.CountAsync();
+        var totalPages = (int)Math.Ceiling(count / (double)page.Size);
+        var result = new ListPaginations<GetPageOfArticlesResponse>(articles, count, totalPages);
 
-        }
-
-
-        [HttpPost("getarticle")]
-        public async Task<IActionResult> GetArticleById(Guid guid)
-        {
-            return Ok(await _context.Articles.FirstAsync(u => u.Id == guid));
-        }
-        [HttpPost("getpaginated")]
-        public async Task<IActionResult> GetArticlesPaginated(PageRequest page)
-        {
-            var articles = await _context.Articles
-                .OrderBy(date => date.CreatedAt)
-                .Skip((page.Number - 1) * page.Size)
-                .Take(page.Size)
-                .Select(article => new GetArticlesRequest
-                {
-                    Title = article.Title,
-                    Text = article.Text,
-                })
-                .ToListAsync();
-
-            var count = await _context.Articles.CountAsync();
-            var totalPages = (int)Math.Ceiling(count / (double)page.Size);
-            ListPaginations<GetArticlesRequest> result = new ListPaginations<GetArticlesRequest>
-            (articles, count,totalPages);
-
-            return Ok(result);
-        }
-        [HttpPost("getall")]
-        public async Task<IActionResult> GetAllArticleTemp()
-        {
-            return Ok(_context.Articles.ToList());
-        }
+        return Ok(result);
     }
 }

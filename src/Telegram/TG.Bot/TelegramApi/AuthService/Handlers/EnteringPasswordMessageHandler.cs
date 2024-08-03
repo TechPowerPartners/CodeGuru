@@ -17,11 +17,12 @@ internal class EnteringPasswordMessageHandler(IBackendApi backendApi) : MessageH
         var name = (string)userData[nameof(AuthState.Name)];
         var password = context.Data;
 
-        var response = await backendApi.LoginAsync(new() {Name = name, Password = password });
+        var response = await backendApi.BindTelegramAccountAsync(new() { Name = name, Password = password, TelegramId = context.UserId });
         if (response.IsSuccessStatusCode)
         {
-            await backendApi.LinkTelegramAsync(new() {Name = name, Password = password, TelegramUserId = context.UserId });
-            await context.BotClient.SendTextMessageAsync(context.UserId, "Вы успешно привязали аккаунт");
+            await context.BotClient.SendTextMessageAsync(
+                context.UserId,
+                "Вы успешно привязали аккаунт");
         }
         else
         {

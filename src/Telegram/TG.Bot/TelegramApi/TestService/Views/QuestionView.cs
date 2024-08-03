@@ -20,11 +20,18 @@ internal class QuestionView
 
     public static async Task EditAnswerAsync(TelegramContext context, ICollection<GetAnswerDto> answers)
     {
-        await context.BotClient.EditMessageReplyMarkupAsync(
-            context.UserId,
-            context.Update.CallbackQuery!.Message!.MessageId,
-            answers.ToInlineKeyboardMarkup()
-            );
+        try
+        {
+            await context.BotClient.EditMessageReplyMarkupAsync(
+                context.UserId,
+                context.Update.CallbackQuery!.Message!.MessageId,
+                answers.ToInlineKeyboardMarkup()
+                );
+        }
+        catch
+        {
+            //Ignore
+        }
     }
 
     public static async Task EditAsync(TelegramContext context, GetQuestionDto question)

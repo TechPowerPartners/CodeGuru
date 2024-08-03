@@ -30,7 +30,7 @@ internal class SelectAnswerCallbackQueryHandler : CallbackQueryHandler
             return;
         }
 
-        var answers = currentQuestion.Answers.MarkAnswer(context.Data);
+        var answers = currentQuestion.Answers.CopyThisSelectingAnswer(answerId);
         await QuestionView.EditAnswerAsync(context, answers);
         await context.State.UpdateData(nameof(answerId), answerId);
     }

@@ -6,14 +6,15 @@ using TG.Bot.TelegramApi.TestService.Views;
 using Telegram.Bot;
 using TG.Bot.Enums;
 using TestingPlatform.Api.Contracts.Dto;
+using TG.Bot.Intagrations.TestingPlatformApi;
 
 namespace TG.Bot.TelegramApi.TestService.Handlers;
 
 /// <summary>
 /// Обработчик нажатия кнопки на стадии выбора теста
 /// </summary>
-/// <param name="_backendApi"></param>
-internal class TestCallbackQueryHandler(IBackendApi _backendApi) : CallbackQueryHandler
+/// <param name="_testingPlatformApi"></param>
+internal class TestCallbackQueryHandler(ITestingPlatformApi _testingPlatformApi) : CallbackQueryHandler
 {
     [StateFilter(nameof(TestState.SelectingTest))]
     public override async Task HandleUpdateAsync(TelegramContext context)
@@ -39,9 +40,9 @@ internal class TestCallbackQueryHandler(IBackendApi _backendApi) : CallbackQuery
         if (!Guid.TryParse(context.Data, out Guid testId))
             return null;
 
-        ///TODO: Время выполнения запроса _backendApi.GetTestAsync в backend (276 мс)
-        ///нужна оптимизация (кэширование)
-        var response = await _backendApi.GetTestAsync(testId);
+        var response = await _testingPlatformApi.GetTestAsync(testId);
+
+        if (!response.IsSuccessStatusCode) return null;
         return response.Content;
     }
 

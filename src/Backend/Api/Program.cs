@@ -1,5 +1,7 @@
 using Api;
+using Api.Abstractions;
 using Api.Persistence;
+using Api.Services;
 using EasyNetQ;
 using System.Text.Json.Serialization;
 
@@ -20,13 +22,18 @@ builder.Services.AddCors(options =>
     });
 });
 
+builder.Services.AddHttpContextAccessor();
 builder.Services.Configure<RouteOptions>(options => options.LowercaseUrls = true);
 builder.Services.AddDbContext<ApplicationDbContext>();
+builder.Services.AddTransient<IPasswordHasher, PasswordHasher>();
 AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
 
 builder.Services.AddDateOnlyTimeOnlyStringConverters();
 builder.Services.ConfigureAuthentication();
 builder.Services.ConfigureSwagger();
+
+builder.Services.AddScoped<ICurrentUser, CurrentUser>();
+builder.Services.AddScoped<TokenService>();
 
 builder.Services.AddEndpointsApiExplorer();
 
