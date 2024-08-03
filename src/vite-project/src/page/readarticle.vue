@@ -1,6 +1,9 @@
 <template>
-    <h1>{{ article.title }}</h1>
-    <div v-html="article.text"></div>
+    <Panel header="{{ article.title }}" toggleable="">
+        <h1></h1>
+        <div v-html="article.text"></div>
+    </Panel>
+
 </template>
 <script setup>
 import { ref, onMounted } from 'vue';
@@ -18,12 +21,10 @@ const fetchArticle = async () => {
     try {
         console.log(route.params.id)
         const response = await ApiService.post(`api/articles/getarticle?guid=${route.params.id}`);
-         article.value = response.data
+        article.value = response.data
     } catch (error) {
-        console.log(error)
+
     }
 }
 </script>
-<style>
-
-</style>
+<style></style>
