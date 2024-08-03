@@ -121,7 +121,7 @@ public class UserArticlesController(
 
         existingArticle.Title = request.Title;
         existingArticle.Content = request.Content;
-        existingArticle.Tags = request.Tags;
+        existingArticle.Tags = request.Tags.ToList();
         existingArticle.Description = request.Description;
 
         if (existingArticle.State == ArticleState.Rejected)
