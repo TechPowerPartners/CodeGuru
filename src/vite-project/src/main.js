@@ -129,7 +129,6 @@ app.use(PrimeVue, {
 
 app.use(createPinia())
 app.component('Editor', Editor)
-app.component('Button', Button);
 app.component('Toast', Toast);
 app.component('Accordion', Accordion);
 app.component('AccordionPanel', AccordionPanel);
@@ -228,7 +227,6 @@ app.component('Textarea', Textarea);
 app.component('Terminal', Terminal);
 app.component('TieredMenu', TieredMenu);
 app.component('Timeline', Timeline);
-app.component('Toast', Toast);
 app.component('Toolbar', Toolbar);
 app.component('ToggleButton', ToggleButton);
 app.component('ToggleSwitch', ToggleSwitch);

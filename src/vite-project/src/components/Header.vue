@@ -23,22 +23,24 @@
           </template>
           <template v-else>
             <PanelMenu :model="loggedInOptions" class="w-full md:w-80" />
-            
+
           </template>
         </div>
         <Dialog v-model:visible="visible" modal header="Логин" :style="{ width: '25rem' }">
-          <span class="text-surface-500 dark:text-surface-400 block mb-8"></span>
-          <div class="flex items-center gap-4 mb-4">
-            <label for="username" class="font-semibold w-24">Логин</label>
-            <InputText class="flex-auto" autocomplete="off" v-model="loginParams.name" />
+          <div class="mb-6">
+            <label for="username" class="font-semibold text-lg">Логин</label>
+            <InputText class="mt-2 border rounded-md p-2" autocomplete="off" v-model="loginParams.name" />
           </div>
-          <div class="flex items-center gap-4 mb-8">
-            <label for="password" class="font-semibold w-24">Пароль</label>
-            <Password class="flex-auto" autocomplete="off" v-model="loginParams.password" :feedback="false" />
+
+          <div class="mb-6">
+            <label for="password" class="font-semibold text-lg">Пароль</label>
+            <Password class="mt-2 border rounded-md p-2" autocomplete="off" v-model="loginParams.password"
+              :feedback="false" />
           </div>
-          <div class="flex justify-end gap-2">
-            <Button type="button" label="Cancel" severity="secondary" @click="visible = false"></Button>
-            <Button type="button" label="Save" @click="login"></Button>
+
+          <div class="flex justify-end gap-4">
+            <Button type="button" label="Login"
+              class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" @click="login"></Button>
           </div>
         </Dialog>
       </template>
@@ -47,14 +49,11 @@
 </template>
 <script setup>
 import { ref, onMounted } from 'vue';
-import { useUserStore } from '@/axios/userStore'; // Ensure correct path
-import Menubar from 'primevue/menubar';
-import InputText from 'primevue/inputtext';
-import Badge from 'primevue/badge';
-import Button from 'primevue/button';
-import Dialog from 'primevue/dialog';
+import { useUserStore } from '@/axios/userStore';
+
 import Password from 'primevue/password';
 import ApiService from '../axios/authService';
+
 
 const visible = ref(false);
 const userStore = useUserStore();
@@ -93,7 +92,7 @@ const loggedInOptions = ref([
       {
         label: 'Личные настройки',
         icon: 'pi pi-cog',
-        
+
       },
       {
         label: 'Выйти',
@@ -115,7 +114,7 @@ const login = async () => {
     await userStore.fetchUser();
     visible.value = false;
   } catch (error) {
-    console.error(error);
+    
   }
 };
 
@@ -141,7 +140,7 @@ onMounted(async () => {
   text-decoration: none
   color: #000
   font-size: 1rem
-  margin-right: 1rem
+  
 
 .logo
   text-decoration: none

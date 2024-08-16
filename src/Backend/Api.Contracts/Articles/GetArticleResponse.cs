@@ -6,4 +6,5 @@ public class GetArticleResponse
     public DateTime PublishedAt { get; set; }
     public ICollection<string> Tags { get; set; }
     public ArticleAuthorDto Author { get; set; }
+    public int Likes { get; set; }
 }

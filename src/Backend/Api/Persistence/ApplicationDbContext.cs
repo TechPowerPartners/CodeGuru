@@ -19,6 +19,8 @@ public class ApplicationDbContext : DbContext
 	public DbSet<VacancyKeyword> VacancyKeywords { get; set; }
 	public DbSet<Candidate> Candidates { get; set; }
 	public DbSet<Article> Articles { get; set; }
+	public DbSet<UserComment> UserComments { get; set; }
+	public DbSet<UserLikes> UserLikes { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 	{

@@ -9,4 +9,5 @@ public class GetPageOfArticlesResponse
     public ICollection<string> Tags { get; set; }
     public ArticleAuthorDto Author { get; set; }
     public DateTime PublishedAt { get; set; }
+    public int Likes { get; set; }
 }
